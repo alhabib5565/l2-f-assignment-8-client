@@ -1,0 +1,376 @@
+[
+  {
+    "id": 1,
+    "title": "Chaldal Basic Synthetic Detergent Powder",
+    "description": "Chaldal Basic Synthetic detergent powder, a one-stop solution for all your laundry woes.",
+    "price": 139,
+    "discountPercentage": 52,
+    "flash_sale": {
+      "sale_start": "2024-03-23T08:00:00Z",
+      "sale_end": "2024-03-23T20:00:00Z"
+    },
+    "rating": 4.8,
+    "stock": 150,
+    "brand": "Chaldal",
+    "category": "Laundry",
+    "thumbnail": "https://chaldn.com/_mpimage/chaldal-basic-synthetic-detergent-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D152235&q=best&v=1&m=400&webp=1",
+    "images": [
+      "https://chaldn.com/_mpimage/chaldal-basic-synthetic-detergent-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D152276&q=best&v=1&m=400&webp=1"
+    ],
+    "weight": "1 kg",
+    "type": "Powder",
+    "features": [
+      "Removes tough stains",
+      "Leaves clothes smelling fresh",
+      "Suitable for all water temperatures"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Surf Excel Washing Powder",
+    "description": "Surf excel Quick Wash detergent powder, a one stop solution for all your laundry woes.While learning new skills and having fun, children often come home with a variety of stains on their clothes and more so often on their very important uniforms. While you’re happy that they have these new experiences, the stains leave you worried. To fight these difficult stains you end up putting in a lot extra effort and use additional stain removers such as bleach, lemon etc. It’s time you switch to Surf excel Quick Wash detergent powder and say goodbye to long laundry drills and juggling with different stain removal products each day. Surf excel Quick Wash is one of the premium most detergent powders available in India and has X-Tra Clean particles that combine the power of different stain removing products such as lemon and bleach. The superior technology of Surf excel Quick Wash removes a variety of common tough stains like oil, ketchup, chocolate, curry stains, tea etc. With X-tra cleaning particles, it makes for the perfect wash. So go on and order your pack of Surf excel Quick Wash right away and let you kids gets out there, clean, smart and prepared to take on the world and leave the stains to us. Buy Now!",
+    "price": 19.99,
+    "discountPercentage": 15,
+    "flash_sale": null,
+    "rating": 4.7,
+    "stock": 200,
+    "brand": "Tide",
+    "category": "Laundry Detergent",
+    "thumbnail": "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D128342&q=best&v=1&m=400&webp=1",
+    "images": [
+      "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D38401&q=best&v=1&m=400&webp=1",
+      "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D38402&q=best&v=1&m=400&webp=1",
+      "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D38403&q=best&v=1&m=400&webp=1"
+    ],
+    "weight": "1 kg",
+    "type": "Powder",
+    "features": [
+      "Advanced stain removal",
+      "Refreshing scent",
+      "Compatible with HE washers"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Rin Washing Liquid",
+    "description": "Rin is introducing a revolutionary new Rin liquid that makes your clothes look good as new after every wash. Rin liquid has the combined power of a bar and powder which gives your clothes a dazzling bright shine and a superior fragrance, whether you wash it with hands or in a washing machine. Liquid detergents effectively help remove both the toughest of stains along with everyday dirt.",
+    "price": 14.49,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.5,
+    "stock": 100,
+    "brand": "Rin",
+    "category": "Laundry",
+    "thumbnail": "https://chaldn.com/_mpimage/rin-washing-liquid-400-ml?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D128324&q=best&v=1&m=400&webp=1",
+    "images": [
+      "https://chaldn.com/_mpimage/rin-liquid-detergent-430-ml?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D47599&q=low&v=1&m=400&webp=1",
+      "https://chaldn.com/_mpimage/rin-liquid-detergent-430-ml?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D47600&q=low&v=1&m=400&webp=1"
+    ],
+    "weight": "50 ml",
+    "type": "Liquid",
+    "features": [
+      "Advanced cleaning power for tough stains.",
+      "Suitable for both hand wash and machine wash.",
+      "Provides a dazzling bright shine to clothes.",
+      "Delivers a superior, long-lasting fragrance."
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Rok Shuvro Detergent Laundry Wash",
+    "description": "Downy Unstopables In-Wash Scent Booster beads infuse clothes with long-lasting freshness.",
+    "price": 11.97,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.8,
+    "stock": 150,
+    "brand": "Downy",
+    "category": "Laundry",
+    "thumbnail": "https://chaldn.com/_mpimage/rok-shuvro-detergent-laundry-wash-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D110564&q=best&v=1&m=400&webp=1",
+    "images": [],
+    "weight": "20.1 oz",
+    "type": "Beads",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Shuvro Fabric Brightener",
+    "description": "OxiClean Versatile Stain Remover Powder tackles the toughest stains, revealing vibrant colors and restores whites.",
+    "price": 8.99,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.6,
+    "stock": 120,
+    "brand": "Shuvro",
+    "category": "Laundry",
+    "thumbnail": "https://chaldn.com/_mpimage/shuvro-fabric-brightener-100-ml?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D122928&q=best&v=1&m=400&webp=1",
+    "images": [
+      "https://example.com/images/oxiclean_stain_remover_powder_1.jpg",
+      "https://example.com/images/oxiclean_stain_remover_powder_2.jpg"
+    ],
+    "weight": "400 ml",
+    "type": "Liquid",
+    "features": [
+      "Advanced cleaning power for tough stains.",
+      "Suitable for both hand wash and machine wash.",
+      "Provides a dazzling bright shine to clothes.",
+      "Delivers a superior, long-lasting fragrance."
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Tibet Laundry Soap Blue",
+    "description": "Tibet Laundry Soap Blue Booster adds a fresh fragrance to your laundry with plant-derived ingredients.",
+    "price": 8.97,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.4,
+    "stock": 80,
+    "brand": "Tibet",
+    "category": "Laundry Additive",
+    "thumbnail": "https://example.com/thumbnails/mrs_meyers_scent_booster.jpg",
+    "images": [
+      "https://example.com/images/mrs_meyers_scent_booster_1.jpg",
+      "https://example.com/images/mrs_meyers_scent_booster_2.jpg"
+    ],
+    "weight": "100 ml",
+    "type": "Soap"
+  },
+  {
+    "id": 7,
+    "title": "Wheel Washing Powder 2 in 1 Clean & Fresh",
+    "description": "Wheel 2in1 Washing Powder cleans Clothes thoroughly removing all malodors. Its advanced white powder provides deep cleanliness & sensorial delight while allso being gentle on your hands. Available in two different variants, Clean & Fresh with odor masking capability & winning floral fragrance in Clean & Rose. Buy Now!",
+    "price": 25.99,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.7,
+    "stock": 100,
+    "brand": "Wheel",
+    "category": "Laundry",
+    "thumbnail": "https://chaldn.com/_mpimage/wheel-washing-powder-2-in-1-clean-fresh-2-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D127801&q=best&v=1&m=400&webp=1",
+    "images": [],
+    "weight": "200 ml",
+    "type": "Powder",
+    "features": [
+      "Gentle formula for sensitive skin",
+      "No artificial fragrances or dyes",
+      "Convenient single-dose packs"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Shout Triple-Acting Stain Remover Spray",
+    "description": "Shout Triple-Acting Stain Remover Spray penetrates, breaks up, and removes tough stains from clothing and fabric surfaces.",
+    "price": 3.99,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.6,
+    "stock": 150,
+    "brand": "Shout",
+    "category": "Stain Remover",
+    "thumbnail": "",
+    "images": [
+      "https://example.com/images/shout_stain_remover_spray_1.jpg",
+      "https://example.com/images/shout_stain_remover_spray_2.jpg"
+    ],
+    "weight": "22 oz",
+    "type": "Spray",
+    "features": [
+      "Triple-acting formula",
+      "Effective on various stains",
+      "Safe for all colorfast washables"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Charlie's Soap Laundry Powder",
+    "description": "Charlie's Soap Laundry Powder cleans clothes thoroughly, rinses completely, and leaves no residue behind.",
+    "price": 17.99,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.9,
+    "stock": 80,
+    "brand": "Charlie's Soap",
+    "category": "Laundry Detergent",
+    "thumbnail": "https://example.com/thumbnails/charlies_soap_laundry_powder.jpg",
+    "images": [
+      "https://example.com/images/charlies_soap_laundry_powder_1.jpg",
+      "https://example.com/images/charlies_soap_laundry_powder_2.jpg"
+    ],
+    "weight": "2.64 lbs",
+    "type": "Powder",
+    "features": [
+      "Hypoallergenic formula",
+      "Suitable for all fabrics and water temperatures",
+      "Biodegradable and environmentally friendly"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Gain Fireworks In-Wash Scent Booster Beads",
+    "description": "Gain Fireworks In-Wash Scent Booster beads add a burst of freshness to your laundry with long-lasting scent.",
+    "price": 9.97,
+    "discountPercentage": 0,
+    "flash_sale": null,
+    "rating": 4.7,
+    "stock": 120,
+    "brand": "Gain",
+    "category": "Laundry Additive",
+    "thumbnail": "https://example.com/thumbnails/gain_fireworks_scent_booster.jpg",
+    "images": [
+      "https://example.com/images/gain_fireworks_scent_booster_1.jpg",
+      "https://example.com/images/gain_fireworks_scent_booster_2.jpg"
+    ],
+    "weight": "14.8 oz",
+    "type": "Beads",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Tide Ultra Stain Release Liquid Laundry Detergent",
+    "description": "Tide Ultra Stain Release liquid laundry detergent removes tough stains and leaves clothes fresh and clean.",
+    "price": 19.99,
+    "discountPercentage": 20,
+    "flash_sale": {
+      "flash_sale_price": 15.99,
+      "sale_start": "2024-03-24T10:00:00Z",
+      "sale_end": "2024-03-24T22:00:00Z"
+    },
+    "rating": 4.7,
+    "stock": 200,
+    "brand": "Tide",
+    "category": "Laundry Detergent",
+    "thumbnail": "https://example.com/thumbnails/tide_ultra_stain_release_detergent.jpg",
+    "images": [
+      "https://example.com/images/tide_ultra_stain_release_detergent_1.jpg",
+      "https://example.com/images/tide_ultra_stain_release_detergent_2.jpg"
+    ],
+    "weight": "2 kg",
+    "type": "Beads",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Downy Infusions Lavender Serenity Fabric Softener",
+    "description": "Downy Infusions Lavender Serenity fabric softener provides long-lasting freshness and softness with a soothing lavender scent.",
+    "price": 8.49,
+    "discountPercentage": 15,
+    "flash_sale": {
+      "flash_sale_price": 7.21,
+      "sale_start": "2024-03-25T08:00:00Z",
+      "sale_end": "2024-03-25T20:00:00Z"
+    },
+    "rating": 4.5,
+    "stock": 150,
+    "brand": "Downy",
+    "category": "Fabric Softener",
+    "thumbnail": "https://example.com/thumbnails/downy_infusions_lavender_serenity_fabric_softener.jpg",
+    "images": [
+      "https://example.com/images/downy_infusions_lavender_serenity_fabric_softener_1.jpg",
+      "https://example.com/images/downy_infusions_lavender_serenity_fabric_softener_2.jpg"
+    ],
+    "weight": "5 gm",
+    "type": "Beads",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Arm & Hammer Clean Burst Liquid Laundry Detergent",
+    "description": "Arm & Hammer Clean Burst liquid laundry detergent delivers a powerful clean and a burst of fresh scent.",
+    "price": 11.99,
+    "discountPercentage": 25,
+    "flash_sale": {
+      "flash_sale_price": 8.99,
+      "sale_start": "2024-03-26T09:00:00Z",
+      "sale_end": "2024-03-26T21:00:00Z"
+    },
+    "rating": 4.6,
+    "stock": 180,
+    "brand": "Arm & Hammer",
+    "category": "Laundry Detergent",
+    "thumbnail": "https://example.com/thumbnails/arm_hammer_clean_burst_detergent.jpg",
+    "images": [
+      "https://example.com/images/arm_hammer_clean_burst_detergent_1.jpg",
+      "https://example.com/images/arm_hammer_clean_burst_detergent_2.jpg"
+    ],
+    "weight": "500 gm",
+    "type": "Powder",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "OxiClean White Revive Laundry Whitener + Stain Remover",
+    "description": "OxiClean White Revive laundry whitener + stain remover brightens whites and removes tough stains.",
+    "price": 12.79,
+    "discountPercentage": 30,
+    "flash_sale": {
+      "flash_sale_price": 8.95,
+      "sale_start": "2024-03-27T07:00:00Z",
+      "sale_end": "2024-03-27T19:00:00Z"
+    },
+    "rating": 4.8,
+    "stock": 160,
+    "brand": "OxiClean",
+    "category": "Stain Remover",
+    "thumbnail": "https://example.com/thumbnails/oxiclean_white_revive_laundry_whitener.jpg",
+    "images": [
+      "https://example.com/images/oxiclean_white_revive_laundry_whitener_1.jpg",
+      "https://example.com/images/oxiclean_white_revive_laundry_whitener_2.jpg"
+    ],
+    "weight": "14.8 oz",
+    "type": "Beads",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Mrs. Meyer's Clean Day Laundry Scent Booster",
+    "description": "Mrs. Meyer's Clean Day Laundry Scent Booster adds a fresh fragrance to your laundry with plant-derived ingredients.",
+    "price": 8.97,
+    "discountPercentage": 40,
+    "flash_sale": {
+      "flash_sale_price": 5.38,
+      "sale_start": "2024-03-28T11:00:00Z",
+      "sale_end": "2024-03-28T23:00:00Z"
+    },
+    "rating": 4.4,
+    "stock": 130,
+    "brand": "Mrs. Meyer's Clean Day",
+    "category": "Laundry Additive",
+    "thumbnail": "https://example.com/thumbnails/mrs_meyers_scent_booster.jpg",
+    "images": [
+      "https://example.com/images/mrs_meyers_scent_booster_1.jpg",
+      "https://example.com/images/mrs_meyers_scent_booster_2.jpg"
+    ],
+    "weight": "14.8 oz",
+    "type": "Beads",
+    "features": [
+      "Long-lasting scent",
+      "Easy-to-use",
+      "Compatible with all detergents"
+    ]
+  }
+]

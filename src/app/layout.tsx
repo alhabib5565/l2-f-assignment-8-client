@@ -4,6 +4,7 @@ import "./globals.css";
 import Provider from "./lib/providers/Provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import Navbar from "@/components/shared/Navbar";
+import { Footer } from "@/components/shared/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,7 +23,8 @@ export default function RootLayout({
         <body className={`${inter.className}`}>
           <AppRouterCacheProvider>
             <Navbar />
-            {children}
+            <div className="min-h-screen h-full">{children}</div>
+            <Footer />
           </AppRouterCacheProvider>
         </body>
       </html>
