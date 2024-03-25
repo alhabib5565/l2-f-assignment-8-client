@@ -1,13 +1,15 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Link from "next/link";
 
 type TSectionHeaderProp = {
   title: string;
   description: string;
+  href?: string;
 };
 
-const SectionHeader = ({ title, description }: TSectionHeaderProp) => {
+const SectionHeader = ({ title, description, href }: TSectionHeaderProp) => {
   return (
     <div>
       <Stack direction="row" justifyContent="space-between">
@@ -19,12 +21,14 @@ const SectionHeader = ({ title, description }: TSectionHeaderProp) => {
             {description}
           </Typography>
         </Box>
-        <div>
-          <Button variant="outlined" className="group">
-            <span>Show All</span>{" "}
-            <ArrowForwardIcon className="group-hover:translate-x-1 transition-all duration-300" />
-          </Button>
-        </div>
+        {href && (
+          <Link href={href}>
+            <Button variant="outlined" className="group">
+              <span>Show All</span>{" "}
+              <ArrowForwardIcon className="group-hover:translate-x-1 transition-all duration-300" />
+            </Button>
+          </Link>
+        )}
       </Stack>
     </div>
   );

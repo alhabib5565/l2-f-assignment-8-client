@@ -1,8 +1,11 @@
 "use client";
 import { Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
+import { useSearchParams } from "next/navigation";
+import { TProduct } from "@/type/product.type";
+import { allProduct } from "@/utils/product";
 
 const brands = [
   "smartphones",
@@ -13,13 +16,22 @@ const brands = [
 ];
 
 const ratings = [1, 2, 3, 4, 5, 6];
-
-const Filter = () => {
+type TFilter = {
+  setProducts: React.Dispatch<React.SetStateAction<never[]>>;
+  products: TProduct[];
+};
+const Filter = ({ products, setProducts }: TFilter) => {
+  const searchParams = useSearchParams();
+  console.log(searchParams.toString(), "from filter ui");
+  useEffect(() => {
+    fetch(`https://assignment-8-server.vercel.app/api/v1/products`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data.data));
+  }, [setProducts]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [value, setValue] = useState<number[]>([20, 37]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
 
-  console.log({ value, selectedBrands, selectedRatings });
   const addBrands = (brand: any) => {
     if (!selectedBrands.includes(brand)) {
       setSelectedBrands((prev) => [...prev, brand]);
@@ -46,7 +58,7 @@ const Filter = () => {
   }
 
   return (
-    <div className="w-[250px] border border-primary rounded-md p-3 ">
+    <div className="w-[250px] border border-slate-300 rounded-md p-3 h-fit">
       <div className="space-y-2">
         <h5 className="text-lg font-medium text-slate-700">Brands</h5>
         {brands.map((brand) => (

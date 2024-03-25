@@ -2,7 +2,6 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
@@ -10,7 +9,9 @@ import { Box } from "@mui/material";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-const ProductCard = () => {
+import { TProduct } from "@/type/product.type";
+import Link from "next/link";
+const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <Card
       className="hover:-translate-y-2 transition-all duration-300 h-auto relative mx-auto"
@@ -18,21 +19,31 @@ const ProductCard = () => {
     >
       <Box>
         <Image
-          src="https://chaldn.com/_mpimage/rok-shuvro-detergent-laundry-wash-buy-3-get-1-free-500-gm?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D91847&q=best&v=1&m=400&webp=1"
-          height={100}
+          src={product?.thumbnail || ""}
+          height={200}
           width={300}
           alt="product image"
         />
       </Box>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {product?.brand}
         </Typography>
         <div className=" flex items-center justify-between">
           <Typography>
-            $95.00 <sub className="line-through">$200</sub>
+            {product?.discountPercentage ? (
+              <>
+                ${" "}
+                {((product.discountPercentage / 100) * product.price).toFixed(
+                  2
+                )}{" "}
+                <sub className="line-through">${product.price}</sub>
+              </>
+            ) : (
+              <>${product?.price} </>
+            )}
           </Typography>
-          <Typography>2 kg</Typography>
+          <Typography>{product?.weight}</Typography>
         </div>
       </CardContent>
       <CardActions className="gap-2" sx={{ px: 2 }}>
@@ -40,10 +51,22 @@ const ProductCard = () => {
           <span className="truncate">Add To Cart </span>
           <ShoppingCartIcon />
         </Button>
-        <Button size="small" variant="outlined">
-          <VisibilityIcon />
-        </Button>
+        <Link href={`laundry-products/${product?._id}`}>
+          <Button size="small" variant="outlined">
+            <VisibilityIcon />
+          </Button>
+        </Link>
       </CardActions>
+      {product?.discountPercentage && (
+        <span
+          style={{
+            clipPath: "polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%)",
+          }}
+          className="bg-secondary h-10 w-28 flex justify-center items-center text-white font-semibold  absolute top-0 left-0"
+        >
+          {product.discountPercentage}% OFF
+        </span>
+      )}
     </Card>
   );
 };

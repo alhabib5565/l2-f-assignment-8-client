@@ -1,9 +1,10 @@
-import ProductCard from "@/components/ui/ProductCard";
-import { Container, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
-import { TProduct } from "@/type/product.type";
 import SectionHeader from "@/components/shared/SectionHeader";
-const FlashSale = async () => {
+import ProductCard from "@/components/ui/ProductCard";
+import { TProduct } from "@/type/product.type";
+import { Container } from "@mui/material";
+import React from "react";
+
+const FlashSalePage = async () => {
   const res = await fetch(`${process.env.SERVER_URL}/products`);
   const products = await res.json();
 
@@ -14,12 +15,12 @@ const FlashSale = async () => {
     <section className="lg:py-32 py-20">
       <Container>
         <SectionHeader
-          href="flash-sale"
           title=" Flash Sale"
           description=" Limited time, unlimited savings!"
         />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-          {flashSaleProducts.slice(0, 4).map((product: TProduct) => (
+          {flashSaleProducts.slice(0, 12).map((product: TProduct) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
@@ -28,4 +29,4 @@ const FlashSale = async () => {
   );
 };
 
-export default FlashSale;
+export default FlashSalePage;
