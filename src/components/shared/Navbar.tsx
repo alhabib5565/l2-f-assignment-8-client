@@ -37,7 +37,7 @@ const Navbar = () => {
       <Container className=" relative">
         <div className="hidden lg:flex justify-between items-center ">
           <Link className="text-4xl font-bold" color="primary.main" href="/">
-            AidBox
+            Laundry
           </Link>
 
           <ul className="flex items-center gap-4 lg:gap-8">
@@ -53,19 +53,19 @@ const Navbar = () => {
           </ul>
         </div>
         {/* for mobile */}
-        <div className="flex lg:hidden justify-between items-center">
+        <div className="flex lg:hidden justify-between items-center relative">
           <Link className="text-4xl font-bold" color="primary.main" href="/">
-            AidBox
+            Laundry
           </Link>
           <Button
-            sx={{ padding: 1, zIndex: 1 }}
+            sx={{ padding: 1, zIndex: 999 }}
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <Menu className="w-6 h-6" />
           </Button>
         </div>
         <nav
-          className={`bg-white pt-8 w-[250px] min-h-screen h-full absolute top-0 right-0  transition-all duration-200 shadow-lg lg:hidden ${
+          className={`bg-white pt-8 w-[250px] min-h-screen h-full absolute top-0 right-0  transition-all duration-200 shadow-lg lg:hidden z-40 ${
             menuOpen ? "translate-x-0" : "translate-x-[100%] scale-x-0"
           }`}
         >

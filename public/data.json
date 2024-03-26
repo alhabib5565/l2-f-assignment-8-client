@@ -13,7 +13,7 @@
     "stock": 150,
     "brand": "Chaldal",
     "category": "Laundry",
-    "thumbnail": "https://chaldn.com/_mpimage/chaldal-basic-synthetic-detergent-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D152235&q=best&v=1&m=400&webp=1",
+    "thumbnail": "https://i.ibb.co/KNpksZX/Charlie-s-Soap-Laundry-Powder2.jpg",
     "images": [
       "https://chaldn.com/_mpimage/chaldal-basic-synthetic-detergent-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D152276&q=best&v=1&m=400&webp=1"
     ],
@@ -36,7 +36,7 @@
     "stock": 200,
     "brand": "Tide",
     "category": "Laundry Detergent",
-    "thumbnail": "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D128342&q=best&v=1&m=400&webp=1",
+    "thumbnail": "https://i.ibb.co/gSWJwZ7/surf-exel.jpg",
     "images": [
       "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D38401&q=best&v=1&m=400&webp=1",
       "https://chaldn.com/_mpimage/surf-excel-washing-powder-1-kg?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D38402&q=best&v=1&m=400&webp=1",
@@ -166,10 +166,11 @@
     "stock": 150,
     "brand": "Shout",
     "category": "Stain Remover",
-    "thumbnail": "",
+    "thumbnail": "https://i.ibb.co/LNpt4rB/shout-T.jpg",
     "images": [
-      "https://example.com/images/shout_stain_remover_spray_1.jpg",
-      "https://example.com/images/shout_stain_remover_spray_2.jpg"
+      "https://i.ibb.co/WnjfdDp/shout.jpg",
+      "https://i.ibb.co/Hpc7c6T/shout2.jpg",
+      "https://i.ibb.co/kmwBvPw/shout3.png"
     ],
     "weight": "22 oz",
     "type": "Spray",
@@ -190,10 +191,12 @@
     "stock": 80,
     "brand": "Charlie's Soap",
     "category": "Laundry Detergent",
-    "thumbnail": "https://example.com/thumbnails/charlies_soap_laundry_powder.jpg",
+    "thumbnail": "https://i.ibb.co/ZXf8v96/Charlie-s-Soap-Laundry-Powder-T.jpg",
     "images": [
-      "https://example.com/images/charlies_soap_laundry_powder_1.jpg",
-      "https://example.com/images/charlies_soap_laundry_powder_2.jpg"
+      "https://i.ibb.co/DQnjBxt/Charlie-s-Soap-Laundry-Powder1.jpg",
+      "https://i.ibb.co/KNpksZX/Charlie-s-Soap-Laundry-Powder2.jpg",
+      "https://i.ibb.co/1dwYCkZ/Charlie-s-Soap-Laundry-Powder3.jpg",
+      "https://i.ibb.co/cwC35PW/Charlie-s-Soap-Laundry-Powder4.jpg"
     ],
     "weight": "2.64 lbs",
     "type": "Powder",
@@ -214,10 +217,11 @@
     "stock": 120,
     "brand": "Gain",
     "category": "Laundry Additive",
-    "thumbnail": "https://example.com/thumbnails/gain_fireworks_scent_booster.jpg",
+    "thumbnail": "https://i.ibb.co/yqcLbDq/gain-T.jpg",
     "images": [
-      "https://example.com/images/gain_fireworks_scent_booster_1.jpg",
-      "https://example.com/images/gain_fireworks_scent_booster_2.jpg"
+      "https://i.ibb.co/yfjDPVq/gain1.jpg",
+      "https://i.ibb.co/tpNwv2V/gain2.jpg",
+      "https://i.ibb.co/YL8hFtR/gain3.jpg"
     ],
     "weight": "14.8 oz",
     "type": "Beads",
@@ -242,10 +246,12 @@
     "stock": 200,
     "brand": "Tide",
     "category": "Laundry Detergent",
-    "thumbnail": "https://example.com/thumbnails/tide_ultra_stain_release_detergent.jpg",
+    "thumbnail": "https://i.ibb.co/rdjs6Zm/tide-T.jpg",
     "images": [
-      "https://example.com/images/tide_ultra_stain_release_detergent_1.jpg",
-      "https://example.com/images/tide_ultra_stain_release_detergent_2.jpg"
+      "https://i.ibb.co/qMZFVrM/tide1.jpg",
+      "https://i.ibb.co/r7V5YGX/tide2.jpg",
+      "https://i.ibb.co/bzXSTy3/tide3.jpg",
+      "https://i.ibb.co/FxTHQLf/tide4.jpg"
     ],
     "weight": "2 kg",
     "type": "Beads",
@@ -270,10 +276,11 @@
     "stock": 150,
     "brand": "Downy",
     "category": "Fabric Softener",
-    "thumbnail": "https://example.com/thumbnails/downy_infusions_lavender_serenity_fabric_softener.jpg",
+    "thumbnail": "https://i.ibb.co/m0R1301/downy-T.jpg",
     "images": [
-      "https://example.com/images/downy_infusions_lavender_serenity_fabric_softener_1.jpg",
-      "https://example.com/images/downy_infusions_lavender_serenity_fabric_softener_2.jpg"
+      "https://i.ibb.co/Rb9b0SM/downy1.jpg",
+      "https://i.ibb.co/xj26ssJ/downy-2.jpg",
+      "https://i.ibb.co/YTZ4fFv/downy3.jpg"
     ],
     "weight": "5 gm",
     "type": "Beads",
@@ -298,10 +305,11 @@
     "stock": 180,
     "brand": "Arm & Hammer",
     "category": "Laundry Detergent",
-    "thumbnail": "https://example.com/thumbnails/arm_hammer_clean_burst_detergent.jpg",
+    "thumbnail": "https://i.ibb.co/Tw62q4M/arm-hammer2.jpg",
     "images": [
-      "https://example.com/images/arm_hammer_clean_burst_detergent_1.jpg",
-      "https://example.com/images/arm_hammer_clean_burst_detergent_2.jpg"
+      "https://i.ibb.co/2jGKmxx/arm-hammer-T.jpg",
+      "https://i.ibb.co/JjppYK8/arm-hammer1.jpg",
+      "https://i.ibb.co/VN3XhFF/arm-hammer3.jpg"
     ],
     "weight": "500 gm",
     "type": "Powder",
@@ -326,10 +334,11 @@
     "stock": 160,
     "brand": "OxiClean",
     "category": "Stain Remover",
-    "thumbnail": "https://example.com/thumbnails/oxiclean_white_revive_laundry_whitener.jpg",
+    "thumbnail": "https://i.ibb.co/LSwCQwQ/Oxi-Clean-T.jpg",
     "images": [
-      "https://example.com/images/oxiclean_white_revive_laundry_whitener_1.jpg",
-      "https://example.com/images/oxiclean_white_revive_laundry_whitener_2.jpg"
+      "https://i.ibb.co/C8v9hWP/Oxi-Clean1.jpg",
+      "https://i.ibb.co/rtpjzdG/Oxi-Clean2.jpg",
+      "https://i.ibb.co/1sznBbT/Oxi-Clean3.jpg"
     ],
     "weight": "14.8 oz",
     "type": "Beads",
@@ -354,10 +363,12 @@
     "stock": 130,
     "brand": "Mrs. Meyer's Clean Day",
     "category": "Laundry Additive",
-    "thumbnail": "https://example.com/thumbnails/mrs_meyers_scent_booster.jpg",
+    "thumbnail": "https://i.ibb.co/d28djmk/meyer-T.jpg",
     "images": [
-      "https://example.com/images/mrs_meyers_scent_booster_1.jpg",
-      "https://example.com/images/mrs_meyers_scent_booster_2.jpg"
+      "https://i.ibb.co/xmzR0kV/meyer1.jpg",
+      "https://i.ibb.co/kgMn1BF/meyer2.jpg",
+      "https://i.ibb.co/PYw8G5x/meyer3.jpg",
+      "https://i.ibb.co/7zX0Qd2/meyer4.jpg"
     ],
     "weight": "14.8 oz",
     "type": "Beads",

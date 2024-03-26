@@ -6,7 +6,11 @@ type TopBrandCardProp = {
   index: number;
 };
 
-const TopBrandCard = ({ img, index }: TopBrandCardProp) => {
+const TopBrandCard = async ({ img, index }: TopBrandCardProp) => {
+  const res = await fetch(`${process.env.SERVER_URL}/brands`);
+  const brands = await res.json();
+  console.log(brands.data.slice(0, 6));
+
   return (
     <div
       className={`rounded-md border-transparent border-2 hover:border-primary relative${

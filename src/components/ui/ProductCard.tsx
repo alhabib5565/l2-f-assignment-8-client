@@ -15,16 +15,18 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <Card
       className="hover:-translate-y-2 transition-all duration-300 h-auto relative mx-auto"
-      sx={{ maxWidth: 400, width: "100%", flex: 1 }}
+      sx={{ maxWidth: 400, width: "100%", flex: 1, position: "relative" }}
     >
       <Box>
         <Image
           src={product?.thumbnail || ""}
           height={200}
-          width={300}
+          width={250}
           alt="product image"
+          className="w-full h-[200px]"
         />
       </Box>
+
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {product?.brand}
@@ -36,7 +38,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                 ${" "}
                 {((product.discountPercentage / 100) * product.price).toFixed(
                   2
-                )}{" "}
+                )}
                 <sub className="line-through">${product.price}</sub>
               </>
             ) : (
@@ -57,15 +59,17 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           </Button>
         </Link>
       </CardActions>
-      {product?.discountPercentage && (
+      {product?.discountPercentage ? (
         <span
           style={{
             clipPath: "polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%)",
           }}
-          className="bg-secondary h-10 w-28 flex justify-center items-center text-white font-semibold  absolute top-0 left-0"
+          className="bg-secondary h-10 w-32 flex justify-center items-center text-white font-semibold  absolute top-0 left-0"
         >
           {product.discountPercentage}% OFF
         </span>
+      ) : (
+        ""
       )}
     </Card>
   );

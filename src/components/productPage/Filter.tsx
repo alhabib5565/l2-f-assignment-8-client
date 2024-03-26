@@ -1,71 +1,51 @@
 "use client";
 import { Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
-import { TProduct } from "@/type/product.type";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const brands = ["OxiClean", "Chaldal", "Downy", "Charlie's Soap", "Tide"];
 
 const ratings = [1, 2, 3, 4, 5];
-type TFilter = {
-  setProducts: React.Dispatch<React.SetStateAction<TProduct[]>>;
-  products: TProduct[];
-};
-const Filter = ({ products, setProducts }: TFilter) => {
-  const [allProducts, setAllProducts] = useState<TProduct[]>([]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+
+const Filter = () => {
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+  const parmas = new URLSearchParams(searchParams);
+
+  const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [selectedRatings, setSelectedRatings] = useState<number>(0);
 
-  console.log({ selectedBrands, selectedRatings, price });
-  useEffect(() => {
-    fetch(`https://assignment-8-server.vercel.app/api/v1/products`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.data);
-        setAllProducts(data.data);
-      });
-  }, [setProducts]);
-
-  useEffect(() => {
-    if (selectedBrands.length > 0) {
-      const filteredData = allProducts.filter(
-        (product) =>
-          product.price >= price &&
-          product.rating >= selectedRatings &&
-          selectedBrands.includes(product.brand)
-      );
-      setProducts(filteredData);
-      // console.log(filteredData, "with barand");
-    } else {
-      const filteredData = allProducts.filter(
-        (product) => product.price > price && product.rating > selectedRatings
-      );
-      // console.log(filteredData, "without barand");
-      setProducts(filteredData);
+  const addBrands = (brand: string) => {
+    setSelectedBrand((prev) => (prev = brand));
+    if (brand && brand !== selectedBrand) {
+      parmas.set("brand", brand);
+    } else if (brand && brand === selectedBrand) {
+      setSelectedBrand((prev) => (prev = ""));
+      parmas.delete("brand");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [price, selectedBrands, selectedRatings]);
 
-  const addBrands = (brand: any) => {
-    if (!selectedBrands.includes(brand)) {
-      setSelectedBrands((prev) => [...prev, brand]);
-    } else {
-      setSelectedBrands((prev) => {
-        return prev.filter((item) => item !== brand);
-      });
-    }
+    router.replace(`${pathName}?${parmas.toString()}`);
   };
+
   const ratingChange = (rating: any) => {
     if (selectedRatings && selectedRatings === rating) {
       setSelectedRatings(0);
+      parmas.delete("minRating");
     } else {
       setSelectedRatings(rating);
+      parmas.set("minRating", rating);
     }
+    router.replace(`${pathName}?${parmas.toString()}`);
   };
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     setPrice(newValue as number);
+    parmas.set("minPrice", newValue.toString());
+    router.replace(`${pathName}?${parmas.toString()}`);
   };
 
   return (
@@ -76,7 +56,7 @@ const Filter = ({ products, setProducts }: TFilter) => {
           <div key={brand}>
             <Checkbox
               sx={{ margin: 0, padding: 0 }}
-              checked={selectedBrands.includes(brand)}
+              checked={selectedBrand === brand}
               onChange={() => addBrands(brand)}
             />{" "}
             <Typography variant="body1" component="span" px={1}>
@@ -92,7 +72,7 @@ const Filter = ({ products, setProducts }: TFilter) => {
           size="medium"
           defaultValue={0}
           min={0}
-          max={200}
+          max={100}
           onChange={handleChange}
           aria-label="medium"
           valueLabelDisplay="auto"
@@ -124,7 +104,7 @@ export default Filter;
  *  const searchParams = useSearchParams();
   // console.log(searchParams.toString(), "from filter ui");
   const [allProducts, setAllProducts] = useState<TProduct[]>([]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedBrand, setSelectedBrands] = useState<string[]>([]);
   const [price, setPrice] = useState<number>(0);
   const [selectedRatings, setSelectedRatings] = useState<number>(0);
 
@@ -179,3 +159,16 @@ export default Filter;
   };
 
  */
+
+/**
+   *   const ratingChange = (rating: any) => {
+    if (selectedRatings && selectedRatings === rating) {
+      setSelectedRatings(0);
+    } else {
+      setSelectedRatings(rating);
+    }
+  };
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setPrice(newValue as number);
+  };
+   */
