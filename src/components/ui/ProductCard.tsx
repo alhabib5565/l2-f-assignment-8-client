@@ -53,7 +53,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           <span className="truncate">Add To Cart </span>
           <ShoppingCartIcon />
         </Button>
-        <Link href={`laundry-products/${product?._id}`}>
+        <Link href={`products/${product?._id}`}>
           <Button size="small" variant="outlined">
             <VisibilityIcon />
           </Button>

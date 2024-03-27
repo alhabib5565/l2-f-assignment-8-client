@@ -12,6 +12,10 @@ const Navbar = () => {
       name: "Home",
     },
     {
+      href: "/dashboard/allProducts",
+      name: "Dashboard",
+    },
+    {
       href: "/categories",
       name: "Categories",
     },

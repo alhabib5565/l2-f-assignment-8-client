@@ -25,7 +25,6 @@ const ProductDetailsCarousel = ({
 }: TProductDetailsCarouselProp) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const allImages = [...images, thumbnail];
-  console.log({ images, allImages });
   return (
     <>
       <div className=" h-[400px] lg:h-[500px] border rounded-md p-2">
