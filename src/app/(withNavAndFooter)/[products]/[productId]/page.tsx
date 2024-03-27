@@ -8,6 +8,16 @@ type TProductDetailPageProp = {
     productId: string;
   };
 };
+
+export const generateStaticParams = async () => {
+  const res = await fetch(`${process.env.SERVER_URL}/products`);
+  const products = await res.json();
+
+  return products.data.slice(0, 10).map((product: TProduct) => ({
+    productId: product._id,
+  }));
+};
+
 const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
   const res = await fetch(
     `${process.env.SERVER_URL}/product/${params.productId}`
