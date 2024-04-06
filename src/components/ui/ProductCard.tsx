@@ -9,8 +9,8 @@ import { Box } from "@mui/material";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { TProduct } from "@/type/product.type";
 import Link from "next/link";
+import { TProduct } from "@/type";
 const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <Card

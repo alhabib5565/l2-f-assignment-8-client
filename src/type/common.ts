@@ -1,3 +1,9 @@
+import { user_role } from "@/constent";
+import { SvgIconTypeMap } from "@mui/material";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+
+export type TUserRole = keyof typeof user_role
+
 export type TProduct = {
     _id: number
     title: string
@@ -19,4 +25,10 @@ export type TProduct = {
 export type FlashSale = {
     sale_start: string
     sale_end: string
+}
+
+export type TSidebarItem = {
+    name: string,
+    href: string,
+    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string; }
 }

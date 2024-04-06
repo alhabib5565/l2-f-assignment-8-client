@@ -1,7 +1,7 @@
 import ProductDetailsCarousel from "@/components/productPage/ProductDetailsCarousel";
 import { Container, Divider, Typography } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { TProduct } from "@/type/product.type";
+import { TProduct } from "@/type";
 
 type TProductDetailPageProp = {
   params: {

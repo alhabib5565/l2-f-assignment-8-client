@@ -1,8 +1,8 @@
 import ProductCard from "@/components/ui/ProductCard";
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-import { TProduct } from "@/type/product.type";
 import SectionHeader from "@/components/shared/SectionHeader";
+import { TProduct } from "@/type";
 const FlashSale = async () => {
   const res = await fetch(`${process.env.SERVER_URL}/products`);
   const products = await res.json();

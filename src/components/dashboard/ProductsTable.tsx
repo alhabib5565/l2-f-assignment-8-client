@@ -1,3 +1,4 @@
+import { TProduct } from "@/type";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -5,7 +6,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { TProduct } from "@/type/product.type";
 
 interface Column {
   id: "name" | "type" | "brand" | "weight" | "price";
@@ -45,12 +45,9 @@ export default async function ProductsTable() {
 
   return (
     <Paper sx={{ width: "100%", overflow: "auto" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 480 }}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead
-            sx={{ bgcolor: "primary.main" }}
-            className="bg-slate-100 divide-x-2"
-          >
+          <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
               {columns.map((column) => (
                 <TableCell

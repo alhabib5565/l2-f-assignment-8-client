@@ -1,7 +1,7 @@
 import Filter from "@/components/productPage/Filter";
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
-import { TProduct } from "@/type/product.type";
+import { TProduct } from "@/type";
 import { Container } from "@mui/material";
 import React from "react";
 

@@ -1,15 +1,10 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { motion, useMotionValue } from "framer-motion";
+import { useState } from "react";
+import { Fab } from "@mui/material";
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { TProduct } from "@/type";
 import Image from "next/image";
-import { TProduct } from "@/type/product.type";
 
 type TProductDetailsCarouselProp = Pick<TProduct, "images" | "thumbnail">;
 
@@ -17,60 +12,105 @@ const ProductDetailsCarousel = ({
   thumbnail,
   images,
 }: TProductDetailsCarouselProp) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const allImages = [...images, thumbnail];
+  const [activeImage, setActiveImage] = useState(0);
+  const dragX = useMotionValue(0);
+  const allImages = [thumbnail, ...images];
+
+  const previousImage = () => {
+    setActiveImage((prev) =>
+      activeImage === 0 ? allImages.length - 1 : prev - 1
+    );
+  };
+
+  const nextImage = () => {
+    setActiveImage((prev) =>
+      activeImage === allImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  // handle drag
+  const DRAG = 50;
+  const onDragEnd = () => {
+    const x = dragX.get();
+
+    if (x >= DRAG && activeImage > 0) {
+      setActiveImage((prev) => prev - 1);
+    } else if (x <= DRAG && allImages.length - 1 > activeImage) {
+      setActiveImage((prev) => prev + 1);
+    }
+  };
+
   return (
-    <>
-      <div className=" h-[400px] lg:h-[500px] border rounded-md p-2">
-        <Swiper
-          loop={true}
-          spaceBetween={10}
-          navigation={true}
-          thumbs={{ swiper: thumbsSwiper }}
-          modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
+    <div>
+      <div className="relative  w-full h-[300px] lg:h-[400px] border rounded-md overflow-hidden">
+        <motion.div
+          drag="x"
+          onDragEnd={onDragEnd}
+          style={{ x: dragX }}
+          animate={{ translateX: `-${activeImage * 100}%` }}
+          dragConstraints={{ left: 0, right: 0 }}
+          className="w-full h-full flex"
         >
           {allImages.map((img, index) => (
-            <SwiperSlide className="flex" key={index}>
-              <Image
-                className=" object-contain max-h-[450px] mx-auto"
-                width={500}
-                height={500}
-                src={img}
-                alt=""
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-      {/* <div className="h-[50px] ">
-        <Swiper
-          onSwiper={setThumbsSwiper}
-          loop={true}
-          spaceBetween={10}
-          slidesPerView={4}
-          freeMode={true}
-          watchSlidesProgress={true}
-          modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwipe mt-4"
-        >
-          {allImages.map((img, index) => (
-            <SwiperSlide
-              className="border mx-auto rounded-md cursor-pointer"
+            <div
+              className="w-full shrink-0 h-auto cursor-grab active:cursor-grabbing  bg-center bg-no-repeat"
+              style={{
+                backgroundImage: `url(${img})`,
+              }}
               key={index}
-            >
-              <Image
-                className="object-contain mx-auto h-[50px]"
-                width={100}
-                height={50}
-                src={img}
-                alt=""
-              />
-            </SwiperSlide>
+            ></div>
           ))}
-        </Swiper>
-      </div> */}
-    </>
+        </motion.div>
+        <div>
+          <Fab
+            onClick={previousImage}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              transform: "translateY(-50%)",
+            }}
+            color="primary"
+            aria-label="add"
+          >
+            <ArrowLeft />
+          </Fab>
+          <Fab
+            onClick={nextImage}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              right: 0,
+              transform: "translateY(-50%)",
+            }}
+            color="primary"
+            aria-label="add"
+          >
+            <ArrowRight />
+          </Fab>
+        </div>
+      </div>
+      <div className="flex items-center gap-1 mt-2">
+        {allImages.map((img, index) => (
+          <button
+            onClick={() => setActiveImage(index)}
+            className={`w-full border-2 rounded h-[50px] relative transition-all ${
+              index === activeImage
+                ? "opacity-100"
+                : "opacity-50 hover:opacity-100"
+            }`}
+            key={index}
+          >
+            <Image
+              alt=""
+              fill
+              src={img}
+              className={`w-full object-contain h-full rounded`}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 

@@ -1,29 +1,22 @@
 "use client";
-import React, { ReactNode } from "react";
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import ViewListIcon from "@mui/icons-material/ViewList";
-import { Home } from "@mui/icons-material";
+import Sidebar from "./sidebar/Sidebar";
 
 const drawerWidth = 240;
-interface Props {
-  window?: () => Window;
-  children: ReactNode;
-}
 
-export default function DashboardLayout(props: Props) {
-  const pathName = usePathname();
-  const { window } = props;
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -42,44 +35,6 @@ export default function DashboardLayout(props: Props) {
     }
   };
 
-  const sidebarItems = [
-    {
-      href: "/dashboard/allProducts",
-      name: "All Products",
-      icon: <ViewListIcon />,
-    },
-    {
-      href: "/",
-      name: "Home",
-      icon: <Home />,
-    },
-  ];
-
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {sidebarItems.map((sidebarItem) => (
-          <Link
-            key={sidebarItem.href}
-            className={`${
-              pathName === sidebarItem.href ? "text-primary" : "text-slate-600 "
-            } w-full bg-primary/10 flex items-center gap-2 mb-2 px-4 py-2 rounded font-medium `}
-            href={sidebarItem.href}
-          >
-            {sidebarItem.icon}
-            {sidebarItem.name}
-          </Link>
-        ))}
-      </List>
-    </div>
-  );
-
-  // Remove this const when copying and pasting into your project.
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -88,6 +43,9 @@ export default function DashboardLayout(props: Props) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          background: "#F4F7FE",
+          borderBottom: "1px solid lightgray",
+          boxShadow: 0,
         }}
       >
         <Toolbar>
@@ -100,9 +58,19 @@ export default function DashboardLayout(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            cleaning supplies store
-          </Typography>
+          <Box>
+            <Typography color="grey" variant="body1" noWrap component="p">
+              Hi, Al-Habib!
+            </Typography>
+            <Typography
+              color="primary.main"
+              variant="body1"
+              noWrap
+              component="p"
+            >
+              Wellcome To Our Store!!!
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -112,7 +80,6 @@ export default function DashboardLayout(props: Props) {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onTransitionEnd={handleDrawerTransitionEnd}
@@ -128,7 +95,7 @@ export default function DashboardLayout(props: Props) {
             },
           }}
         >
-          {drawer}
+          <Sidebar />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -141,7 +108,7 @@ export default function DashboardLayout(props: Props) {
           }}
           open
         >
-          {drawer}
+          <Sidebar />
         </Drawer>
       </Box>
       <Box
@@ -153,7 +120,7 @@ export default function DashboardLayout(props: Props) {
         }}
       >
         <Toolbar />
-        {props.children}
+        <Box>{children}</Box>
       </Box>
     </Box>
   );

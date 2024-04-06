@@ -1,6 +1,6 @@
 import React from "react";
 import ProductCard from "../ui/ProductCard";
-import { TProduct } from "@/type/product.type";
+import { TProduct } from "@/type";
 
 const AllProducts = async ({}) => {
   const res = await fetch(`${process.env.SERVER_URL}/products`, {
