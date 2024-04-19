@@ -2,7 +2,7 @@ import ProductsTable from "@/components/dashboard/ProductsTable";
 import { Box } from "@mui/material";
 import React from "react";
 
-const AllProducts = async () => {
+const ProductsPage = () => {
   return (
     <Box
       sx={{
@@ -14,4 +14,4 @@ const AllProducts = async () => {
   );
 };
 
-export default AllProducts;
+export default ProductsPage;

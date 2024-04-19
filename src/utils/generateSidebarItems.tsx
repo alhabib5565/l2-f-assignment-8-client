@@ -8,15 +8,15 @@ export const generageSidebarItems = (role: TUserRole) => {
   switch (role) {
     case user_role.ADMIN:
       sidebarItems.push({
-        name: "All Products",
-        href: "allProducts",
+        name: "Products",
+        href: "products",
         icon: ViewListIcon,
       });
       break;
     case user_role.CUSTOMER:
       sidebarItems.push({
-        name: "All Products",
-        href: "allProducts",
+        name: "Products",
+        href: "products",
         icon: ViewListIcon,
       });
       break;
