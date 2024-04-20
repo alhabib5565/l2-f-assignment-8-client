@@ -8,9 +8,20 @@ type TInput = {
   type: HTMLInputTypeAttribute;
   label: string;
   sx?: SxProps;
+  placeholder?: string;
+  multiline?: boolean;
+  rows?: number;
 };
 
-const MyInput = ({ type, name, sx, label }: TInput) => {
+const MyInput = ({
+  type,
+  name,
+  sx,
+  label,
+  placeholder,
+  multiline,
+  rows,
+}: TInput) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -25,6 +36,9 @@ const MyInput = ({ type, name, sx, label }: TInput) => {
           fullWidth
           label={label}
           variant="outlined"
+          multiline={multiline}
+          rows={rows}
+          placeholder={placeholder && placeholder}
           error={!!error?.message}
           helperText={error?.message}
         />

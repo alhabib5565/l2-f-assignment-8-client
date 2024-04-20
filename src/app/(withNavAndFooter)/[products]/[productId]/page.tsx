@@ -23,6 +23,7 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
     `${process.env.SERVER_URL}/product/${params.productId}`
   );
   const { data } = await res.json();
+
   const {
     brand,
     description,
