@@ -1,15 +1,19 @@
 "use client";
+import { registerUser } from "@/actions/register";
 import { icon_logo } from "@/assets";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import z from "zod";
 
 const RegisterPage = () => {
+  const router = useRouter();
+
   const registerFormValidation = z.object({
     name: z.string({
       required_error: "Name is required",
@@ -28,9 +32,15 @@ const RegisterPage = () => {
       }),
   });
 
-  const onSubmit = (value: FieldValues) => {
+  const onSubmit = async (value: FieldValues) => {
+    try {
+      const response = await registerUser(value);
+
+      console.log(response);
+    } catch (error) {}
     console.log(value);
   };
+
   return (
     <Box
       sx={{

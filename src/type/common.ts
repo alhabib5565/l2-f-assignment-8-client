@@ -32,3 +32,8 @@ export type TSidebarItem = {
     href: string,
     icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string; }
 }
+
+export type TSelectOptions = {
+    value: string;
+    label: string;
+};

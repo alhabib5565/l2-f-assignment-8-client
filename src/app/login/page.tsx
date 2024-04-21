@@ -1,4 +1,5 @@
 "use client";
+import { loginUser } from "@/actions/loginUser";
 import { icon_logo } from "@/assets";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
@@ -31,8 +32,12 @@ const LoginPage = () => {
     password: "",
   };
 
-  const onSubmit = (value: FieldValues) => {
+  const onSubmit = async (value: FieldValues) => {
     console.log(value);
+    try {
+      const response = await loginUser(value);
+      console.log(response);
+    } catch (error) {}
   };
   return (
     <Box
