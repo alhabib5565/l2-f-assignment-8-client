@@ -10,10 +10,13 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist'
+import { cartPersistedReducer } from './features/cartSlice/cartSlice';
+// import { cartReducer } from './features/cartSlice/cartSlice';
 
 export const store = configureStore({
     reducer: {
         auth: userPersistedReducer,
+        cart: cartPersistedReducer,
         [baseApi.reducerPath]: baseApi.reducer
     },
     middleware: (getDefaultMiddleware) =>

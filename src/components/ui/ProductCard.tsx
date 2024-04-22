@@ -11,6 +11,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Link from "next/link";
 import { TProduct } from "@/type";
+import AddToCartButton from "./AddToCartButton";
 const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <Card
@@ -49,10 +50,12 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         </div>
       </CardContent>
       <CardActions className="gap-2" sx={{ px: 2 }}>
-        <Button size="small" sx={{ gap: 2, flex: 1 }}>
-          <span className="truncate">Add To Cart </span>
-          <ShoppingCartIcon />
-        </Button>
+        <AddToCartButton
+          productId={product._id}
+          price={product.price}
+          thumbnail={product.thumbnail}
+          title={product.title}
+        />
         <Link href={`products/${product?._id}`}>
           <Button size="small" variant="outlined">
             <VisibilityIcon />

@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Button } from "@mui/material";
 import React from "react";
 import { toast } from "sonner";
+import CartIcon from "./CartIcon";
 
 const AuthButton = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -13,6 +14,7 @@ const AuthButton = () => {
   };
   return (
     <>
+      <CartIcon />
       {user?.email ? (
         <Button onClick={handleLogout} color="error">
           Log out

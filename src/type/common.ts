@@ -5,7 +5,7 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 export type TUserRole = keyof typeof user_role
 
 export type TProduct = {
-    _id: number
+    _id: string
     title: string
     description: string
     price: number
