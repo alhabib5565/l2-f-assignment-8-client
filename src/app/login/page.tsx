@@ -3,41 +3,37 @@ import { loginUser } from "@/actions/loginUser";
 import { icon_logo } from "@/assets";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
+import { login } from "@/redux/features/authSlice/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { jwtDecoder } from "@/utils/jwtDecoder";
+import {
+  defaultValue,
+  loginFormValidation,
+} from "@/validationSchema/validation.login";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues } from "react-hook-form";
-import z from "zod";
+import { toast } from "sonner";
 
 const LoginPage = () => {
-  const loginFormValidation = z.object({
-    email: z
-      .string({
-        invalid_type_error: "Please provide a valid email",
-        required_error: "Email is required",
-      })
-      .email(),
-    password: z
-      .string({
-        required_error: "Password is required",
-      })
-      .min(6, {
-        message: "Password must be at least 6 characters long",
-      }),
-  });
-
-  const defaultValue = {
-    email: "",
-    password: "",
-  };
-
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const onSubmit = async (value: FieldValues) => {
-    console.log(value);
     try {
       const response = await loginUser(value);
       console.log(response);
-    } catch (error) {}
+      if (response?.token) {
+        const userInfo = jwtDecoder(response.token);
+        dispatch(login({ token: response.token, user: userInfo }));
+        toast.success(response.message || "login succesfull");
+        router.push("/");
+      }
+    } catch (error: any) {
+      toast.success(error.message || "something went wrong");
+    }
   };
   return (
     <Box

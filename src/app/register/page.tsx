@@ -1,17 +1,23 @@
 "use client";
+import { loginUser } from "@/actions/loginUser";
 import { registerUser } from "@/actions/register";
 import { icon_logo } from "@/assets";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
+import { login } from "@/redux/features/authSlice/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { jwtDecoder } from "@/utils/jwtDecoder";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 const RegisterPage = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const registerFormValidation = z.object({
@@ -35,10 +41,18 @@ const RegisterPage = () => {
   const onSubmit = async (value: FieldValues) => {
     try {
       const response = await registerUser(value);
-
-      console.log(response);
-    } catch (error) {}
-    console.log(value);
+      if (response?.success) {
+        const loginResponse = await loginUser(value);
+        if (loginResponse?.token) {
+          const userInfo = jwtDecoder(loginResponse.token);
+          dispatch(login({ token: loginResponse.token, user: userInfo }));
+          toast.success(response.message || "User register succesfully");
+          router.push("/");
+        }
+      }
+    } catch (error: any) {
+      toast.success(error.message || "something went wrong");
+    }
   };
 
   return (
