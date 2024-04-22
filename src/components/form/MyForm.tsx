@@ -26,7 +26,7 @@ const MyForm = ({ children, onSubmit, defaultValues, resolver }: TForm) => {
     formConfig["defaultValues"] = defaultValues;
   }
   if (resolver) {
-    formConfig["resolver"] = zodResolver(resolver);
+    formConfig["resolver"] = resolver;
   }
 
   const methods = useForm(formConfig);

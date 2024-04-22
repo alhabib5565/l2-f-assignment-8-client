@@ -24,7 +24,7 @@ const LoginPage = () => {
   const onSubmit = async (value: FieldValues) => {
     try {
       const response = await loginUser(value);
-      console.log(response);
+
       if (response?.token) {
         const userInfo = jwtDecoder(response.token);
         dispatch(login({ token: response.token, user: userInfo }));

@@ -17,24 +17,26 @@ import {
   ProductValidationSchema,
   productDefaultValue,
 } from "@/validationSchema/validation.addProduct";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { addProduct } from "@/actions/addProduct";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const AddProduct = () => {
+  const router = useRouter();
   const [features, setFeatures] = useState<string[]>([
     "habib",
     "imran",
     "netun",
   ]);
-  const [productImagesUrl, setProductImagesUrl] = useState<string[]>([
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-    "https://i.ibb.co/GsBQtyC/netun.jpg",
-  ]);
+  const [productImagesUrl, setProductImagesUrl] = useState<string[]>([]);
 
-  const onSubmit = (value: FieldValues) => {
+  const onSubmit = async (value: FieldValues) => {
+    if (!productImagesUrl.length) {
+      return toast.error("Please add product thumnail", {
+        className: "text-red-500",
+      });
+    }
     value.price = Number(value.price);
     value.stock = Number(value.stock);
     value.weight = `${value.weight} ${value.unit}`;
@@ -42,7 +44,12 @@ const AddProduct = () => {
     value.thumbnail = productImagesUrl[0];
     value.images = productImagesUrl;
     delete value.unit;
-    console.log(value);
+
+    const response = await addProduct(value);
+    if (response?.success) {
+      toast.success(response.message || "product add succesfull");
+      router.push("/dashboard/products");
+    }
   };
 
   const cetagoryOptions = [
@@ -58,15 +65,18 @@ const AddProduct = () => {
 
   return (
     <Box bgcolor="white" padding={2} borderRadius={2}>
-      <Typography mb={2} variant="h6" component="h6">
-        Add New Product
-      </Typography>
       <Box width="100%">
         <MyForm
           // defaultValues={productDefaultValue}
-          // resolver={ProductValidationSchema}
+          // resolver={zodResolver(ProductValidationSchema)}
           onSubmit={onSubmit}
         >
+          <Stack mb={2} direction="row" justifyContent="space-between">
+            <Typography variant="h6" component="h6">
+              Add New Product
+            </Typography>
+            <Button type="submit">Add Product</Button>
+          </Stack>
           <Grid container spacing={4}>
             {/* left side of the form */}
             <Grid item xs={12} md={6} lg={7}>
@@ -252,7 +262,6 @@ const AddProduct = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Button type="submit">Add Now</Button>
         </MyForm>
       </Box>
     </Box>
