@@ -6,24 +6,65 @@ import { HeaderText } from "../page";
 import { Add } from "@mui/icons-material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import {
+  clearCart,
   removeFromCart,
   updateQuantity,
 } from "@/redux/features/cartSlice/cartSlice";
-import cartImage from "../../../../assets/cart_image.png";
 import CloseIcon from "@mui/icons-material/Close";
+import EmptyCart from "./EmptyCart";
 
 const CartProductRow = () => {
   const { products } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
 
   return (
-    <Box>
+    <Box sx={{ padding: 2, bgcolor: "white", borderRadius: 2 }}>
       {products.length ? (
-        <>
+        <Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="centers"
+            pb={2}
+          >
+            <Typography
+              display={"flex"}
+              variant="h5"
+              component="h5"
+              alignItems="end"
+              gap={1}
+              fontWeight={600}
+            >
+              {" "}
+              Cart <Typography>({products.length} products)</Typography>
+            </Typography>
+            <Button onClick={handleClearCart} color="error" variant="text">
+              <CloseIcon fontSize="small" /> Clear Cart
+            </Button>
+          </Stack>
+          <Stack direction="row" mb={2}>
+            <Typography
+              sx={{ flexGrow: 1, fontSize: 16 }}
+              variant="h6"
+              component="h6"
+              fontWeight={600}
+            >
+              Product
+            </Typography>
+
+            <HeaderText sx={{ width: 80, display: { xs: "none", sm: "flex" } }}>
+              Price
+            </HeaderText>
+            <HeaderText>Quantity</HeaderText>
+            <HeaderText>Total Price</HeaderText>
+            <Box width={30}></Box>
+          </Stack>
           {products.map((product, index) => (
-            <>
+            <Box key={index}>
               <Stack
-                key={product.productId}
                 direction="row"
                 alignItems="center"
                 border="1px solid lightgray"
@@ -37,10 +78,11 @@ const CartProductRow = () => {
                     alignItems: "center",
                     display: "flex",
                     gap: 2,
+                    minHeight: 60,
                   }}
                 >
                   <Image
-                    style={{ borderRadius: 5 }}
+                    style={{ borderRadius: 5, height: "100%" }}
                     height={60}
                     width={60}
                     src={product.thumbnail}
@@ -54,8 +96,14 @@ const CartProductRow = () => {
                     {product.title}
                   </Typography>
                 </Box>
-                <HeaderText>${product.price}</HeaderText>
-                <Stack alignItems="center" direction="row" gap={1}>
+                <HeaderText sx={{ display: { xs: "none", sm: "flex" } }}>
+                  ${product.price}
+                </HeaderText>
+                <Stack
+                  alignItems="center"
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 0, sm: 1 }}
+                >
                   <IconButton
                     onClick={() =>
                       dispatch(
@@ -107,29 +155,11 @@ const CartProductRow = () => {
                   <CloseIcon fontSize="small" />
                 </IconButton>
               </Stack>
-            </>
+            </Box>
           ))}
-        </>
-      ) : (
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          gap={2}
-          py={3}
-        >
-          <Image height={100} width={100} src={cartImage} alt="" />
-          <Typography component="h4" variant="h4" fontWeight={600}>
-            Your cart is Empty
-          </Typography>
-          <Typography component="p" variant="body1" fontSize={18}>
-            Sorry mate... no items found inside your cart
-          </Typography>
-          <Button href="/products" sx={{ borderRadius: 5 }}>
-            Shop now
-          </Button>
         </Box>
+      ) : (
+        <EmptyCart />
       )}
     </Box>
   );

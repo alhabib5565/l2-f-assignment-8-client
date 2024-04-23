@@ -34,7 +34,6 @@ export const cartSlice = createSlice({
             const isExist = state.products.find(item => item.productId === action.payload.productId)
             if (!isExist) {
                 state.products.push({ ...action.payload, quantity: 1, })
-                console.log(totalQuantity(state), 'inside add to cart')
             }
             state.selectedProducts = totalQuantity(state)
             state.priceOfTotalSelectedProducts = totalPrice(state)
@@ -96,7 +95,7 @@ const totalPrice = (state: TInitialSate) => {
     const price = state.products.reduce((prev, current) => {
         return Number(prev += (current.price * current.quantity))
     }, 0)
-    return price
+    return Number(price.toFixed(2))
 }
 
 
