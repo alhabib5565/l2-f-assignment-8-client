@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 type TUser = {
     email: string;
+    name?: string
 };
 
 type TInitaialState = {

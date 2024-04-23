@@ -23,7 +23,12 @@ const AddToCartButton = ({
     dispatch(addToCart({ price, productId, thumbnail, title }));
   };
   return (
-    <Button onClick={handleAddToCart} size="small" sx={{ gap: 2, flex: 1 }}>
+    <Button
+      fullWidth
+      onClick={handleAddToCart}
+      size="small"
+      sx={{ gap: 2, flex: 1 }}
+    >
       <span className="truncate">Add To Cart </span>
       <ShoppingCartIcon />
     </Button>

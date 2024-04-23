@@ -29,7 +29,6 @@ const PlaceOrderFrom = () => {
       toast.success(response?.message || "Order place sucesfully");
       dispatch(clearCart());
     }
-    console.log(response);
   };
   return (
     <Box>

@@ -1,7 +1,16 @@
 import ProductDetailsCarousel from "@/components/productPage/ProductDetailsCarousel";
-import { Container, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Stack,
+  Typography,
+} from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { TProduct } from "@/type";
+import ShowReview from "./components/ShowReview";
+import AddToCartButton from "@/components/ui/AddToCartButton";
 
 type TProductDetailPageProp = {
   params: {
@@ -37,7 +46,7 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
     title,
   } = data as TProduct;
   return (
-    <Container sx={{ my: 3 }}>
+    <Container sx={{ my: 8 }}>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-full lg:w-1/2">
           <ProductDetailsCarousel
@@ -98,8 +107,20 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
               ))}
             </ul>
           )}
+          <Box mt={2}>
+            <AddToCartButton
+              price={price}
+              productId={data._id}
+              thumbnail={thumbnail}
+              title={title}
+            />
+          </Box>
         </div>
       </div>
+      <Divider sx={{ my: { xs: 4, md: 8 } }} />
+      <Box>
+        <ShowReview productId={params.productId} />
+      </Box>
     </Container>
   );
 };

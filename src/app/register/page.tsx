@@ -7,6 +7,7 @@ import MyInput from "@/components/form/MyInput";
 import { login } from "@/redux/features/authSlice/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { jwtDecoder } from "@/utils/jwtDecoder";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -93,7 +94,10 @@ const RegisterPage = () => {
         </Stack>
 
         {/* form */}
-        <MyForm resolver={registerFormValidation} onSubmit={onSubmit}>
+        <MyForm
+          resolver={zodResolver(registerFormValidation)}
+          onSubmit={onSubmit}
+        >
           <Grid container spacing={2}>
             <Grid xs={12} item>
               <MyInput label="Name" name="name" type="text" />

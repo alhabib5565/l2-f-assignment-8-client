@@ -10,6 +10,7 @@ import {
   defaultValue,
   loginFormValidation,
 } from "@/validationSchema/validation.login";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,6 +28,7 @@ const LoginPage = () => {
 
       if (response?.token) {
         const userInfo = jwtDecoder(response.token);
+        console.log(userInfo);
         dispatch(login({ token: response.token, user: userInfo }));
         toast.success(response.message || "login succesfull");
         router.push("/");
@@ -74,7 +76,7 @@ const LoginPage = () => {
 
         {/* form */}
         <MyForm
-          resolver={loginFormValidation}
+          resolver={zodResolver(loginFormValidation)}
           defaultValues={defaultValue}
           onSubmit={onSubmit}
         >

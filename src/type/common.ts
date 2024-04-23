@@ -37,3 +37,16 @@ export type TSelectOptions = {
     value: string;
     label: string;
 };
+
+
+export type TAddReviewData = {
+    ratings: number | null,
+    review: string,
+    productId: string,
+    userEmail: string
+    userName?: string
+}
+
+export type TReviewData = TAddReviewData & {
+    _id: string
+}
