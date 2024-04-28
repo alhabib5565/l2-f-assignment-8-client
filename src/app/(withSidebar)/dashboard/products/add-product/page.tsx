@@ -9,6 +9,7 @@ import MyInput from "@/components/form/MyInput";
 import ImageUpload from "./components/ImageUpload";
 import MySelect from "@/components/form/MySelect";
 import {
+  categoryOptions,
   productTypeOptions,
   weightUnitOptions,
 } from "@/constent/selectOptions";
@@ -21,25 +22,32 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addProduct } from "@/actions/addProduct";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useGetAllBrandsQuery } from "@/redux/api/brand.api";
+import { TSelectOptions } from "@/type";
 
 const AddProduct = () => {
   const router = useRouter();
-  const [features, setFeatures] = useState<string[]>([
-    "habib",
-    "imran",
-    "netun",
-  ]);
+  const [features, setFeatures] = useState<string[]>([]);
   const [productImagesUrl, setProductImagesUrl] = useState<string[]>([]);
 
+  const { data, isLoading } = useGetAllBrandsQuery({});
+
+  if (isLoading) {
+    return "loading...";
+  }
+  const brandOptions: TSelectOptions[] = data?.data.map((brand: any) => ({
+    value: brand._id,
+    label: brand._id,
+  }));
+
   const onSubmit = async (value: FieldValues) => {
+    console.log(value);
     if (!productImagesUrl.length) {
       return toast.error("Please add product thumnail", {
         className: "text-red-500",
       });
     }
-    value.price = Number(value.price);
-    value.stock = Number(value.stock);
-    value.weight = `${value.weight} ${value.unit}`;
+
     value.features = features || [];
     value.thumbnail = productImagesUrl[0];
     value.images = productImagesUrl;
@@ -52,23 +60,12 @@ const AddProduct = () => {
     }
   };
 
-  const cetagoryOptions = [
-    {
-      label: "Habib",
-      value: "hbib",
-    },
-    {
-      label: "Netun",
-      value: "nutun",
-    },
-  ];
-
   return (
     <Box bgcolor="white" padding={2} borderRadius={2}>
       <Box width="100%">
         <MyForm
-          // defaultValues={productDefaultValue}
-          // resolver={zodResolver(ProductValidationSchema)}
+          defaultValues={productDefaultValue}
+          resolver={zodResolver(ProductValidationSchema)}
           onSubmit={onSubmit}
         >
           <Stack mb={2} direction="row" justifyContent="space-between">
@@ -240,7 +237,7 @@ const AddProduct = () => {
                       <MySelect
                         name="category"
                         label="Product Category"
-                        options={cetagoryOptions}
+                        options={categoryOptions}
                       />
                     </Box>
 
@@ -252,7 +249,7 @@ const AddProduct = () => {
                       <MySelect
                         name="brand"
                         label="Product Brand"
-                        options={cetagoryOptions}
+                        options={brandOptions}
                       />
                     </Box>
 

@@ -7,8 +7,6 @@ import {
   useForm,
 } from "react-hook-form";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-
 type TMyFormConfig = {
   defaultValues?: Record<string, any>;
   resolver?: any;
@@ -33,7 +31,6 @@ const MyForm = ({ children, onSubmit, defaultValues, resolver }: TForm) => {
   const { handleSubmit, reset } = methods;
 
   const submit: SubmitHandler<FieldValues> = (data) => {
-    // console.log(data);
     onSubmit(data);
     reset();
   };

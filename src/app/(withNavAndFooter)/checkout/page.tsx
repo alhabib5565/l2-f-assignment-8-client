@@ -28,24 +28,3 @@ const CheckoutPage = () => {
 };
 
 export default CheckoutPage;
-
-type THeaderText = {
-  children: ReactNode;
-  sx?: SxProps;
-};
-export const HeaderText = ({ children, sx }: THeaderText) => {
-  return (
-    <Typography
-      variant="h6"
-      component="h6"
-      fontSize={16}
-      fontWeight={600}
-      maxWidth={100}
-      width={"100%"}
-      textAlign="center"
-      sx={sx}
-    >
-      {children}
-    </Typography>
-  );
-};

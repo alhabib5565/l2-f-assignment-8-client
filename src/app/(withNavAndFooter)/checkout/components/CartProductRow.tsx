@@ -1,8 +1,14 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  SxProps,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
-import React from "react";
-import { HeaderText } from "../page";
+import React, { ReactNode } from "react";
 import { Add } from "@mui/icons-material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import {
@@ -97,7 +103,7 @@ const CartProductRow = () => {
                   </Typography>
                 </Box>
                 <HeaderText sx={{ display: { xs: "none", sm: "flex" } }}>
-                  ${product.price}
+                  ${product.price.toFixed(2)}
                 </HeaderText>
                 <Stack
                   alignItems="center"
@@ -166,3 +172,25 @@ const CartProductRow = () => {
 };
 
 export default CartProductRow;
+
+// @ts-ignore
+type THeaderText = {
+  children: ReactNode;
+  sx?: SxProps;
+};
+export const HeaderText = ({ children, sx }: THeaderText) => {
+  return (
+    <Typography
+      variant="h6"
+      component="h6"
+      fontSize={16}
+      fontWeight={600}
+      maxWidth={100}
+      width={"100%"}
+      textAlign="center"
+      sx={sx || {}}
+    >
+      {children}
+    </Typography>
+  );
+};

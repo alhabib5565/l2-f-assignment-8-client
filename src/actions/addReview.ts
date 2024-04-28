@@ -1,10 +1,10 @@
 'use server'
 
 import { TAddReviewData } from "@/type"
+import { revalidateTag } from "next/cache"
 
 
 export const addReview = async (data: TAddReviewData) => {
-    console.log(data)
     const response = await fetch(`${process.env.SERVER_URL}/review/add-review`, {
         method: 'POST',
         headers: {
@@ -12,5 +12,6 @@ export const addReview = async (data: TAddReviewData) => {
         },
         body: JSON.stringify(data)
     })
+    revalidateTag('reviews')
     return await response.json()
 }

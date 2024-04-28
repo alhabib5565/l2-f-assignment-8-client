@@ -7,25 +7,26 @@ export const ProductValidationSchema = z.object({
     title: z.string().min(1, { message: "Title is required" }),
     description: z.string().min(1, { message: "Description is required" }),
     brand: z.string().min(1, { message: "Brand is required" }),
-    price: z.number().min(0, 'Price must be a posetive number'),
+    price: z.preprocess((value) => (value), z.coerce.number().int().min(1, "price must be a positive number")),
+    discountPercentage: z.preprocess((value) => (value), z.coerce.number().int().optional()),
+    stock: z.preprocess((value) => (value), z.coerce.number().int().min(1, "stock must be a positive number")),
     category: z.string().min(1, { message: "Category is required" }),
-    thumbnail: z.string().min(1, { message: " Thumbnail is required" }),
-    images: z.array(z.string()).optional(),
-    weight: z.string().optional(),
-    type: z.string().optional(),
-    features: z.array(z.string()).optional(),
+    weight: z.preprocess((value) => (value), z.coerce.number().int().min(1, "weight must be a positive number")),
+    unit: z.string().min(1, 'unit is required'),
+    type: z.string().min(1, 'product is required')
 });
 
 // Usage:
 export const productDefaultValue = {
     title: "",
     description: "",
+    brand: "",
     price: 0,
     discountPercentage: 0,
     stock: 0,
-    brand: "",
     category: "",
-    weight: "",
+    weight: 0,
     type: "",
+    unit: ''
 };
 

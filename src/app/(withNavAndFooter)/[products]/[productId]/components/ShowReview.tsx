@@ -8,7 +8,7 @@ const ShowReview = async ({ productId }: { productId: string }) => {
     `${process.env.SERVER_URL}/review/${productId}`,
     {
       next: {
-        revalidate: 30,
+        tags: ["reviews"],
       },
     }
   );

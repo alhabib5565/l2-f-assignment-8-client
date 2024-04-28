@@ -19,3 +19,19 @@ export const productTypeOptions: TSelectOptions[] = [
     { value: "granular", label: "Granular Cleaners" },
     { value: "paste", label: "Paste Cleaners" },
 ];
+
+export const categoryOptions: TSelectOptions[] = [
+    { value: "surface", label: "Surface Cleaners" },
+    { value: "floor", label: "Floor Care" },
+    { value: "laundry", label: "Laundry Care" },
+    { value: "dishwashing", label: "Dishwashing" },
+    { value: "tools", label: "Tools & Equipment" },
+    { value: "air_fresheners", label: "Air Fresheners & Deodorizers" },
+    { value: "trash_recycling", label: "Trash & Recycling" },
+    { value: "specialty", label: "Specialty Cleaners" },
+    { value: "pet_cleaning", label: "Pet Cleaning" },
+    { value: "green_eco", label: "Green & Eco-Friendly" },
+    { value: "commercial_industrial", label: "Commercial & Industrial" },
+    { value: "health_safety", label: "Health & Safety" },
+    { value: "seasonal", label: "Seasonal Cleaning" },
+];

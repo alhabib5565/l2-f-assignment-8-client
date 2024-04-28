@@ -19,7 +19,7 @@ const pages = [
     name: "Home",
   },
   {
-    href: "/dashboard/dashboard",
+    href: "/dashboard",
     name: "Dashboard",
   },
   {
