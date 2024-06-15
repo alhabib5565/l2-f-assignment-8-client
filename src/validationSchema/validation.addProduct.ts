@@ -1,8 +1,4 @@
 import { z } from "zod";
-
-// price: z.number().min(0, "price must be a positive number"),
-// discountPercentage: z.number().optional(),
-// stock: z.string().min(0, { message: "Stock must be a positive number" }),
 export const ProductValidationSchema = z.object({
     title: z.string().min(1, { message: "Title is required" }),
     description: z.string().min(1, { message: "Description is required" }),

@@ -19,42 +19,18 @@ const HeroCarousel = () => {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 1,
+    slidesToScroll: 1,
     arrows: false,
+    autoplay: true,
     cssEase: "ease-in",
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
   };
 
   return (
     <div className="slider-container">
       <Slider {...settings}>
         {images.map((img, index) => (
-          <Box height="300px" pr={3} width="300px" key={index}>
+          <Box height="350px" maxWidth={910} key={index}>
             <Image
               src={img}
               alt={`Hero Carousel Image ${index} `}

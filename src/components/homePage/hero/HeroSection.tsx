@@ -1,12 +1,20 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import HeroCarousel from "./HeroCarousel";
+import MainCategoryDropdown from "./categoryDropdown/DropdownContainer";
 
 const HeroSection = () => {
   return (
-    <div className="bg-secondary/20">
-      <Container>
-        <Box pt={10} maxWidth="800px" margin="0 auto" textAlign="center">
+    <Container sx={{ mt: 2 }}>
+      <Grid container spacing={2}>
+        <Grid item md={3}>
+          <MainCategoryDropdown />
+        </Grid>
+        <Grid item md={9}>
+          <HeroCarousel />
+        </Grid>
+      </Grid>
+      {/* <Box pt={10} maxWidth="800px" margin="0 auto" textAlign="center">
           <Typography
             color="primary.main"
             component="h2"
@@ -30,9 +38,8 @@ const HeroSection = () => {
         </Box>
         <Box py={10}>
           <HeroCarousel />
-        </Box>
-      </Container>
-    </div>
+        </Box> */}
+    </Container>
   );
 };
 
