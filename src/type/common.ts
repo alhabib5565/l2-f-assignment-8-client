@@ -27,11 +27,15 @@ export type FlashSale = {
     sale_end: string
 }
 
-export type TSidebarItem = {
+export type TSidebarRoute = {
     name: string,
-    href: string,
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string; }
+    href?: string,
+    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string; },
 }
+export type TSidebarItem = TSidebarRoute & {
+    nestedRoutes?: TSidebarRoute[]
+}
+
 
 export type TSelectOptions = {
     value: string;
@@ -50,3 +54,4 @@ export type TAddReviewData = {
 export type TReviewData = TAddReviewData & {
     _id: string
 }
+

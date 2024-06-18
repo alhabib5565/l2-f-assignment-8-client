@@ -54,7 +54,7 @@ const MainCategoryMenuItems = ({
                 src="https://img.alicdn.com/imgextra/i3/O1CN01B0aYfH1Mb3yQnQt38_!!6000000001452-0-tps-240-240.jpg"
                 alt=""
               />
-              <span>main{items.mainCategoryName}</span>
+              <span>{items.mainCategoryName}</span>
             </Box>
             <ExpandMoreIcon />
           </Link>

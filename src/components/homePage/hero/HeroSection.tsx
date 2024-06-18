@@ -7,10 +7,10 @@ const HeroSection = () => {
   return (
     <Container sx={{ mt: 2 }}>
       <Grid container spacing={2}>
-        <Grid item md={3}>
+        <Grid display={{ xs: "none", md: "grid" }} item md={3}>
           <MainCategoryDropdown />
         </Grid>
-        <Grid item md={9}>
+        <Grid item xs={12} md={9}>
           <HeroCarousel />
         </Grid>
       </Grid>

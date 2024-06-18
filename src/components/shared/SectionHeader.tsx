@@ -12,7 +12,7 @@ type TSectionHeaderProp = {
 const SectionHeader = ({ title, description, href }: TSectionHeaderProp) => {
   return (
     <div>
-      <Stack direction="row" justifyContent="space-between">
+      <Stack direction="row" justifyContent="space-between" alignItems="end">
         <Box maxWidth={340}>
           <Typography component="h3" variant="h4">
             {title}

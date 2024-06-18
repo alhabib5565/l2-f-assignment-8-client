@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 
 const HomePage = () => {
   return (
-    <Box>
+    <Box bgcolor="#f8f8f8">
       <HeroSection />
       <FlashSale />
       <TopBrands />
