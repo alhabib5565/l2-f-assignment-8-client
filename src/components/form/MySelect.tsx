@@ -31,7 +31,6 @@ export default function MySelect({ name, label, options }: TSelect) {
             {...field}
             labelId="demo-select-small-label"
             // value={age}
-            label="Age"
             // onChange={handleChange}
           >
             {options.map((item, index) => (

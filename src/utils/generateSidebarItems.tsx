@@ -17,7 +17,7 @@ export const generageSidebarItems = (role: TUserRole) => {
       sidebarItems.push(
         {
           name: "Products",
-          href: "products",
+          href: `/dashboard/${role}/products`,
           icon: ViewListOutlined,
         },
         {
@@ -26,17 +26,17 @@ export const generageSidebarItems = (role: TUserRole) => {
           nestedRoutes: [
             {
               name: "Main Category",
-              href: "category/main-categories",
+              href: `/dashboard/${role}/category/main-categories`,
               icon: CategoryOutlined,
             },
             {
               name: "Category",
-              href: "category/categories",
+              href: `/dashboard/${role}/category/categories`,
               icon: ListAltOutlined,
             },
             {
               name: "Sub Category",
-              href: "category/sub-categories",
+              href: `/dashboard/${role}/category/sub-categories`,
               icon: SubdirectoryArrowRightOutlined,
             },
           ],
@@ -46,7 +46,7 @@ export const generageSidebarItems = (role: TUserRole) => {
     case user_role.CUSTOMER:
       sidebarItems.push({
         name: "Products",
-        href: "products",
+        href: `/dashboard/${role}/products`,
         icon: ViewListIcon,
       });
       break;
