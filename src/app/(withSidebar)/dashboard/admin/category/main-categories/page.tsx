@@ -181,7 +181,7 @@ const MainCategorypage = () => {
         </Box>
         <Button onClick={handleCeateMainCategoryModalOpen}>
           <Add /> {"  "}
-          Add Product
+          Add Main Category
         </Button>
       </Stack>
       <Box
