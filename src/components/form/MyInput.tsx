@@ -29,7 +29,6 @@ const MyInput = ({
       name={name}
       render={({ field, fieldState: { error } }) => (
         <TextField
-          // value={field?.value}
           sx={sx}
           {...field}
           size="small"

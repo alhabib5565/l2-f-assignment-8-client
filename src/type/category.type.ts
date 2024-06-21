@@ -18,3 +18,14 @@ export type TCategory = {
     metaDescription?: string
     status: TStatus
 }
+
+export type TSubCategory = {
+    _id: string
+    mainCategoryName: string, //ref
+    categoryName: string// ref
+    subCategoryName: string
+    imageURL: string,
+    metaTitle: string
+    metaDescription: string
+    isDeleted: TStatus
+}
