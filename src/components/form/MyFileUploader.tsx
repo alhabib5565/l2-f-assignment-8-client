@@ -2,17 +2,33 @@ import * as React from "react";
 import { SxProps, styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { Input } from "@mui/material";
 
 type TProps = {
   name: string;
   label?: string;
+  type: React.HTMLInputTypeAttribute;
   sx?: SxProps;
+  fullWidth?: boolean;
+  onImageChange: React.Dispatch<React.SetStateAction<File | null>>;
 };
 
-export default function MyFileUploader({ name, label, sx }: TProps) {
+export default function MyFileUploader({
+  name,
+  label,
+  type,
+  sx,
+  fullWidth = true,
+  onImageChange,
+}: TProps) {
   const { control } = useFormContext();
+  const image = useWatch({ control, name });
+
+  React.useEffect(() => {
+    onImageChange(image);
+  }, [image, onImageChange]);
+
   return (
     <Controller
       name={name}
@@ -21,6 +37,7 @@ export default function MyFileUploader({ name, label, sx }: TProps) {
         return (
           <Button
             component="label"
+            fullWidth={fullWidth}
             role={undefined}
             variant="contained"
             tabIndex={-1}
@@ -30,7 +47,7 @@ export default function MyFileUploader({ name, label, sx }: TProps) {
             {label || "Upload file"}
             <Input
               {...field}
-              type={name}
+              type={type}
               value={value?.fileName}
               onChange={(e) =>
                 onChange((e?.target as HTMLInputElement).files?.[0])

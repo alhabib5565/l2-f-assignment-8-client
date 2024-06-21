@@ -37,7 +37,6 @@ const ImageUpload = ({
           ]);
           setLoading(false);
           setImage(null);
-          console.log("Image uploaded successfully:", data);
         }
       } catch (error) {
         setLoading(false);
