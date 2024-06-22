@@ -8,6 +8,10 @@ import React, { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MySelect from "@/components/form/MySelect";
+import {
+  subCategoryDefaultValues,
+  subCategoryValidationSchema,
+} from "./subCategoryValidation";
 
 type TCreateSubCategoryModalOpen = {
   open: boolean;
@@ -39,16 +43,20 @@ const CreateSubCategoryModal = ({
   }, [image]);
 
   const onSubmit = (data: FieldValues) => {
-    if (!imageURL) {
-      return alert("Please upload image");
-    }
+    // if (!imageURL) {
+    //   return alert("Please upload image");
+    // }
     data.imageURL = imageURL;
     console.log(data);
   };
 
   return (
     <MyModal title="Create A Sub Category" open={open} setOpen={setOpen}>
-      <MyForm onSubmit={onSubmit}>
+      <MyForm
+        onSubmit={onSubmit}
+        resolver={zodResolver(subCategoryValidationSchema)}
+        defaultValues={subCategoryDefaultValues}
+      >
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <MySelect
