@@ -12,6 +12,12 @@ import {
   subCategoryDefaultValues,
   subCategoryValidationSchema,
 } from "./subCategoryValidation";
+import { useGetMainCategoriesQuery } from "@/redux/api/categories/mainCategory.api";
+import { TSelectOptions } from "@/type";
+import { useGetCategoriesQuery } from "@/redux/api/categories/category.api";
+import MySelectWithWatch from "@/components/form/MySelectWithWatch";
+import { useCreateSubCategoryMutation } from "@/redux/api/categories/subCategory.api";
+import { toast } from "sonner";
 
 type TCreateSubCategoryModalOpen = {
   open: boolean;
@@ -24,6 +30,31 @@ const CreateSubCategoryModal = ({
 }: TCreateSubCategoryModalOpen) => {
   const [image, setImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState("");
+  const [mainCategory, setMainCategory] = useState("");
+  const { data: mainCategoryData, isLoading: mainCategoryLoading } =
+    useGetMainCategoriesQuery({ query: "fields=mainCategoryName&limit=20" });
+  const { data: categoryData, isLoading: categoryLoading } =
+    useGetCategoriesQuery(
+      {
+        query: `fields=categoryName&limit=20&mainCategory=${mainCategory}`,
+      },
+      { skip: !mainCategory }
+    );
+  const [createSubCategory] = useCreateSubCategoryMutation();
+
+  const mainCategoryOptions: TSelectOptions[] = mainCategoryData?.data.map(
+    (item: { _id: string; mainCategoryName: string }) => ({
+      label: item.mainCategoryName,
+      value: item._id,
+    })
+  );
+
+  const categoryOptions: TSelectOptions[] = categoryData?.data.map(
+    (item: { _id: string; categoryName: string }) => ({
+      label: item.categoryName,
+      value: item._id,
+    })
+  );
 
   useEffect(() => {
     const uploadImageAndSetGallery = async () => {
@@ -42,12 +73,20 @@ const CreateSubCategoryModal = ({
     uploadImageAndSetGallery();
   }, [image]);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     // if (!imageURL) {
     //   return alert("Please upload image");
     // }
     data.imageURL = imageURL;
-    console.log(data);
+    const response = (await createSubCategory(data)) as any;
+    if (response?.error) {
+      toast.error(
+        response?.error?.data.message || "Sub Category create failed"
+      );
+    } else {
+      toast.success("Sub Category create successfull");
+      setImageURL("");
+    }
   };
 
   return (
@@ -59,27 +98,20 @@ const CreateSubCategoryModal = ({
       >
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <MySelect
+            <MySelectWithWatch
+              onValueChange={setMainCategory}
+              disabled={mainCategoryLoading}
               label="Select Main Category"
-              name="mainCategoryName"
-              options={[
-                {
-                  label: "Women",
-                  value: "women",
-                },
-              ]}
+              name="mainCategory"
+              options={mainCategoryOptions || []}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <MySelect
+              disabled={categoryLoading || !mainCategory}
               label="Select Category"
-              name="categoryName"
-              options={[
-                {
-                  label: "Women",
-                  value: "women",
-                },
-              ]}
+              name="category"
+              options={categoryOptions || []}
             />
           </Grid>
           <Grid item xs={8}>

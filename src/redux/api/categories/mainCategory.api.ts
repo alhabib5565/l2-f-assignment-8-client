@@ -12,12 +12,12 @@ const mainCategoryApi = baseApi.injectEndpoints({
             invalidatesTags: ["main-category"]
         }),
         getMainCategories: builder.query({
-            query: () => ({
-                url: '/main-categories',
+            query: ({ query }) => ({
+                url: `/main-categories?${query || ''}`,
             }),
             providesTags: ['main-category']
         }),
     })
 })
 
-export const { useCreateMainCategoryMutation } = mainCategoryApi
+export const { useCreateMainCategoryMutation, useGetMainCategoriesQuery } = mainCategoryApi

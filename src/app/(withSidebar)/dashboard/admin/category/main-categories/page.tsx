@@ -1,5 +1,6 @@
 "use client";
 import CreateMainCategoryModal from "@/components/dashboard/categories/mainCategory/CreateMainCategoryModal";
+import { useGetMainCategoriesQuery } from "@/redux/api/categories/mainCategory.api";
 import { TStatus } from "@/type/category.type";
 import { Add } from "@mui/icons-material";
 import {
@@ -21,6 +22,8 @@ const MainCategorypage = () => {
   const [status, setStatus] = useState<TStatus | "">("");
   const [createMainCategoryModalOpen, setCreateMainCategoryModalOpen] =
     useState(false);
+  const { data, isLoading } = useGetMainCategoriesQuery({});
+  console.log(data);
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value);
@@ -31,36 +34,31 @@ const MainCategorypage = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "mainCategoryId", headerName: "Main Category ID", width: 150 },
     {
       field: "imageURL",
       headerName: "Image",
-      renderCell: (row) => (
-        <Box
-          sx={{
-            display: "flex",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            height={50}
-            width={50}
-            src={
-              "https://dreamspos.dreamstechnologies.com/html/template/assets/img/products/product1.jpg"
-            }
-            alt=""
-          />
-        </Box>
-      ),
+      renderCell: (row) => {
+        console.log(row.row.imageURL);
+        return (
+          <Box
+            sx={{
+              display: "flex",
+              height: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Image height={50} width={50} src={row?.row.imageURL} alt="" />
+          </Box>
+        );
+      },
     },
     { field: "mainCategoryName", headerName: "Main Category Name", flex: 1 },
     { field: "metaTitle", headerName: "Meta Title", flex: 1 },
     {
       field: "isDeleted",
       headerName: "Status",
-      width: 200,
+      width: 220,
       renderCell: (row) => (
         <Box
           sx={{
@@ -77,7 +75,7 @@ const MainCategorypage = () => {
               borderRadius: 10,
             }}
           >
-            {`${row.row.isDeleted}`}
+            {`${row.row.status}`}
           </Typography>
           <FormControl size="small" sx={{ m: 1, minWidth: 100 }}>
             <Select
@@ -214,7 +212,13 @@ const MainCategorypage = () => {
             </Select>
           </FormControl>
         </Stack>
-        <DataGrid rowHeight={60} rows={rows} columns={columns} />
+        <DataGrid
+          getRowId={(row) => row.mainCategoryId}
+          loading={isLoading}
+          rowHeight={60}
+          rows={data?.data || []}
+          columns={columns}
+        />
         {createMainCategoryModalOpen && (
           <CreateMainCategoryModal
             open={createMainCategoryModalOpen}

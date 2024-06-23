@@ -1,3 +1,4 @@
+"use client";
 import MyFileUploader from "@/components/form/MyFileUploader";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
@@ -10,6 +11,8 @@ import MainCategoryValidationSchema, {
   mainCategoryDefaultValue,
 } from "./mainCategoryValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateMainCategoryMutation } from "@/redux/api/categories/mainCategory.api";
+import { toast } from "sonner";
 
 type TCreateMainCategoryModalOpen = {
   open: boolean;
@@ -22,9 +25,10 @@ const CreateMainCategoryModal = ({
 }: TCreateMainCategoryModalOpen) => {
   const [image, setImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState("");
+  const [createMainCategory] = useCreateMainCategoryMutation();
 
   useEffect(() => {
-    const uploadImageAndSetGallery = async () => {
+    const uploadMainCategoryImage = async () => {
       try {
         if (image) {
           const data = await uploadImage(image);
@@ -37,15 +41,25 @@ const CreateMainCategoryModal = ({
       }
     };
 
-    uploadImageAndSetGallery();
+    uploadMainCategoryImage();
   }, [image]);
 
-  const onSubmit = (data: FieldValues) => {
-    if (!imageURL) {
-      return alert("Please upload image");
-    }
-    data.imageURL = imageURL;
+  const onSubmit = async (data: FieldValues) => {
     console.log(data);
+    // if (!imageURL) {
+    //   return alert("Please upload image");
+    // }
+    data.imageURL = imageURL;
+    const response = (await createMainCategory(data)) as any;
+    console.log(data);
+    if (response?.error) {
+      toast.error(
+        response?.error?.data.message || "Main Category create failed"
+      );
+    } else {
+      toast.success("Main Category create successfull");
+      setImageURL("");
+    }
   };
 
   return (

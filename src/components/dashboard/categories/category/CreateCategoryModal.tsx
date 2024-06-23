@@ -8,7 +8,13 @@ import React, { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MySelect from "@/components/form/MySelect";
-import CategoryValidationSchema from "./categoryValidation";
+import CategoryValidationSchema, {
+  categoryDefaultValues,
+} from "./categoryValidation";
+import { useGetMainCategoriesQuery } from "@/redux/api/categories/mainCategory.api";
+import { TSelectOptions } from "@/type";
+import { useCreateCategoryMutation } from "@/redux/api/categories/category.api";
+import { toast } from "sonner";
 
 type TCreateCategoryModalOpen = {
   open: boolean;
@@ -18,6 +24,18 @@ type TCreateCategoryModalOpen = {
 const CreateCategoryModal = ({ open, setOpen }: TCreateCategoryModalOpen) => {
   const [image, setImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState("");
+  const { data, isLoading } = useGetMainCategoriesQuery({
+    query: "fields=mainCategoryName&limit=20",
+  });
+
+  const [createCategory] = useCreateCategoryMutation();
+
+  const mainCategoryOptions: TSelectOptions[] = data?.data.map(
+    (item: { _id: string; mainCategoryName: string }) => ({
+      label: item.mainCategoryName,
+      value: item._id,
+    })
+  );
 
   useEffect(() => {
     const uploadImageAndSetGallery = async () => {
@@ -36,12 +54,19 @@ const CreateCategoryModal = ({ open, setOpen }: TCreateCategoryModalOpen) => {
     uploadImageAndSetGallery();
   }, [image]);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     // if (!imageURL) {
     //   return alert("Please upload image");
     // }
     data.imageURL = imageURL;
+    const response = (await createCategory(data)) as any;
     console.log(data);
+    if (response?.error) {
+      toast.error(response?.error?.data.message || "Category create failed");
+    } else {
+      toast.success("Category create successfull");
+      setImageURL("");
+    }
   };
 
   return (
@@ -49,6 +74,7 @@ const CreateCategoryModal = ({ open, setOpen }: TCreateCategoryModalOpen) => {
       <MyForm
         onSubmit={onSubmit}
         resolver={zodResolver(CategoryValidationSchema)}
+        defaultValues={categoryDefaultValues}
       >
         <Grid container spacing={2}>
           <Grid item xs={8}>
@@ -68,14 +94,10 @@ const CreateCategoryModal = ({ open, setOpen }: TCreateCategoryModalOpen) => {
           </Grid>
           <Grid item xs={12}>
             <MySelect
+              disabled={isLoading}
               label="Select Main Category"
-              name="mainCategoryName"
-              options={[
-                {
-                  label: "Women",
-                  value: "women",
-                },
-              ]}
+              name="mainCategory"
+              options={mainCategoryOptions || []}
             />
           </Grid>
           <Grid item xs={12}>
