@@ -5,12 +5,14 @@ import TopBrands from "@/components/homePage/brandSection/TopBrands";
 import PopularProductSection from "@/components/homePage/popularProductsSection/PopularProductSection";
 import Sponser from "@/components/homePage/sponser/Sponser";
 import { Box } from "@mui/material";
+import Categories from "@/components/homePage/categorySection/Categories";
 
 const HomePage = () => {
   return (
     <Box bgcolor="#f8f8f8">
       <HeroSection />
       <FlashSale />
+      <Categories />
       <TopBrands />
       <PopularProductSection />
       <Sponser />

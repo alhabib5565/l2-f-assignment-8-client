@@ -14,7 +14,7 @@ const SectionHeader = ({ title, description, href }: TSectionHeaderProp) => {
     <div>
       <Stack direction="row" justifyContent="space-between" alignItems="end">
         <Box maxWidth={340}>
-          <Typography component="h3" variant="h4">
+          <Typography fontWeight={600} component="h3" variant="h4">
             {title}
           </Typography>
           <Typography component="p" variant="body1" mt={1}>
