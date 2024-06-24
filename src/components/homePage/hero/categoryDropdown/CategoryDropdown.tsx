@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { TSubCategoryItemsData } from "./category.dropdown.type";
 import Link from "next/link";
@@ -35,17 +35,18 @@ const CategoryDropdown = ({
           style={{
             width: "100%",
             display: "flex",
-            gap: 1,
+            padding: "5px 10px",
+            gap: 8,
           }}
           href={""}
         >
-          <Image
-            height={20}
-            width={20}
-            src="https://img.alicdn.com/imgextra/i3/O1CN01B0aYfH1Mb3yQnQt38_!!6000000001452-0-tps-240-240.jpg"
-            alt=""
-          />
-          <span>{subCategory.categoryName}</span>
+          <Image height={20} width={20} src={subCategory.imageURL} alt="" />
+          <Typography
+            color={`${isCategoryDropdownOpen ? "red" : ""}`}
+            fontSize={14}
+          >
+            {subCategory.categoryName}
+          </Typography>{" "}
         </Link>
       ))}
     </Box>

@@ -1,11 +1,12 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Link from "next/link";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { TCategoryItemsData } from "./category.dropdown.type";
 import CategoryDropdown from "./CategoryDropdown";
 import Image from "next/image";
+import { KeyboardArrowRight } from "@mui/icons-material";
 
 const CategoryMenuItems = ({ category }: { category: TCategoryItemsData }) => {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
@@ -14,22 +15,18 @@ const CategoryMenuItems = ({ category }: { category: TCategoryItemsData }) => {
   };
 
   return (
-    <Box
-      sx={{
-        px: 2,
-      }}
-      onMouseEnter={handleOpenDropdown}
-      onMouseLeave={handleOpenDropdown}
-    >
+    <Box onMouseEnter={handleOpenDropdown} onMouseLeave={handleOpenDropdown}>
       {category.subCategories ? (
         <>
           <Link
             style={{
+              padding: "5px 10px",
               width: "100%",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              background: "white",
+              color: `${isCategoryDropdownOpen ? "red" : ""}`,
+              background: `${isCategoryDropdownOpen ? "#f8f8f8" : "white"}`,
             }}
             href={""}
           >
@@ -40,20 +37,28 @@ const CategoryMenuItems = ({ category }: { category: TCategoryItemsData }) => {
                 gap: 1,
               }}
             >
-              <Image
-                height={20}
-                width={20}
-                src="https://img.alicdn.com/imgextra/i3/O1CN01B0aYfH1Mb3yQnQt38_!!6000000001452-0-tps-240-240.jpg"
-                alt=""
-              />
-              <span>{category.categoryName}</span>
+              <Image height={20} width={20} src={category.imageURL} alt="" />
+              <Typography
+                color={`${isCategoryDropdownOpen ? "red" : ""}`}
+                fontSize={14}
+              >
+                {category.categoryName}
+              </Typography>{" "}
             </Box>
-            <ExpandMoreIcon />
+            {category.subCategories && category.subCategories.length ? (
+              <KeyboardArrowRight />
+            ) : (
+              ""
+            )}
           </Link>
-          <CategoryDropdown
-            isCategoryDropdownOpen={isCategoryDropdownOpen}
-            subCategories={category.subCategories}
-          />
+          {category.subCategories && category.subCategories.length ? (
+            <CategoryDropdown
+              isCategoryDropdownOpen={isCategoryDropdownOpen}
+              subCategories={category.subCategories}
+            />
+          ) : (
+            ""
+          )}
         </>
       ) : (
         // <Box>
