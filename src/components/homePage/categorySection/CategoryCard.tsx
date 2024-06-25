@@ -18,7 +18,7 @@ const CategoryCard = ({ category }: { category: TCategory }) => {
             borderRadius: 1,
             justifyContent: "center",
             alignItems: "center",
-            coloer: "red",
+            bgcolor: "white",
           }}
         >
           <Image height={56} width={56} src={category.imageURL} alt="" />

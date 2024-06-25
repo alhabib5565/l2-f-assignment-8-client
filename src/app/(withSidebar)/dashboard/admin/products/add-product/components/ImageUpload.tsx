@@ -89,7 +89,7 @@ const ImageUpload = ({
         ) : (
           <Button
             sx={{
-              height: 200,
+              height: 211,
               border: "1px dashad black",
             }}
             fullWidth

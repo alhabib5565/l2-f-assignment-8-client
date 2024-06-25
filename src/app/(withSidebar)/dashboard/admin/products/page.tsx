@@ -78,7 +78,7 @@ const ProductsPage = () => {
         <Typography fontWeight={600} variant="h4" component="h4">
           Products
         </Typography>
-        <Link href="/dashboard/products/add-product">
+        <Link href="/dashboard/admin/products/add-product">
           <Button>
             Add Product <Add />
           </Button>

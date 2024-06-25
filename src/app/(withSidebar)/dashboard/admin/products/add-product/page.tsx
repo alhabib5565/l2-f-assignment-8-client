@@ -23,7 +23,11 @@ import { addProduct } from "@/actions/addProduct";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useGetAllBrandsQuery } from "@/redux/api/brand.api";
-import { TSelectOptions } from "@/type";
+import { TColor, TSelectOptions } from "@/type";
+import { useGetAllColorsQuery } from "@/redux/api/color.api";
+import MyMultiSelect, {
+  TMultiSelectOption,
+} from "@/components/form/MyMultiSelect";
 
 const AddProduct = () => {
   const router = useRouter();
@@ -31,6 +35,15 @@ const AddProduct = () => {
   const [productImagesUrl, setProductImagesUrl] = useState<string[]>([]);
 
   const { data, isLoading } = useGetAllBrandsQuery({});
+  const { data: colorData, isLoading: colorIsLoading } = useGetAllColorsQuery(
+    {}
+  );
+
+  const colorOptions = colorData?.data?.map((color: TColor) => ({
+    _id: color._id,
+    label: color.name,
+    hexCode: color.hexCode,
+  }));
 
   if (isLoading) {
     return "loading...";
@@ -64,8 +77,8 @@ const AddProduct = () => {
     <Box bgcolor="white" padding={2} borderRadius={2}>
       <Box width="100%">
         <MyForm
-          defaultValues={productDefaultValue}
-          resolver={zodResolver(ProductValidationSchema)}
+          // defaultValues={productDefaultValue}
+          // resolver={zodResolver(ProductValidationSchema)}
           onSubmit={onSubmit}
         >
           <Stack mb={2} direction="row" justifyContent="space-between">
@@ -78,7 +91,7 @@ const AddProduct = () => {
             {/* left side of the form */}
             <Grid item xs={12} md={6} lg={7}>
               {/* General Information */}
-              <Box bgcolor="secondary.main" p={2} borderRadius={2}>
+              <Box>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -100,7 +113,7 @@ const AddProduct = () => {
                   <Grid xs={12} item>
                     <MyInput
                       multiline={true}
-                      rows={4}
+                      rows={6}
                       // placeholder="Enter product description"
                       name="description"
                       label="Poduct Description"
@@ -111,7 +124,7 @@ const AddProduct = () => {
               </Box>
 
               {/* Price And Stock */}
-              <Box p={2} borderRadius={2}>
+              <Box mt={2}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -139,7 +152,7 @@ const AddProduct = () => {
               </Box>
 
               {/* Weight And unit Product type*/}
-              <Box p={2} borderRadius={2}>
+              <Box mt={2}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -174,8 +187,8 @@ const AddProduct = () => {
                 </Grid>
               </Box>
 
-              {/* Features */}
-              <Box p={2} borderRadius={2}>
+              {/* Brand and category select  */}
+              <Box mt={2}>
                 <Typography
                   variant="h6"
                   component="h6"
@@ -183,37 +196,86 @@ const AddProduct = () => {
                   fontSize={18}
                   mb={1}
                 >
-                  Features
+                  Category & Brand
                 </Typography>
+
                 <Grid container spacing={2}>
-                  <Grid xs={12} item>
-                    <AddFeatures
-                      features={features}
-                      setFeatures={setFeatures}
-                    />
+                  <Grid item xs={6}>
+                    <Box>
+                      <MySelect
+                        name="category"
+                        label="Product Category"
+                        options={categoryOptions}
+                      />
+                    </Box>
+                  </Grid>
+
+                  {/* brand */}
+                  <Grid item xs={6}>
+                    <Box>
+                      <MySelect
+                        name="brand"
+                        label="Product Brand"
+                        options={brandOptions}
+                      />
+                    </Box>
                   </Grid>
                 </Grid>
+              </Box>
+
+              {/* Features */}
+              <Box mt={2} borderRadius={2}>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  fontWeight={600}
+                  fontSize={18}
+                >
+                  Features
+                </Typography>
+
+                <AddFeatures features={features} setFeatures={setFeatures} />
               </Box>
             </Grid>
 
             {/* right side of the form */}
-            <Grid item xs={12} md={6} lg={5} mt={2}>
-              <Grid container spacing={2}>
-                {/* Image Upload  */}
-                <Grid
-                  bgcolor="secondary.main"
-                  p={2}
-                  borderRadius={2}
-                  xs={12}
-                  item
+            <Grid item xs={12} md={6} lg={5}>
+              {/* Image Upload  */}
+              <Box>
+                <ImageUpload
+                  productImagesUrl={productImagesUrl}
+                  setProductImagesUrl={setProductImagesUrl}
+                />
+              </Box>
+              <Box mt={2}>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  fontWeight={600}
+                  fontSize={18}
+                  mb={0.5}
                 >
-                  <ImageUpload
-                    productImagesUrl={productImagesUrl}
-                    setProductImagesUrl={setProductImagesUrl}
-                  />
-                </Grid>
+                  Variants
+                </Typography>
+                <MyMultiSelect
+                  name="variants.color"
+                  label="Colors"
+                  disabled={colorIsLoading}
+                  options={colorOptions || []}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </MyForm>
+      </Box>
+    </Box>
+  );
+};
 
-                {/* Brand and category select  */}
+export default AddProduct;
+
+/**
+ *     Brand and category select 
                 <Grid
                   mt={2}
                   bgcolor="secondary.main"
@@ -243,7 +305,7 @@ const AddProduct = () => {
 
                     <Button sx={{ whiteSpace: "nowrap" }}>Add Category</Button>
                   </Stack>
-                  {/* brand */}
+                  // brand 
                   <Stack mt={2} direction="row" spacing={2}>
                     <Box flex={1}>
                       <MySelect
@@ -256,13 +318,4 @@ const AddProduct = () => {
                     <Button sx={{ whiteSpace: "nowrap" }}>Add brand</Button>
                   </Stack>
                 </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </MyForm>
-      </Box>
-    </Box>
-  );
-};
-
-export default AddProduct;
+ */
