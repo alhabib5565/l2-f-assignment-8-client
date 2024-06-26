@@ -16,13 +16,14 @@ type TSelect = {
   onValueChange: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function MySelectWithWatch({
+const MySelectWithWatch = ({
   name,
   label,
   options,
   disabled,
   onValueChange,
-}: TSelect) {
+}: TSelect) => {
+  console.log(name, "selectWithWatchrender");
   const { control } = useFormContext();
   const selectValue = useWatch({
     control,
@@ -56,4 +57,5 @@ export default function MySelectWithWatch({
       )}
     />
   );
-}
+};
+export default React.memo(MySelectWithWatch);

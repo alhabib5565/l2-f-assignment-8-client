@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, memo, useState } from "react";
 
 type TFeatures = {
   setFeatures: Dispatch<SetStateAction<string[]>>;
@@ -81,4 +81,4 @@ const AddFeatures = ({ features, setFeatures }: TFeatures) => {
   );
 };
 
-export default AddFeatures;
+export default memo(AddFeatures);

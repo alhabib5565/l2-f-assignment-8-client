@@ -1,6 +1,6 @@
 "use client";
 import { Box, Button, IconButton, Input, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { uploadImage } from "@/utils/uploadImage";
 import Image from "next/image";
@@ -188,4 +188,4 @@ const ImageUpload = ({
   );
 };
 
-export default ImageUpload;
+export default memo(ImageUpload);

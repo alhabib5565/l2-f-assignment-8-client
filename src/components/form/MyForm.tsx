@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { ReactNode, memo } from "react";
 import {
   FieldValues,
   FormProvider,
@@ -34,7 +34,7 @@ const MyForm = ({ children, onSubmit, defaultValues, resolver }: TForm) => {
     onSubmit(data);
     reset();
   };
-
+  console.log("form...");
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(submit)}>{children}</form>
@@ -42,4 +42,4 @@ const MyForm = ({ children, onSubmit, defaultValues, resolver }: TForm) => {
   );
 };
 
-export default MyForm;
+export default memo(MyForm);

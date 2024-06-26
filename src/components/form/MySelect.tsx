@@ -19,7 +19,7 @@ type TSelect = {
   options: TSelectOptions[];
 };
 
-export default function MySelect({ name, label, options, disabled }: TSelect) {
+const MySelect = ({ name, label, options, disabled }: TSelect) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -34,7 +34,7 @@ export default function MySelect({ name, label, options, disabled }: TSelect) {
             labelId="demo-select-small-label"
             value={field.value}
           >
-            {options.map((item, index) => (
+            {options?.map((item, index) => (
               <MenuItem key={index} value={item.value}>
                 {item.label}
               </MenuItem>
@@ -45,4 +45,6 @@ export default function MySelect({ name, label, options, disabled }: TSelect) {
       )}
     />
   );
-}
+};
+
+export default React.memo(MySelect);

@@ -6,6 +6,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Controller, useFormContext } from "react-hook-form";
+import { Stack, Typography } from "@mui/material";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -34,13 +35,13 @@ export default function MyMultiSelect({
     <Controller
       control={control}
       name={name}
-      defaultValue={[]} // Ensure defaultValue is set
+      defaultValue={[]}
       render={({ field }) => (
         <Autocomplete
           {...field}
-          value={field.value || []} // Set the value from the field
+          value={field.value || []}
           onChange={(event, newValue) => {
-            field.onChange(newValue); // Update the field value on change
+            field.onChange(newValue);
           }}
           disabled={disabled}
           size="small"
@@ -49,17 +50,22 @@ export default function MyMultiSelect({
           options={options}
           disableCloseOnSelect
           getOptionLabel={(option) => option.label}
-          isOptionEqualToValue={(option, value) => option._id === value._id} // Ensure equality check is correct
+          isOptionEqualToValue={(option, value) => option._id === value._id}
           renderOption={(props, option, { selected }) => (
-            <li key={option._id} {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.label}
-            </li>
+            <Typography
+              sx={{ display: "flex", gap: 1, alignItems: "center" }}
+              key={option._id}
+              {...props}
+            >
+              <Typography
+                component="span"
+                height={15}
+                width={15}
+                borderRadius={0.5}
+                bgcolor={option.hexCode}
+              ></Typography>
+              <Typography>{option.label}</Typography>
+            </Typography>
           )}
           renderInput={(params) => <TextField {...params} label={label} />}
         />

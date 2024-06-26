@@ -9,7 +9,6 @@ import MyInput from "@/components/form/MyInput";
 import ImageUpload from "./components/ImageUpload";
 import MySelect from "@/components/form/MySelect";
 import {
-  categoryOptions,
   productTypeOptions,
   weightUnitOptions,
 } from "@/constent/selectOptions";
@@ -28,30 +27,46 @@ import { useGetAllColorsQuery } from "@/redux/api/color.api";
 import MyMultiSelect, {
   TMultiSelectOption,
 } from "@/components/form/MyMultiSelect";
+import useMainCategoryOptions from "@/hooks/categories/useMainCategoryOptions";
+import useCategoryOptions from "@/hooks/categories/useCategoryOptions";
+import MySelectWithWatch from "@/components/form/MySelectWithWatch";
+import useSubCategoryOptions from "@/hooks/categories/useSubCategoryOptions";
 
 const AddProduct = () => {
   const router = useRouter();
   const [features, setFeatures] = useState<string[]>([]);
   const [productImagesUrl, setProductImagesUrl] = useState<string[]>([]);
+  const [mainCategory, setMainCategory] = useState("");
+  const [category, setCategory] = useState("");
 
-  const { data, isLoading } = useGetAllBrandsQuery({});
+  const { data, isLoading: brandLoading } = useGetAllBrandsQuery({});
   const { data: colorData, isLoading: colorIsLoading } = useGetAllColorsQuery(
     {}
   );
 
+  //categories select option hooks
+  const { mainCategoryOptions, mainCategoryLoading } = useMainCategoryOptions();
+  const { categoryOptions, categoryLoading } = useCategoryOptions({
+    mainCategory,
+  });
+  const { subCategoryOptions, subSategoryLoading } = useSubCategoryOptions({
+    category: category,
+  });
+
+  if (brandLoading || colorIsLoading || mainCategoryLoading) {
+    return "loading...";
+  }
   const colorOptions = colorData?.data?.map((color: TColor) => ({
     _id: color._id,
     label: color.name,
     hexCode: color.hexCode,
   }));
-
-  if (isLoading) {
-    return "loading...";
-  }
-  const brandOptions: TSelectOptions[] = data?.data.map((brand: any) => ({
-    value: brand._id,
-    label: brand._id,
-  }));
+  const brandOptions: TSelectOptions[] = data?.data.map((brand: any) => {
+    return {
+      value: brand._id,
+      label: brand._id,
+    };
+  });
 
   const onSubmit = async (value: FieldValues) => {
     console.log(value);
@@ -77,7 +92,7 @@ const AddProduct = () => {
     <Box bgcolor="white" padding={2} borderRadius={2}>
       <Box width="100%">
         <MyForm
-          // defaultValues={productDefaultValue}
+          defaultValues={productDefaultValue}
           // resolver={zodResolver(ProductValidationSchema)}
           onSubmit={onSubmit}
         >
@@ -104,7 +119,7 @@ const AddProduct = () => {
                 <Grid container spacing={2}>
                   <Grid xs={12} item>
                     <MyInput
-                      name="title"
+                      name="productName"
                       // placeholder="Enter product name"
                       label="Product Name"
                       type="text"
@@ -146,7 +161,11 @@ const AddProduct = () => {
                     />
                   </Grid>
                   <Grid xs={12} item>
-                    <MyInput name="stock" label="Product Stock" type="number" />
+                    <MyInput
+                      name="totalQuantity"
+                      label="Total Quantity"
+                      type="number"
+                    />
                   </Grid>
                 </Grid>
               </Box>
@@ -165,14 +184,14 @@ const AddProduct = () => {
                 <Grid container spacing={2}>
                   <Grid xs={6} item>
                     <MyInput
-                      name="weight"
+                      name="weight.value"
                       label="Product Weight"
                       type="number"
                     />
                   </Grid>
                   <Grid xs={6} item>
                     <MySelect
-                      name="unit"
+                      name="weight.unit"
                       label="Unit"
                       options={weightUnitOptions}
                     />
@@ -201,24 +220,39 @@ const AddProduct = () => {
 
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <Box>
-                      <MySelect
-                        name="category"
-                        label="Product Category"
-                        options={categoryOptions}
-                      />
-                    </Box>
+                    <MySelectWithWatch
+                      name="mainCategory"
+                      label="Select Main Category"
+                      disabled={mainCategoryLoading}
+                      options={mainCategoryOptions || []}
+                      onValueChange={setMainCategory}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <MySelectWithWatch
+                      name="category"
+                      label="Select Category"
+                      disabled={categoryLoading || !mainCategory}
+                      options={categoryOptions || []}
+                      onValueChange={setCategory}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <MySelect
+                      name="subCategory"
+                      label="Select Sub Category"
+                      disabled={subSategoryLoading || !category}
+                      options={subCategoryOptions || []}
+                    />
                   </Grid>
 
                   {/* brand */}
                   <Grid item xs={6}>
-                    <Box>
-                      <MySelect
-                        name="brand"
-                        label="Product Brand"
-                        options={brandOptions}
-                      />
-                    </Box>
+                    <MySelect
+                      name="brand"
+                      label="Product Brand"
+                      options={brandOptions}
+                    />
                   </Grid>
                 </Grid>
               </Box>

@@ -39,7 +39,10 @@ export type TProduct = {
     brand?: string;
     type?: string;
     flash_sale?: TFlashSale
-    weight?: string;
+    weight?: {
+        value: number
+        unit: string
+    };
     features?: string[];
     metaTitle?: string
     metaDescription?: string

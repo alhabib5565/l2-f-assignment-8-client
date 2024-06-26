@@ -9,7 +9,7 @@ const categoryApi = baseApi.injectEndpoints({
                 body: data,
                 method: "POST"
             }),
-            invalidatesTags: ['main-category']
+            invalidatesTags: ['category']
         }),
         getCategories: builder.query({
             query: ({ query }) => ({
