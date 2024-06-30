@@ -75,11 +75,11 @@ const ImageUpload = ({
             }}
           >
             <Image
-              height={300}
+              height={313}
               width={300}
               style={{
                 width: "100%",
-                height: "300px",
+                height: "315px",
                 borderRadius: 5,
               }}
               src={productImagesUrl[0] || ""}
@@ -89,7 +89,7 @@ const ImageUpload = ({
         ) : (
           <Button
             sx={{
-              height: 211,
+              height: 315,
               border: "1px dashad black",
             }}
             fullWidth

@@ -34,7 +34,6 @@ const MyForm = ({ children, onSubmit, defaultValues, resolver }: TForm) => {
     onSubmit(data);
     reset();
   };
-  console.log("form...");
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(submit)}>{children}</form>

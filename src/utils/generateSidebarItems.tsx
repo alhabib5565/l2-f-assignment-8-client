@@ -7,6 +7,7 @@ import {
   ListAltOutlined,
   SubdirectoryArrowRightOutlined,
 } from "@mui/icons-material";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ViewListIcon from "@mui/icons-material/ViewList";
 
 export const generageSidebarItems = (role: TUserRole) => {
@@ -15,6 +16,11 @@ export const generageSidebarItems = (role: TUserRole) => {
   switch (role) {
     case user_role.ADMIN:
       sidebarItems.push(
+        {
+          name: "Dashboard",
+          href: `/dashboard/${role}`,
+          icon: DashboardOutlinedIcon,
+        },
         {
           name: "Products",
           href: `/dashboard/${role}/products`,

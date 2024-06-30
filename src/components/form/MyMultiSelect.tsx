@@ -1,15 +1,9 @@
 "use client";
 import * as React from "react";
-import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Controller, useFormContext } from "react-hook-form";
-import { Stack, Typography } from "@mui/material";
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+import { Typography } from "@mui/material";
 
 export type TMultiSelectOption = {
   _id: string;

@@ -18,26 +18,29 @@ import {
   productDefaultValue,
 } from "@/validationSchema/validation.addProduct";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addProduct } from "@/actions/addProduct";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useGetAllBrandsQuery } from "@/redux/api/brand.api";
 import { TColor, TSelectOptions } from "@/type";
 import { useGetAllColorsQuery } from "@/redux/api/color.api";
-import MyMultiSelect, {
-  TMultiSelectOption,
-} from "@/components/form/MyMultiSelect";
+import MyMultiSelect from "@/components/form/MyMultiSelect";
 import useMainCategoryOptions from "@/hooks/categories/useMainCategoryOptions";
 import useCategoryOptions from "@/hooks/categories/useCategoryOptions";
 import MySelectWithWatch from "@/components/form/MySelectWithWatch";
 import useSubCategoryOptions from "@/hooks/categories/useSubCategoryOptions";
+import { useCreateProductMutation } from "@/redux/api/product.api";
 
 const AddProduct = () => {
   const router = useRouter();
   const [features, setFeatures] = useState<string[]>([]);
-  const [productImagesUrl, setProductImagesUrl] = useState<string[]>([]);
+  const [productImagesUrl, setProductImagesUrl] = useState<string[]>([
+    "https://static-01.daraz.com.bd/p/fd99fa84242d8857351521aab22780de.jpg",
+    "https://static-01.daraz.com.bd/p/68d11d7406580c7c7105573da0dce830.jpg",
+  ]);
   const [mainCategory, setMainCategory] = useState("");
   const [category, setCategory] = useState("");
+
+  const [createProduct] = useCreateProductMutation();
 
   const { data, isLoading: brandLoading } = useGetAllBrandsQuery({});
   const { data: colorData, isLoading: colorIsLoading } = useGetAllColorsQuery(
@@ -61,6 +64,7 @@ const AddProduct = () => {
     label: color.name,
     hexCode: color.hexCode,
   }));
+
   const brandOptions: TSelectOptions[] = data?.data.map((brand: any) => {
     return {
       value: brand._id,
@@ -69,7 +73,6 @@ const AddProduct = () => {
   });
 
   const onSubmit = async (value: FieldValues) => {
-    console.log(value);
     if (!productImagesUrl.length) {
       return toast.error("Please add product thumnail", {
         className: "text-red-500",
@@ -77,15 +80,20 @@ const AddProduct = () => {
     }
 
     value.features = features || [];
+    value.price = Number(value.price);
+    value.discountPercentage = Number(value.discountPercentage);
+    value.totalQuantity = Number(value.totalQuantity);
     value.thumbnail = productImagesUrl[0];
+    value.weight.value = Number(value.weight.value);
     value.images = productImagesUrl;
-    delete value.unit;
 
-    const response = await addProduct(value);
-    if (response?.success) {
-      toast.success(response.message || "product add succesfull");
-      router.push("/dashboard/products");
-    }
+    console.log(value);
+    const response = await createProduct(value);
+    console.log(response);
+    toast.success("product add succesfull");
+    // if (response?.success) {
+    //   router.push("/dashboard/products");
+    // }
   };
 
   return (
@@ -93,7 +101,7 @@ const AddProduct = () => {
       <Box width="100%">
         <MyForm
           defaultValues={productDefaultValue}
-          // resolver={zodResolver(ProductValidationSchema)}
+          resolver={zodResolver(ProductValidationSchema)}
           onSubmit={onSubmit}
         >
           <Stack mb={2} direction="row" justifyContent="space-between">
@@ -120,7 +128,6 @@ const AddProduct = () => {
                   <Grid xs={12} item>
                     <MyInput
                       name="productName"
-                      // placeholder="Enter product name"
                       label="Product Name"
                       type="text"
                     />
@@ -128,7 +135,7 @@ const AddProduct = () => {
                   <Grid xs={12} item>
                     <MyInput
                       multiline={true}
-                      rows={6}
+                      rows={4}
                       // placeholder="Enter product description"
                       name="description"
                       label="Poduct Description"
@@ -165,42 +172,6 @@ const AddProduct = () => {
                       name="totalQuantity"
                       label="Total Quantity"
                       type="number"
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-
-              {/* Weight And unit Product type*/}
-              <Box mt={2}>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  fontWeight={600}
-                  fontSize={18}
-                  mb={1}
-                >
-                  Weight Unit And Product Type
-                </Typography>
-                <Grid container spacing={2}>
-                  <Grid xs={6} item>
-                    <MyInput
-                      name="weight.value"
-                      label="Product Weight"
-                      type="number"
-                    />
-                  </Grid>
-                  <Grid xs={6} item>
-                    <MySelect
-                      name="weight.unit"
-                      label="Unit"
-                      options={weightUnitOptions}
-                    />
-                  </Grid>
-                  <Grid xs={12} item>
-                    <MySelect
-                      name="type"
-                      label="Product type"
-                      options={productTypeOptions}
                     />
                   </Grid>
                 </Grid>
@@ -257,18 +228,40 @@ const AddProduct = () => {
                 </Grid>
               </Box>
 
-              {/* Features */}
-              <Box mt={2} borderRadius={2}>
+              {/* Weight And unit Product type*/}
+              <Box mt={2}>
                 <Typography
                   variant="h6"
                   component="h6"
                   fontWeight={600}
                   fontSize={18}
+                  mb={1}
                 >
-                  Features
+                  Weight Unit And Product Type
                 </Typography>
-
-                <AddFeatures features={features} setFeatures={setFeatures} />
+                <Grid container spacing={2}>
+                  <Grid xs={6} item>
+                    <MyInput
+                      name="weight.value"
+                      label="Product Weight"
+                      type="number"
+                    />
+                  </Grid>
+                  <Grid xs={6} item>
+                    <MySelect
+                      name="weight.unit"
+                      label="Unit"
+                      options={weightUnitOptions}
+                    />
+                  </Grid>
+                  <Grid xs={12} item>
+                    <MySelect
+                      name="type"
+                      label="Product type"
+                      options={productTypeOptions}
+                    />
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
 
@@ -289,7 +282,7 @@ const AddProduct = () => {
                   fontSize={18}
                   mb={0.5}
                 >
-                  Variants
+                  Variants & Features
                 </Typography>
                 <MyMultiSelect
                   name="variants.color"
@@ -297,6 +290,19 @@ const AddProduct = () => {
                   disabled={colorIsLoading}
                   options={colorOptions || []}
                 />
+              </Box>
+              {/* Features */}
+              <Box borderRadius={2}>
+                {/* <Typography
+                  variant="h6"
+                  component="h6"
+                  fontWeight={600}
+                  fontSize={18}
+                >
+                  Features
+                </Typography> */}
+
+                <AddFeatures features={features} setFeatures={setFeatures} />
               </Box>
             </Grid>
           </Grid>

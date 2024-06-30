@@ -27,11 +27,13 @@ const MyInput = ({
     <Controller
       control={control}
       name={name}
+      defaultValue={""}
       render={({ field, fieldState: { error } }) => (
         <TextField
           sx={sx}
           {...field}
           size="small"
+          value={field.value || ""}
           type={type}
           fullWidth
           label={label}

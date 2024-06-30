@@ -20,4 +20,4 @@ const subCategoryApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useCreateSubCategoryMutation } = subCategoryApi
+export const { useCreateSubCategoryMutation, useGetSubCategoriesQuery } = subCategoryApi
