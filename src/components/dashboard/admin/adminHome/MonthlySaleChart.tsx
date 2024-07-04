@@ -48,9 +48,8 @@ const MonthlySaleChart = () => {
             label: "Total Sales",
           },
         ]}
-        height={300}
+        height={400}
         margin={{ right: 0, bottom: 20, top: 50 }}
-        // grid={{ horizontal: true, vertical: true }}
       />
     </Box>
   );

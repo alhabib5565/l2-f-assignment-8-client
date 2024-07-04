@@ -1,5 +1,6 @@
 "use client";
 import MonthlySaleChart from "@/components/dashboard/admin/adminHome/MonthlySaleChart";
+import OrderOverviewChart from "@/components/dashboard/admin/adminHome/OrderOverviewChart";
 import OverviewCard from "@/components/dashboard/admin/adminHome/OverviewCard";
 import SavenDaysChart from "@/components/dashboard/admin/adminHome/SavenDaysChart";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
@@ -73,7 +74,9 @@ const AdminDashboardHome = () => {
         <Grid item xs={12} md={8} mt={3}>
           <MonthlySaleChart />
         </Grid>
-        <Grid item xs={12} md={4}></Grid>
+        <Grid item xs={12} md={4} mt={3}>
+          <OrderOverviewChart />
+        </Grid>
       </Grid>
     </Box>
   );
