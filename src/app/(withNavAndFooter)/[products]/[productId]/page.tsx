@@ -29,34 +29,21 @@ export const generateStaticParams = async () => {
 
 const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
   const res = await fetch(
-    `${process.env.SERVER_URL}/product/${params.productId}`
+    `${process.env.SERVER_URL}/products/${params.productId}`
   );
   const { data } = await res.json();
-
-  const {
-    brand,
-    description,
-    images,
-    thumbnail,
-    price,
-    weight,
-    type,
-    stock,
-    features,
-    title,
-  } = data as TProduct;
   return (
     <Container sx={{ my: 8 }}>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-full lg:w-1/2">
           <ProductDetailsCarousel
-            images={images}
-            thumbnail={thumbnail}
+            images={data?.images}
+            thumbnail={data?.thumbnail}
           ></ProductDetailsCarousel>
         </div>
         <div className="w-full lg:w-1/2">
           <Typography component="p" variant="body1">
-            {brand}
+            {data?.brand || "no brand"}
           </Typography>
           <Typography
             component="h3"
@@ -65,7 +52,7 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
             mt={1}
             color="#414141"
           >
-            {title}
+            {data?.productName}
           </Typography>
           <Typography
             component="h3"
@@ -74,26 +61,26 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
             mt={1}
             color="primary.main"
           >
-            ${price}
+            ${data?.price}
           </Typography>
           <Divider sx={{ my: 2 }}></Divider>
           <div className="w-full max-h-[300px] h-auto overflow-y-scroll text-justify">
             <Typography component="p" variant="body1">
-              {description}
+              {data?.description}
             </Typography>
           </div>
           <div className="flex justify-between items-center pt-4 text-primary">
             <p>
-              <span className="text-[17px] font-semibold">Type:</span> {type}
+              <span className="text-[17px] font-semibold">Type:</span>{" "}
+              {data?.type}
             </p>
             <p>
-              <span className="text-[17px] font-semibold">Weight:</span>{" "}
-              {weight}
+              <span className="text-[17px] font-semibold">Weight:</span> weight
             </p>
           </div>
-          {features?.length && (
+          {data && data?.features && data.features?.length && (
             <ul className="mt-4 space-y-2 ml-2">
-              {features?.map((feature: string, index: number) => (
+              {data.features?.map((feature: string, index: number) => (
                 <Typography
                   key={index}
                   variant="body1"
@@ -109,10 +96,10 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
           )}
           <Box mt={2}>
             <AddToCartButton
-              price={price}
-              productId={data._id}
-              thumbnail={thumbnail}
-              title={title}
+              price={data?.price}
+              productId={data?._id}
+              thumbnail={data?.thumbnail}
+              title={data?.productName}
             />
           </Box>
         </div>

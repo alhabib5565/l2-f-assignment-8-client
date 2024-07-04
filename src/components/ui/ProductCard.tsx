@@ -43,7 +43,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             component="div"
             color="#000000"
           >
-            {product.title}
+            {product.productName}
           </Typography>
           <Typography fontWeight={500} fontSize={16} variant="h5">
             {product?.discountPercentage ? (

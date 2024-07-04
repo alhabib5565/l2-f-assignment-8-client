@@ -36,7 +36,7 @@ const ShowReview = async ({ productId }: { productId: string }) => {
         <ReviewModalOpenButton productId={productId} />
       </Stack>
       <Box mt={3} display="flex" flexDirection="column" gap={3}>
-        {reviews?.data.map((review: TReviewData, index: number) => (
+        {reviews?.data?.map((review: TReviewData, index: number) => (
           <Box
             key={index}
             sx={{ bgcolor: "secondary.main", padding: 2, borderRadius: 2 }}

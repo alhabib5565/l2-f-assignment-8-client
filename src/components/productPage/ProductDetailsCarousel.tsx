@@ -53,7 +53,7 @@ const ProductDetailsCarousel = ({
         >
           {allImages.map((img, index) => (
             <div
-              className="w-full shrink-0 h-auto cursor-grab active:cursor-grabbing  bg-center bg-no-repeat"
+              className="w-full shrink-0 h-auto cursor-grab active:cursor-grabbing  bg-center bg-contain bg-no-repeat"
               style={{
                 backgroundImage: `url(${img})`,
               }}

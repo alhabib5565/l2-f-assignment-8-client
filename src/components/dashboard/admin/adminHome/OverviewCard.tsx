@@ -6,11 +6,8 @@ import {
   Box,
   Stack,
   Chip,
-  SvgIconTypeMap,
+  SxProps,
 } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-
 type TOverviewCardProps = {
   title: string;
   count: number;
@@ -19,6 +16,7 @@ type TOverviewCardProps = {
   gradientEndColor: string;
   iconGradientStartColor: string;
   iconGradientEndColor: string;
+  sx?: SxProps;
 };
 
 const OverviewCard = ({
@@ -29,6 +27,7 @@ const OverviewCard = ({
   iconGradientStartColor,
   gradientStartColor,
   gradientEndColor,
+  sx,
 }: TOverviewCardProps) => {
   return (
     <Card
@@ -36,6 +35,7 @@ const OverviewCard = ({
         minWidth: 275,
         height: 180,
         backgroundImage: `linear-gradient(270deg, ${gradientStartColor}, ${gradientEndColor})`,
+        ...sx,
       }}
     >
       <CardContent
@@ -82,7 +82,7 @@ const OverviewCard = ({
               fontSize: 12,
               borderRadius: 1,
               color: "white",
-              backgroundColor: "#187d44",
+              // backgroundColor: "#187d44",
               height: "26px",
             }}
             label={"+95%"}

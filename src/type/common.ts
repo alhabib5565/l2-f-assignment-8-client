@@ -22,13 +22,14 @@ export type TVariants = {
     color?: string[]
 }
 export type TProduct = {
+    _id: string
     productName: string;
     mainCategory: string
     category: string;
     subCategory: string,
     description: string;
     price: number;
-    discount_percentage?: number
+    discountPercentage?: number
     totalQuantity: number;
     availableQuantity: number;
     thumbnail: string;
