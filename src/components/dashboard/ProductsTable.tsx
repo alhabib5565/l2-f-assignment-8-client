@@ -65,11 +65,11 @@ export default async function ProductsTable() {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={product._id}>
                   <TableCell sx={{ whiteSpace: "nowrap" }}>
-                    {product.title}
+                    {product.productName}
                   </TableCell>
                   <TableCell>{product.type}</TableCell>
                   <TableCell>{product.brand}</TableCell>
-                  <TableCell>{product.weight}</TableCell>
+                  <TableCell>weight</TableCell>
                   <TableCell sx={{ color: "primary.main", fontWeight: 600 }}>
                     ${product.price}
                   </TableCell>

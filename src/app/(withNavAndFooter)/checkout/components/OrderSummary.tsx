@@ -15,7 +15,14 @@ const OrderSummary = () => {
     // dispatch(clearCar());
   };
   return (
-    <Box sx={{ padding: 2, bgcolor: "white", borderRadius: 2 }}>
+    <Box
+      sx={{
+        padding: 2,
+        bgcolor: "white",
+        borderRadius: 2,
+        border: "1px solid lightgray",
+      }}
+    >
       <Typography
         display={"flex"}
         variant="h5"
@@ -41,6 +48,8 @@ const OrderSummary = () => {
         <Typography sx={{ fontSize: 18 }}>Delivery charge</Typography>
         <Typography sx={{ fontSize: 18 }}>${deliveryCharge}</Typography>
       </Stack>
+      <Divider sx={{ my: 2 }} />
+
       <Stack mb={1} direction="row" justifyContent="space-between">
         <Typography sx={{ fontSize: 18, fontWeight: 600 }}>Total</Typography>
         <Typography
@@ -49,10 +58,9 @@ const OrderSummary = () => {
           ${priceOfTotalSelectedProducts + deliveryCharge}
         </Typography>
       </Stack>
-      <Divider sx={{ my: 2 }} />
-      <Box mb={3}>
+      {/* <Box mb={3}>
         <PlaceOrderFrom />
-      </Box>
+      </Box> */}
     </Box>
   );
 };

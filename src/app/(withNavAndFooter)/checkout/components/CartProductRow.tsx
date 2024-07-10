@@ -27,7 +27,14 @@ const CartProductRow = () => {
   };
 
   return (
-    <Box sx={{ padding: 2, bgcolor: "white", borderRadius: 2 }}>
+    <Box
+      sx={{
+        padding: 2,
+        bgcolor: "white",
+        borderRadius: 2,
+        border: "1px solid lightgray",
+      }}
+    >
       {products.length ? (
         <Box>
           <Stack

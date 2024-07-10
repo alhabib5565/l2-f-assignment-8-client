@@ -1,7 +1,8 @@
 "use client";
 import { Box, Container, Grid, SxProps, Typography } from "@mui/material";
-import React, { ReactNode } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
+import PlaceOrderFrom from "./components/PlaceOrderFrom";
 const CartProductRow = dynamic(() => import("./components/CartProductRow"), {
   ssr: false,
 });
@@ -16,6 +17,7 @@ const CheckoutPage = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={7}>
             <CartProductRow />
+            <PlaceOrderFrom />
           </Grid>
 
           <Grid item xs={12} md={5}>
