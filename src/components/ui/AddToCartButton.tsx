@@ -9,18 +9,18 @@ type TAddToCartButton = {
   productId: string;
   price: number;
   thumbnail: string;
-  title: string;
+  productName: string;
 };
 
 const AddToCartButton = ({
   productId,
   price,
   thumbnail,
-  title,
+  productName,
 }: TAddToCartButton) => {
   const dispatch = useAppDispatch();
   const handleAddToCart = () => {
-    dispatch(addToCart({ price, productId, thumbnail, title }));
+    dispatch(addToCart({ price, productId, thumbnail, productName }));
   };
   return (
     <Button

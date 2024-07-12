@@ -1,4 +1,3 @@
-"use client";
 import { proceedOrder } from "@/actions/proceedOrder";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
@@ -13,19 +12,19 @@ import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  allDivision,
-  districtsOf,
-  divisionalDataOf,
-  DivisonName,
-} from "@bangladeshi/bangladesh-address";
-import MySelectWithWatch from "@/components/form/MySelectWithWatch";
 import MySelect from "@/components/form/MySelect";
 import {
   deliveryTypeOptions,
   itemTypeOptions,
 } from "./procedOrderSelectOptions";
+import { useGetDivisionOptions } from "@/hooks/locationOptionHook/useGetDivisionOptions";
+import { useGetDistrictOptions } from "@/hooks/locationOptionHook/useGetDistrictOptions";
+import { useGetUpazilaOptions } from "@/hooks/locationOptionHook/useGetUpazilaOptions";
 const PlaceOrderFrom = () => {
+  const divisionOptions = useGetDivisionOptions();
+  const districtOptions = useGetDistrictOptions();
+  const upazilaOptions = useGetUpazilaOptions();
+  const unionOptions = useGetUpazilaOptions();
   const { products, selectedProducts, priceOfTotalSelectedProducts } =
     useAppSelector((state) => state.cart);
   const totalPrice = priceOfTotalSelectedProducts + selectedProducts * 15;
@@ -89,26 +88,28 @@ item_type:"<item type>"
             <MyInput label="Phone" name="recipient_phone" type="text" />
           </Grid>
 
-          <Grid item xs={12}>
-            <MyInput label="Address" name="recipient_address" type="text" />
-          </Grid>
-          {/* <Grid item xs={6}>
-            <MySelectWithWatch
+          <Grid item xs={6}>
+            <MySelect
               name="division"
               label="Division"
               options={divisionOptions}
-              onValueChange={setDivision}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <MySelect
+              name="district"
+              label="District"
+              options={districtOptions}
             />
           </Grid>
           <Grid item xs={6}>
-            <MySelectWithWatch
-              name="district"
-              label="District"
-              disabled={!division}
-              options={divisionOptions}
-              onValueChange={setDivision}
-            />
-          </Grid> */}
+            <MySelect label="Upazila" name="upazila" options={upazilaOptions} />
+          </Grid>
+
+          <Grid item xs={6}>
+            <MySelect name="union" label="Union" options={unionOptions} />
+          </Grid>
 
           <Grid item xs={12}>
             <MyInput label="Area" name="recipient_area" type="text" />

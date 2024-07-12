@@ -97,9 +97,9 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
           <Box mt={2}>
             <AddToCartButton
               price={data?.price}
-              productId={data?._id}
+              productId={data?.productId}
               thumbnail={data?.thumbnail}
-              title={data?.productName}
+              productName={data?.productName}
             />
           </Box>
         </div>

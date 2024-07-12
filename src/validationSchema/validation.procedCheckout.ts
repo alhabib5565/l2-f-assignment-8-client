@@ -10,8 +10,11 @@ export const CheckoutValidationSchema = z.object({
     .string({
       required_error: "Phone number is required",
     })
-    .min(11, { message: "Phone number must be at least 11 characters long" }),
-  recipient_address: z.string().min(1, { message: "Address is required" }),
+    .min(11, { message: "Phone number must be at least 11 characters" }),
+  division: z.string().min(1, { message: "Division is required" }),
+  district: z.string().min(1, { message: "District is required" }),
+  upazila: z.string().min(1, { message: "Upazila is required" }),
+  union: z.string().min(1, { message: "Union is required" }),
   recipient_area: z
     .string({
       required_error: "Area is required",
@@ -37,4 +40,41 @@ export const checkoutDefaultValue = {
   recipient_area: "",
   item_type: "",
   delivery_type: "",
+  division: "",
+  district: "",
+  upazila: "",
+  union: "",
 };
+// import { ORDER_STATUS } from "./order.constant";
+
+// export type TOrder = {
+//   _id: string;
+//   orderId: string;
+//   products: TProductItem[];
+//   totalQuantity: number;
+//   totalAmount: number;
+//   orderStatus: TOrderStatus;
+//   shippingAddress: TShippingAddress;
+//   paymentInfo: TPaymentInfo;
+// };
+
+// export type TOrderStatus = keyof typeof ORDER_STATUS;
+
+// export type TProductItem = {
+//   productId: string;
+//   productName: string;
+//   quantity: number;
+//   price: number;
+// };
+
+// export type TShippingAddress = {
+//   street: string;
+//   city: string;
+//   state: string;
+//   postalCode: string;
+//   country: string;
+// };
+
+// export type TPaymentInfo = {
+//   method: string;
+// };

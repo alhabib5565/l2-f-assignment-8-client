@@ -4,102 +4,112 @@ import persistReducer from "redux-persist/es/persistReducer";
 import storage from "redux-persist/lib/storage";
 
 type TProductPayload = {
-    productId: string,
-    thumbnail: string,
-    title: string,
-    price: number
-}
+  productId: string;
+  thumbnail: string;
+  productName: string;
+  price: number;
+};
 
 type TProduct = TProductPayload & {
-    quantity: number
-}
+  quantity: number;
+};
 
 type TInitialSate = {
-    products: TProduct[]
-    selectedProducts: number,
-    priceOfTotalSelectedProducts: number
-}
+  products: TProduct[];
+  selectedProducts: number;
+  priceOfTotalSelectedProducts: number;
+};
 
 const initialState: TInitialSate = {
-    products: [],
-    selectedProducts: 0,
-    priceOfTotalSelectedProducts: 0
-}
+  products: [],
+  selectedProducts: 0,
+  priceOfTotalSelectedProducts: 0,
+};
 
 export const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
-    reducers: {
-        addToCart: (state, action: PayloadAction<TProductPayload>) => {
-            const isExist = state.products.find(item => item.productId === action.payload.productId)
-            if (!isExist) {
-                state.products.push({ ...action.payload, quantity: 1, })
-            }
-            state.selectedProducts = totalQuantity(state)
-            state.priceOfTotalSelectedProducts = totalPrice(state)
-        },
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart: (state, action: PayloadAction<TProductPayload>) => {
+      const isExist = state.products.find(
+        (item) => item.productId === action.payload.productId
+      );
+      if (!isExist) {
+        state.products.push({ ...action.payload, quantity: 1 });
+      }
+      state.selectedProducts = totalQuantity(state);
+      state.priceOfTotalSelectedProducts = totalPrice(state);
+    },
 
-        updateQuantity: (state, action: PayloadAction<{ productId: string, type: 'increment' | 'decrement' }>) => {
-            const { productId, type } = action.payload
-            const product = state.products.find(item => item.productId === productId)
-            state.products.map(item => {
-                if (item.productId === productId) {
-                    if (type === 'increment') {
-                        product!.quantity += 1
-                    } else if (type === 'decrement') {
-                        if (product?.quantity === 1) {
-                            const { productId } = action.payload
-                            state.products = state.products.filter(item => item.productId !== productId)
-                        } else {
-                            product!.quantity -= 1
-                        }
-                    }
-                }
-            })
-            state.selectedProducts = totalQuantity(state)
-            state.priceOfTotalSelectedProducts = totalPrice(state)
-        },
-        removeFromCart: (state, action: PayloadAction<{ productId: string }>) => {
-            const { productId } = action.payload
-            state.products = state.products.filter(item => item.productId !== productId)
-        },
-        clearCart: (state) => {
-            state.products = []
-            state.selectedProducts = 0
-            state.priceOfTotalSelectedProducts = 0
+    updateQuantity: (
+      state,
+      action: PayloadAction<{
+        productId: string;
+        type: "increment" | "decrement";
+      }>
+    ) => {
+      const { productId, type } = action.payload;
+      const product = state.products.find(
+        (item) => item.productId === productId
+      );
+      state.products.map((item) => {
+        if (item.productId === productId) {
+          if (type === "increment") {
+            product!.quantity += 1;
+          } else if (type === "decrement") {
+            if (product?.quantity === 1) {
+              const { productId } = action.payload;
+              state.products = state.products.filter(
+                (item) => item.productId !== productId
+              );
+            } else {
+              product!.quantity -= 1;
+            }
+          }
         }
-    }
-})
+      });
+      state.selectedProducts = totalQuantity(state);
+      state.priceOfTotalSelectedProducts = totalPrice(state);
+    },
+    removeFromCart: (state, action: PayloadAction<{ productId: string }>) => {
+      const { productId } = action.payload;
+      state.products = state.products.filter(
+        (item) => item.productId !== productId
+      );
+    },
+    clearCart: (state) => {
+      state.products = [];
+      state.selectedProducts = 0;
+      state.priceOfTotalSelectedProducts = 0;
+    },
+  },
+});
 
 const persistConfig = {
-    key: "root",
-    storage,
+  key: "root",
+  storage,
 };
 
 export const cartPersistedReducer = persistReducer(
-    persistConfig,
-    cartSlice.reducer
+  persistConfig,
+  cartSlice.reducer
 );
 
-
-export const { addToCart, updateQuantity, removeFromCart, clearCart } = cartSlice.actions
-
+export const { addToCart, updateQuantity, removeFromCart, clearCart } =
+  cartSlice.actions;
 
 const totalQuantity = (state: TInitialSate) => {
-    const quantity = state.products.reduce((prev, current) => {
-        return Number(prev += current.quantity)
-    }, 0)
-    return quantity
-}
+  const quantity = state.products.reduce((prev, current) => {
+    return Number((prev += current.quantity));
+  }, 0);
+  return quantity;
+};
 const totalPrice = (state: TInitialSate) => {
-    const price = state.products.reduce((prev, current) => {
-        return Number(prev += (current.price * current.quantity))
-    }, 0)
-    return Number(price.toFixed(2))
-}
-
-
-
+  const price = state.products.reduce((prev, current) => {
+    return Number((prev += current.price * current.quantity));
+  }, 0);
+  return Number(price.toFixed(2));
+};
 
 /**
 import { createSlice } from "@reduxjs/toolkit";
