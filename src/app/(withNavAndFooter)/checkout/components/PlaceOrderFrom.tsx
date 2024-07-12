@@ -2,7 +2,6 @@
 import { proceedOrder } from "@/actions/proceedOrder";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
-import { useGetDivisionsQuery } from "@/redux/api/bdLocation.api";
 import { clearCart } from "@/redux/features/cartSlice/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -11,15 +10,24 @@ import {
 } from "@/validationSchema/validation.procedCheckout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
-
+import {
+  allDivision,
+  districtsOf,
+  divisionalDataOf,
+  DivisonName,
+} from "@bangladeshi/bangladesh-address";
+import MySelectWithWatch from "@/components/form/MySelectWithWatch";
+import MySelect from "@/components/form/MySelect";
+import {
+  deliveryTypeOptions,
+  itemTypeOptions,
+} from "./procedOrderSelectOptions";
 const PlaceOrderFrom = () => {
   const { products, selectedProducts, priceOfTotalSelectedProducts } =
     useAppSelector((state) => state.cart);
-  // const { data, isLoading } = useGetDivisionsQuery({});
-  // console.log(data);
   const totalPrice = priceOfTotalSelectedProducts + selectedProducts * 15;
 
   const dispatch = useAppDispatch();
@@ -27,11 +35,12 @@ const PlaceOrderFrom = () => {
   const onSubmit = async (value: FieldValues) => {
     value.products = products;
     value.totalPrice = totalPrice;
-    const response = await proceedOrder(value);
-    if (response?.success) {
-      toast.success(response?.message || "Order place sucesfully");
-      dispatch(clearCart());
-    }
+    console.log(value);
+    // const response = await proceedOrder(value);
+    // if (response?.success) {
+    //   toast.success(response?.message || "Order place sucesfully");
+    //   dispatch(clearCart());
+    // }
   };
 
   /**
@@ -45,6 +54,7 @@ recipient_area:"<recipient area>"
 delivery_type:"<delivery type>"
 item_type:"<item type>"
    */
+
   return (
     <Box
       sx={{
@@ -78,26 +88,44 @@ item_type:"<item type>"
           <Grid item xs={6}>
             <MyInput label="Phone" name="recipient_phone" type="text" />
           </Grid>
-          {/* <Grid item xs={12}>
-            <MyInput label="Email" name="email" type="email" />
-          </Grid> */}
+
           <Grid item xs={12}>
             <MyInput label="Address" name="recipient_address" type="text" />
           </Grid>
-          <Grid item xs={6}>
-            <MyInput label="City" name="recipient_city" type="text" />
+          {/* <Grid item xs={6}>
+            <MySelectWithWatch
+              name="division"
+              label="Division"
+              options={divisionOptions}
+              onValueChange={setDivision}
+            />
           </Grid>
           <Grid item xs={6}>
-            <MyInput label="Zone" name="recipient_zone" type="text" />
-          </Grid>
+            <MySelectWithWatch
+              name="district"
+              label="District"
+              disabled={!division}
+              options={divisionOptions}
+              onValueChange={setDivision}
+            />
+          </Grid> */}
+
           <Grid item xs={12}>
             <MyInput label="Area" name="recipient_area" type="text" />
           </Grid>
           <Grid item xs={6}>
-            <MyInput label="Item Type" name="item_type" type="text" />
+            <MySelect
+              label="Item Type"
+              name="item_type"
+              options={itemTypeOptions}
+            />
           </Grid>
           <Grid item xs={6}>
-            <MyInput label="Delivery Type" name="delivery_type" type="text" />
+            <MySelect
+              label="Delivery Type"
+              name="delivery_type"
+              options={deliveryTypeOptions}
+            />
           </Grid>
         </Grid>
         <Divider sx={{ my: 2 }} />

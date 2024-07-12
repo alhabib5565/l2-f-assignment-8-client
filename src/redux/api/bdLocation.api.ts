@@ -8,7 +8,9 @@ export const bdLocationApi = createApi({
   endpoints: (builder) => ({
     getDivisions: builder.query({
       query: () => ({
-        url: "divisions",
+        url: "/divisions",
+        mode: "no-cors",
+        method: "GET",
       }),
     }),
   }),
