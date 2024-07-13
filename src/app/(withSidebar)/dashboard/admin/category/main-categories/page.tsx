@@ -20,6 +20,7 @@ import React, { useState } from "react";
 const MainCategorypage = () => {
   const [age, setAge] = useState("");
   const [status, setStatus] = useState<TStatus | "">("");
+  console.log(status);
   const [createMainCategoryModalOpen, setCreateMainCategoryModalOpen] =
     useState(false);
   const { data, isLoading } = useGetMainCategoriesQuery({});
@@ -39,7 +40,6 @@ const MainCategorypage = () => {
       field: "imageURL",
       headerName: "Image",
       renderCell: (row) => {
-        console.log(row.row.imageURL);
         return (
           <Box
             sx={{

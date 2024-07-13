@@ -33,7 +33,7 @@ const columns: GridColDef[] = [
     headerName: "Price",
     type: "number",
     renderCell: (row) => {
-      return <Typography>{row.row.price} $</Typography>;
+      return <Typography>TK {row.row.price}</Typography>;
     },
     width: 110,
     editable: true,
