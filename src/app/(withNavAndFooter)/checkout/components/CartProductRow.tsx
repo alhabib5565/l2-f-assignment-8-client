@@ -106,7 +106,7 @@ const CartProductRow = () => {
                     component="h6"
                     sx={{ fontSize: 14, fontWeight: 600 }}
                   >
-                    {product.title}
+                    {product.productName}
                   </Typography>
                 </Box>
                 <HeaderText sx={{ display: { xs: "none", sm: "flex" } }}>

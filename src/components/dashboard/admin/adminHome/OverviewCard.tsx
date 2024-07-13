@@ -14,8 +14,9 @@ type TOverviewCardProps = {
   Icon: ReactElement<any, any>;
   gradientStartColor: string;
   gradientEndColor: string;
-  iconGradientStartColor: string;
-  iconGradientEndColor: string;
+  iconGradientStartColor?: string;
+  iconGradientEndColor?: string;
+  percentage?: number;
   sx?: SxProps;
 };
 
@@ -23,6 +24,7 @@ const OverviewCard = ({
   title,
   count,
   Icon,
+  percentage,
   iconGradientEndColor,
   iconGradientStartColor,
   gradientStartColor,
@@ -33,7 +35,7 @@ const OverviewCard = ({
     <Card
       sx={{
         minWidth: 275,
-        height: 180,
+        height: percentage ? 180 : 100,
         backgroundImage: `linear-gradient(270deg, ${gradientStartColor}, ${gradientEndColor})`,
         ...sx,
       }}
@@ -68,7 +70,15 @@ const OverviewCard = ({
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              backgroundImage: `linear-gradient(${iconGradientStartColor}, ${iconGradientEndColor})`,
+
+              // iconGradientEndColor &&
+              // iconGradientStartColor &&?    backgroundImage:
+              // `linear-gradient(${iconGradientStartColor}, ${iconGradientEndColor})`,
+
+              backgroundImage:
+                iconGradientEndColor &&
+                iconGradientStartColor &&
+                `linear-gradient(${iconGradientStartColor}, ${iconGradientEndColor})`,
             }}
           >
             {Icon}
@@ -76,21 +86,23 @@ const OverviewCard = ({
           </Box>
         </Stack>
 
-        <Stack direction={"row"} gap={1} alignItems="center">
-          <Chip
-            sx={{
-              fontSize: 12,
-              borderRadius: 1,
-              color: "white",
-              // backgroundColor: "#187d44",
-              height: "26px",
-            }}
-            label={"+95%"}
-          />
-          <Typography fontSize={14} color="white">
-            Last Month
-          </Typography>
-        </Stack>
+        {percentage && (
+          <Stack direction={"row"} gap={1} alignItems="center">
+            <Chip
+              sx={{
+                fontSize: 12,
+                borderRadius: 1,
+                color: "white",
+                // backgroundColor: "#187d44",
+                height: "26px",
+              }}
+              label={`+ ${percentage}%`}
+            />
+            <Typography fontSize={14} color="white">
+              Last Month
+            </Typography>
+          </Stack>
+        )}
       </CardContent>
     </Card>
   );

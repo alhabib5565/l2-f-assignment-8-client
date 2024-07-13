@@ -26,6 +26,7 @@ const AdminDashboardHome = () => {
             title="Total User"
             count={234}
             Icon={<AccountCircle sx={{ color: "#89ecb3" }} fontSize="large" />}
+            percentage={95}
             gradientStartColor="#4eda89"
             gradientEndColor="#1a9f53"
             iconGradientStartColor="#27bf68"
@@ -36,6 +37,7 @@ const AdminDashboardHome = () => {
             title="Total Products"
             count={1535}
             Icon={<ShoppingBag sx={{ color: "#96cefa" }} fontSize="large" />}
+            percentage={53}
             gradientStartColor="#64b3f6"
             gradientEndColor="#2b77e5"
             iconGradientStartColor="#4094f1"
@@ -48,6 +50,7 @@ const AdminDashboardHome = () => {
             title="Total Orders"
             count={546}
             Icon={<ShoppingCart sx={{ color: "#f3a0ff" }} fontSize="large" />}
+            percentage={40}
             gradientStartColor="#ed68ff"
             gradientEndColor="#be0ee1"
             iconGradientStartColor="#de2fff"
@@ -58,6 +61,7 @@ const AdminDashboardHome = () => {
             title="Total Reviews"
             count={342}
             Icon={<Star sx={{ color: "#f6e053" }} fontSize="large" />}
+            percentage={86}
             gradientStartColor="#f4d02b"
             gradientEndColor="#e1940e"
             iconGradientStartColor="#edb213"

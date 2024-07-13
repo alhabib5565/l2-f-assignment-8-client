@@ -19,10 +19,6 @@ const pages = [
     name: "Home",
   },
   {
-    href: "/dashboard",
-    name: "Dashboard",
-  },
-  {
     href: "/categories",
     name: "Categories",
   },
@@ -33,6 +29,10 @@ const pages = [
   {
     href: "/flash-sale",
     name: "Flash Sale",
+  },
+  {
+    href: "/dashboard",
+    name: "Dashboard",
   },
   // {
   //   href: "/about-us",
@@ -63,7 +63,7 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -77,7 +77,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            CS store
+            QuickShop
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

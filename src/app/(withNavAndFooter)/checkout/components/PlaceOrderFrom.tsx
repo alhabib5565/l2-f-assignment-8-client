@@ -34,12 +34,12 @@ const PlaceOrderFrom = () => {
   const onSubmit = async (value: FieldValues) => {
     value.products = products;
     value.totalPrice = totalPrice;
-    console.log(value);
-    // const response = await proceedOrder(value);
-    // if (response?.success) {
-    //   toast.success(response?.message || "Order place sucesfully");
-    //   dispatch(clearCart());
-    // }
+    const response = await proceedOrder(value);
+    console.log(response);
+    if (response?.success) {
+      toast.success(response?.message || "Order place sucesfully");
+      dispatch(clearCart());
+    }
   };
 
   /**

@@ -6,6 +6,7 @@ import {
   CategoryOutlined,
   ListAltOutlined,
   SubdirectoryArrowRightOutlined,
+  ShoppingCartOutlined,
 } from "@mui/icons-material";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ViewListIcon from "@mui/icons-material/ViewList";
@@ -25,6 +26,11 @@ export const generageSidebarItems = (role: TUserRole) => {
           name: "Products",
           href: `/dashboard/${role}/products`,
           icon: ViewListOutlined,
+        },
+        {
+          name: "Orders",
+          href: `/dashboard/${role}/order-list`,
+          icon: ShoppingCartOutlined,
         },
         {
           name: "Categories",

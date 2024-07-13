@@ -2,17 +2,20 @@ import Filter from "@/components/productPage/Filter";
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
 import { TProduct } from "@/type";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 
 const ProductsPage = async (props: any) => {
   const parms = new URLSearchParams(props.searchParams).toString();
-  const res = await fetch(`${process.env.SERVER_URL}/products?${parms}`);
+  const res = await fetch(`${process.env.SERVER_URL}/products?${parms}`, {
+    cache: "no-store",
+    next: { revalidate: 30 },
+  });
   const products = await res.json();
   console.log(`${process.env.SERVER_URL}/products?${parms}`);
 
   return (
-    <div className="lg:py-32 py-20">
+    <Box py={4}>
       <Container>
         <div className="flex gap-8">
           <Filter />{" "}
@@ -29,7 +32,7 @@ const ProductsPage = async (props: any) => {
           </div>
         </div>
       </Container>
-    </div>
+    </Box>
   );
 };
 
