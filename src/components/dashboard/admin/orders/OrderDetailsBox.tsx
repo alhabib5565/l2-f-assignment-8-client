@@ -4,25 +4,26 @@ import { formatOrderDate } from "@/utils/formatOrderData";
 import { getOrderStatus } from "@/utils/orderStatusWithIcon";
 import { Box, Chip, Divider, Typography } from "@mui/material";
 
-type TOrderDetailsForAdminProps = Pick<
+type TOrderDetailsBoxProps = Pick<
   TOrder,
   "orderId" | "orderStatus" | "createdAt"
 >;
 
-const OrderDetailsForAdmin = (orderInfo: TOrderDetailsForAdminProps) => {
+const OrderDetailsBox = (orderInfo: TOrderDetailsBoxProps) => {
   return (
     <Box
       sx={{
         border: "1px solid lightgray",
         borderRadius: 2,
-        py: 1,
+        bgcolor: "white",
+        boxShadow: 1,
       }}
     >
       <HeaderText
         sx={{
           minWidth: "100%",
           textAlign: "left",
-          px: 1,
+          p: 1,
         }}
       >
         Order Details
@@ -30,7 +31,7 @@ const OrderDetailsForAdmin = (orderInfo: TOrderDetailsForAdminProps) => {
       <Divider />
       <Box
         sx={{
-          p: 1,
+          p: 2,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -50,4 +51,4 @@ const OrderDetailsForAdmin = (orderInfo: TOrderDetailsForAdminProps) => {
   );
 };
 
-export default OrderDetailsForAdmin;
+export default OrderDetailsBox;

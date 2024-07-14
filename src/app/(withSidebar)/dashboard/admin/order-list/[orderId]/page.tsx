@@ -1,50 +1,18 @@
 "use client";
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { HeaderText } from "@/app/(withNavAndFooter)/checkout/components/CartProductRow";
 import { useGetSingleOrderQuery } from "@/redux/api/orders.api";
-import { TOrder, TOrderStatus } from "@/type/order.type";
-import {
-  Cancel,
-  CheckCircle,
-  CheckCircleOutline,
-  LocalShipping,
-  Pending,
-} from "@mui/icons-material";
-import { ORDER_STATUS } from "@/constent";
-import { formatOrderDate } from "@/utils/formatOrderData";
-import OrderDetailsForAdmin from "@/components/dashboard/admin/orders/OrderDetailsForAdmin";
+import { TOrder } from "@/type/order.type";
+import OrderDetailsBox from "@/components/dashboard/admin/orders/OrderDetailsBox";
+import CustomerDetailsBox from "@/components/dashboard/admin/orders/CustomerDetailsBox";
+import ShippingAddressBox from "@/components/dashboard/admin/orders/ShippingAddressBox";
+import OrderSummary from "@/app/(withNavAndFooter)/checkout/components/OrderSummary";
 
 type TOrderDetailPageProp = {
   params: {
     orderId: string;
   };
-};
-const getOrderStatus = (status: TOrderStatus) => {
-  const iconStyle = { color: "", fontSize: "50px" };
-
-  switch (status) {
-    case ORDER_STATUS.Pending:
-      iconStyle.color = "orange";
-      return <Pending style={iconStyle} />;
-    case ORDER_STATUS.Rejected:
-      iconStyle.color = "red";
-      return <Cancel style={iconStyle} />;
-    case ORDER_STATUS.Accepted:
-      iconStyle.color = "green";
-      return <CheckCircle style={iconStyle} />;
-    case ORDER_STATUS.Shipped:
-      iconStyle.color = "blue";
-      return <LocalShipping style={iconStyle} />;
-    case ORDER_STATUS.Delivered:
-      iconStyle.color = "green";
-      return <CheckCircleOutline style={iconStyle} />;
-    case ORDER_STATUS.Cancelled:
-      iconStyle.color = "grey";
-      return <Cancel style={iconStyle} />;
-    default:
-      return null;
-  }
 };
 
 const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
@@ -64,6 +32,7 @@ const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
             bgcolor: "white",
             borderRadius: 2,
             border: "1px solid lightgray",
+            boxShadow: 1,
           }}
         >
           <Stack
@@ -101,15 +70,12 @@ const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
                     alignItems: "center",
                     display: "flex",
                     gap: 2,
-                    minHeight: 60,
                   }}
                 >
-                  <Image
-                    style={{ borderRadius: 5 }}
-                    height={60}
-                    width={60}
+                  <Avatar
                     src="https://themesbrand.com/velzon/html/modern/assets/images/products/img-8.png"
-                    alt="product image"
+                    sx={{ width: 56, height: 56, bgcolor: "lightgray" }}
+                    variant="rounded"
                   />
                   <Typography
                     variant="h6"
@@ -130,13 +96,34 @@ const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
               </Stack>
             </Box>
           ))}
+          <Divider />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              mt: 2,
+            }}
+          >
+            <OrderSummary
+              totalPrice={orderInfo.totalPrice}
+              products={orderInfo.products}
+            />
+          </Box>
         </Box>
       </Grid>
       <Grid item xs={12} md={5} lg={4}>
-        <OrderDetailsForAdmin
+        <OrderDetailsBox
           createdAt={orderInfo.createdAt}
           orderId={orderInfo.orderId}
           orderStatus={orderInfo.orderStatus}
+        />
+        <CustomerDetailsBox
+          recipient_name={orderInfo.recipient_name}
+          recipient_phone={orderInfo.recipient_phone}
+        />
+        <ShippingAddressBox
+          recipient_name={orderInfo.recipient_name}
+          recipient_phone={orderInfo.recipient_phone}
         />
       </Grid>
     </Grid>

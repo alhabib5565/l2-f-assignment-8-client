@@ -1,66 +1,75 @@
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { useAppSelector } from "@/redux/hooks";
+import { Product } from "@/type/order.type";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
-import PlaceOrderFrom from "./PlaceOrderFrom";
 
-const OrderSummary = () => {
-  const { products, priceOfTotalSelectedProducts, selectedProducts } =
-    useAppSelector((state) => state.cart);
+type TOrderSummeryPrpos = {
+  totalPrice: number;
+  products: Product[];
+};
 
-  const deliveryCharge = selectedProducts * 15;
+const OrderSummary = ({ products, totalPrice }: TOrderSummeryPrpos) => {
+  const totalQuantity = products.reduce((previousValue, currentValue) => {
+    return previousValue + currentValue.quantity;
+  }, 0);
+  const deliveryCharge = products.length * 15;
 
-  const dispatch = useAppDispatch();
-
-  const handleClearCart = () => {
-    // dispatch(clearCar());
-  };
   return (
     <Box
       sx={{
-        padding: 2,
-        bgcolor: "white",
-        borderRadius: 2,
-        border: "1px solid lightgray",
+        width: "100%",
       }}
     >
-      <Typography
-        display={"flex"}
-        variant="h5"
-        component="h5"
-        alignItems="end"
-        gap={1}
-        fontWeight={600}
-        mb={2}
-      >
-        Order summary
-      </Typography>
-      <Stack mb={1} direction="row" justifyContent="space-between">
-        <Typography sx={{ fontSize: 18 }}>Total products</Typography>
-        <Typography sx={{ fontSize: 18 }}>{selectedProducts}</Typography>
-      </Stack>
-      <Stack mb={1} direction="row" justifyContent="space-between">
-        <Typography sx={{ fontSize: 18 }}>Subtotal</Typography>
-        <Typography sx={{ fontSize: 18 }}>
-          ${priceOfTotalSelectedProducts}
+      <Stack mb={2} direction="row" justifyContent="space-between">
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          Total products:
+        </Typography>
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          {totalQuantity}
         </Typography>
       </Stack>
-      <Stack mb={1} direction="row" justifyContent="space-between">
-        <Typography sx={{ fontSize: 18 }}>Delivery charge</Typography>
-        <Typography sx={{ fontSize: 18 }}>${deliveryCharge}</Typography>
+      <Stack mb={2} direction="row" justifyContent="space-between">
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          Subtotal:
+        </Typography>
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          TK {totalPrice}
+        </Typography>
+      </Stack>
+      <Stack mb={2} direction="row" justifyContent="space-between">
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          Discount:
+        </Typography>
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          TK 00
+        </Typography>
+      </Stack>
+      <Stack mb={2} direction="row" justifyContent="space-between">
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          Delivery charge:
+        </Typography>
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          TK {deliveryCharge}
+        </Typography>
+      </Stack>
+      <Stack mb={2} direction="row" justifyContent="space-between">
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          Estimated Tax:
+        </Typography>
+        <Typography variant="body1" fontWeight={600} fontSize={14}>
+          TK {deliveryCharge}
+        </Typography>
       </Stack>
       <Divider sx={{ my: 2 }} />
 
-      <Stack mb={1} direction="row" justifyContent="space-between">
+      <Stack mb={2} direction="row" justifyContent="space-between">
         <Typography sx={{ fontSize: 18, fontWeight: 600 }}>Total</Typography>
         <Typography
           sx={{ color: "primary.main", fontSize: 18, fontWeight: 600 }}
         >
-          ${priceOfTotalSelectedProducts + deliveryCharge}
+          TK {totalPrice + deliveryCharge}
         </Typography>
       </Stack>
-      {/* <Box mb={3}>
-        <PlaceOrderFrom />
-      </Box> */}
     </Box>
   );
 };
