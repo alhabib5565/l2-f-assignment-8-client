@@ -24,4 +24,8 @@ const ordersApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllOrdersQuery } = ordersApi;
+export const {
+  useGetAllOrdersQuery,
+  useGetSingleOrderQuery,
+  useUpdateOrderMutation,
+} = ordersApi;

@@ -22,6 +22,7 @@ export type TOrderStatus = keyof typeof ORDER_STATUS;
 export type Product = {
   productId: string;
   productName: string;
+  thumbnail: string;
   quantity: number;
   price: number;
   _id: string;

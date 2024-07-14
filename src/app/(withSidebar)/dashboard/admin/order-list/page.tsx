@@ -9,25 +9,25 @@ import {
   Pending,
   RemoveCircle,
   ShoppingBag,
+  Visibility,
 } from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import {
   Box,
   Button,
-  Chip,
   FormControl,
   Grid,
   MenuItem,
   Select,
   Stack,
-  ToggleButton,
   Typography,
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import { TOrder, TOrderStatus } from "@/type/order.type";
 import Image from "next/image";
 import { months, ORDER_STATUS } from "@/constent";
+import Link from "next/link";
 
 const OrderList = () => {
   const [status, setStatus] = useState<TOrderStatus | "">("Pending");
@@ -36,7 +36,15 @@ const OrderList = () => {
   const { data, isLoading } = useGetAllOrdersQuery({});
   const columns = useMemo<GridColDef<TOrder>[]>(
     () => [
-      { field: "orderId", headerName: "OrdereId", type: "string", width: 100 },
+      {
+        field: "orderId",
+        headerName: "OrdereId",
+        type: "string",
+        width: 100,
+        valueGetter: (value) => {
+          return `#${value}`;
+        },
+      },
       {
         field: "user",
         headerName: "User",
@@ -144,9 +152,9 @@ const OrderList = () => {
       {
         field: "action",
         headerName: "Action",
-        width: 200,
+        flex: 1,
         type: "number",
-        renderCell: () => {
+        renderCell: (row) => {
           return (
             <Stack
               height="100%"
@@ -155,6 +163,15 @@ const OrderList = () => {
               justifyContent="end"
               gap={1}
             >
+              <Link href={`order-list/${row.row.orderId}`}>
+                <Button
+                  variant="outlined"
+                  sx={{ height: 40, width: 40, px: 0 }}
+                  color="success"
+                >
+                  <Visibility />
+                </Button>
+              </Link>
               <Button
                 variant="outlined"
                 sx={{ height: 40, width: 40, px: 0 }}
