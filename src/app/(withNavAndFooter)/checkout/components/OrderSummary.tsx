@@ -4,16 +4,23 @@ import { Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 
 type TOrderSummeryPrpos = {
-  totalPrice: number;
+  subTotalPrice: number;
   products: Product[];
 };
 
-const OrderSummary = ({ products, totalPrice }: TOrderSummeryPrpos) => {
+const OrderSummary = ({ products, subTotalPrice }: TOrderSummeryPrpos) => {
   const totalQuantity = products.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.quantity;
   }, 0);
+
   const deliveryCharge = products.length * 15;
 
+  const estimatedTax = (
+    (4 / 100) *
+    (subTotalPrice + deliveryCharge)
+  ).toPrecision(2);
+
+  const totalPrice = subTotalPrice + deliveryCharge + Number(estimatedTax);
   return (
     <Box
       sx={{
@@ -30,10 +37,10 @@ const OrderSummary = ({ products, totalPrice }: TOrderSummeryPrpos) => {
       </Stack>
       <Stack mb={2} direction="row" justifyContent="space-between">
         <Typography variant="body1" fontWeight={600} fontSize={14}>
-          Subtotal:
+          Sub Total:
         </Typography>
         <Typography variant="body1" fontWeight={600} fontSize={14}>
-          TK {totalPrice}
+          TK {subTotalPrice}
         </Typography>
       </Stack>
       <Stack mb={2} direction="row" justifyContent="space-between">
@@ -57,7 +64,7 @@ const OrderSummary = ({ products, totalPrice }: TOrderSummeryPrpos) => {
           Estimated Tax:
         </Typography>
         <Typography variant="body1" fontWeight={600} fontSize={14}>
-          TK {deliveryCharge}
+          TK {estimatedTax}
         </Typography>
       </Stack>
       <Divider sx={{ my: 2 }} />
@@ -67,7 +74,7 @@ const OrderSummary = ({ products, totalPrice }: TOrderSummeryPrpos) => {
         <Typography
           sx={{ color: "primary.main", fontSize: 18, fontWeight: 600 }}
         >
-          TK {totalPrice + deliveryCharge}
+          TK {totalPrice}
         </Typography>
       </Stack>
     </Box>

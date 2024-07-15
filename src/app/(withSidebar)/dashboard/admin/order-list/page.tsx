@@ -1,7 +1,10 @@
 "use client";
 import OrderOverviewCard from "@/components/dashboard/admin/orders/OrderOverviewCard";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
-import { useGetAllOrdersQuery } from "@/redux/api/orders.api";
+import {
+  useGetAllOrdersQuery,
+  useUpdateOrderMutation,
+} from "@/redux/api/orders.api";
 import {
   Delete,
   Edit,
@@ -20,18 +23,35 @@ import {
   Grid,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   Typography,
 } from "@mui/material";
-import { useMemo, useState } from "react";
-import { TOrder, TOrderStatus } from "@/type/order.type";
+import { useMemo } from "react";
+import { TOrder } from "@/type/order.type";
 import Image from "next/image";
-import { months, ORDER_STATUS } from "@/constent";
+import { ORDER_STATUS } from "@/constent";
 import Link from "next/link";
+import { formatOrderDate } from "@/utils/formatOrderData";
+import { toast } from "sonner";
 
 const OrderList = () => {
-  const [status, setStatus] = useState<TOrderStatus | "">("Pending");
-  console.log(status);
+  const [updateStatus, { isLoading: updateStatusLoading }] =
+    useUpdateOrderMutation();
+  const handleStatusUpdate = async (event: SelectChangeEvent, id: string) => {
+    const response = (await updateStatus({
+      id,
+      data: { orderStatus: event.target.value },
+    })) as any;
+
+    if (response.data) {
+      toast.success(response.data.message);
+    } else {
+      toast.error("Status update failed");
+    }
+
+    // toast();
+  };
 
   const { data, isLoading } = useGetAllOrdersQuery({});
   const columns = useMemo<GridColDef<TOrder>[]>(
@@ -109,7 +129,8 @@ const OrderList = () => {
             <FormControl size="small" sx={{ minWidth: 100 }}>
               <Select
                 value={row.row.orderStatus}
-                onChange={(e) => setStatus(e.target.value as typeof status)}
+                disabled={updateStatusLoading}
+                onChange={(e) => handleStatusUpdate(e, row.row?.orderId)}
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
               >
@@ -128,26 +149,14 @@ const OrderList = () => {
         headerName: "Created Time",
         type: "number",
         width: 200,
-        valueGetter: (value) => {
-          const date = new Date(value);
-
-          const day = date.getDate();
-          const month = months[date.getMonth()];
-          const year = date.getFullYear();
-          const hours = date.getHours().toString().padStart(2, "0");
-          const minutes = date.getMinutes().toString().padStart(2, "0");
-
-          return `${day} ${month} ${year} ${hours}:${minutes}`;
-        },
+        valueGetter: (value) => formatOrderDate(value),
       },
       {
         field: "totalPrice",
         headerName: "Total Price",
         type: "number",
         width: 100,
-        valueGetter: (value) => {
-          return `TK ${value}`;
-        },
+        valueGetter: (value) => `TK ${value}`,
       },
       {
         field: "action",
@@ -191,7 +200,7 @@ const OrderList = () => {
         },
       },
     ],
-    []
+    [handleStatusUpdate, updateStatusLoading]
   );
 
   return (

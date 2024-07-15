@@ -26,10 +26,10 @@ const LoginPage = () => {
     try {
       const response = await loginUser(value);
 
-      if (response?.token) {
-        const userInfo = jwtDecoder(response.token);
+      if (response?.data.accessToken) {
+        const userInfo = jwtDecoder(response?.data.accessToken);
         console.log(userInfo);
-        dispatch(login({ token: response.token, user: userInfo }));
+        dispatch(login({ token: response?.data.accessToken, user: userInfo }));
         toast.success(response.message || "login succesfull");
         router.push("/");
       }

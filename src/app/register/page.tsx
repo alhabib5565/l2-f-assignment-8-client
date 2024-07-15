@@ -44,9 +44,12 @@ const RegisterPage = () => {
       const response = await registerUser(value);
       if (response?.success) {
         const loginResponse = await loginUser(value);
-        if (loginResponse?.token) {
-          const userInfo = jwtDecoder(loginResponse.token);
-          dispatch(login({ token: loginResponse.token, user: userInfo }));
+        console.log({ response, loginResponse });
+        if (loginResponse?.data.accessToken) {
+          const userInfo = jwtDecoder(loginResponse?.data.accessToken);
+          dispatch(
+            login({ token: loginResponse?.data?.accessToken, user: userInfo })
+          );
           toast.success(response.message || "User register succesfully");
           router.push("/");
         }

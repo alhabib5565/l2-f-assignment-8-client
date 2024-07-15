@@ -62,7 +62,7 @@ const CategoryPage = () => {
           }}
         >
           <Typography component="p" variant="body1" fontSize={14}>
-            {row.row.mainCategory.mainCategoryName}
+            {row.row?.mainCategory?.mainCategoryName}
           </Typography>
         </Box>
       ),

@@ -20,11 +20,15 @@ import {
 import { useGetDivisionOptions } from "@/hooks/locationOptionHook/useGetDivisionOptions";
 import { useGetDistrictOptions } from "@/hooks/locationOptionHook/useGetDistrictOptions";
 import { useGetUpazilaOptions } from "@/hooks/locationOptionHook/useGetUpazilaOptions";
+
 const PlaceOrderFrom = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
   const divisionOptions = useGetDivisionOptions();
   const districtOptions = useGetDistrictOptions();
   const upazilaOptions = useGetUpazilaOptions();
   const unionOptions = useGetUpazilaOptions();
+
   const { products, selectedProducts, priceOfTotalSelectedProducts } =
     useAppSelector((state) => state.cart);
   const totalPrice = priceOfTotalSelectedProducts + selectedProducts * 15;
@@ -32,8 +36,14 @@ const PlaceOrderFrom = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = async (value: FieldValues) => {
+    if (!user) {
+      return toast.error("Please login", {
+        duration: 5000,
+      });
+    }
     value.products = products;
     value.totalPrice = totalPrice;
+    value.paymentInfo.method = "Cash On Delivery";
     const response = await proceedOrder(value);
     console.log(response);
     if (response?.success) {
@@ -41,18 +51,6 @@ const PlaceOrderFrom = () => {
       dispatch(clearCart());
     }
   };
-
-  /**
-
-recipient_name:"<recipient name>"
-recipient_phone:"<recipient phone>"
-recipient_address:"<recipient address>"
-recipient_city:"<recipient city>"
-recipient_zone:"<recipient zone>"
-recipient_area:"<recipient area>"
-delivery_type:"<delivery type>"
-item_type:"<item type>"
-   */
 
   return (
     <Box

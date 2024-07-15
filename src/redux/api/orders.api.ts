@@ -6,12 +6,14 @@ const ordersApi = baseApi.injectEndpoints({
       query: ({ query }) => ({
         url: `/orders?${query || ""}`,
       }),
+      providesTags: ["order"],
     }),
 
     getSingleOrder: builder.query({
       query: ({ id }) => ({
         url: `/orders/${id}`,
       }),
+      providesTags: ["order"],
     }),
 
     updateOrder: builder.mutation({
@@ -20,6 +22,7 @@ const ordersApi = baseApi.injectEndpoints({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ["order"],
     }),
   }),
 });

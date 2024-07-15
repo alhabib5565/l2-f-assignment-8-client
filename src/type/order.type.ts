@@ -13,6 +13,7 @@ export type TOrder = {
   upazila: string;
   union: string;
   recipient_area: string;
+  paymentInfo: TPaymentInfo;
   createdAt: string;
   updatedAt: string;
 };
@@ -26,4 +27,8 @@ export type Product = {
   quantity: number;
   price: number;
   _id: string;
+};
+
+export type TPaymentInfo = {
+  method: string;
 };

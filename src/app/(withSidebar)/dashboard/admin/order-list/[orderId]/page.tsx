@@ -105,7 +105,9 @@ const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
             }}
           >
             <OrderSummary
-              totalPrice={orderInfo.totalPrice}
+              subTotalPrice={
+                orderInfo.totalPrice - orderInfo.products.length * 15
+              }
               products={orderInfo.products}
             />
           </Box>

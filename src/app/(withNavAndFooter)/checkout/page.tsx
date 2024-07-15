@@ -45,7 +45,7 @@ const CheckoutPage = () => {
                 Order summary
               </Typography>
               <OrderSummary
-                totalPrice={priceOfTotalSelectedProducts}
+                subTotalPrice={priceOfTotalSelectedProducts}
                 products={products as Product[]}
               />
             </Box>
