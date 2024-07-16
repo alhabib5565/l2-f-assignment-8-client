@@ -17,6 +17,7 @@ import {
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import {
+  Avatar,
   Box,
   Button,
   FormControl,
@@ -27,7 +28,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { TOrder } from "@/type/order.type";
 import Image from "next/image";
 import { ORDER_STATUS } from "@/constent";
@@ -38,20 +39,21 @@ import { toast } from "sonner";
 const OrderList = () => {
   const [updateStatus, { isLoading: updateStatusLoading }] =
     useUpdateOrderMutation();
-  const handleStatusUpdate = async (event: SelectChangeEvent, id: string) => {
-    const response = (await updateStatus({
-      id,
-      data: { orderStatus: event.target.value },
-    })) as any;
+  const handleStatusUpdate = useCallback(
+    async (event: SelectChangeEvent, id: string) => {
+      const response = (await updateStatus({
+        id,
+        data: { orderStatus: event.target.value },
+      })) as any;
 
-    if (response.data) {
-      toast.success(response.data.message);
-    } else {
-      toast.error("Status update failed");
-    }
-
-    // toast();
-  };
+      if (response.data) {
+        toast.success(response.data.message);
+      } else {
+        toast.error("Status update failed");
+      }
+    },
+    [updateStatus]
+  );
 
   const { data, isLoading } = useGetAllOrdersQuery({});
   const columns = useMemo<GridColDef<TOrder>[]>(
@@ -80,16 +82,12 @@ const OrderList = () => {
               gap: 1,
             }}
           >
-            <Image
-              height={40}
-              width={40}
+            <Avatar
               src="https://mironcoder-hotash.netlify.app/images/avatar/01.webp"
-              alt=""
-              style={{
-                borderRadius: "500%",
-              }}
+              sx={{ width: 40, height: 40, bgcolor: "lightgray" }}
+              variant="rounded"
             />
-            <Typography>MD Al-Habib</Typography>
+            <Typography fontSize={14}>MD Al-Habib</Typography>
           </Box>
         ),
       },
@@ -162,7 +160,6 @@ const OrderList = () => {
         field: "action",
         headerName: "Action",
         flex: 1,
-        type: "number",
         renderCell: (row) => {
           return (
             <Stack

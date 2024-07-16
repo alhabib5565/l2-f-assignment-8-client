@@ -73,3 +73,8 @@ export type TAddReviewData = {
 export type TReviewData = TAddReviewData & {
   _id: string;
 };
+
+export type TModalOpenProps = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
