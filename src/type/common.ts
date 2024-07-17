@@ -13,8 +13,9 @@ export type TColor = {
 };
 
 export type TFlashSale = {
-  sale_start: string;
-  sale_end: string;
+  flashSaleDiscountPercentage: number;
+  flashSaleStartDate: Date;
+  flashSaleEndDate: Date;
 };
 
 export type TVariants = {
@@ -22,6 +23,7 @@ export type TVariants = {
 };
 export type TProduct = {
   _id: string;
+  productId: string;
   productName: string;
   mainCategory: string;
   category: string;
@@ -38,7 +40,7 @@ export type TProduct = {
   variants?: TVariants;
   brand?: string;
   type?: string;
-  flash_sale?: TFlashSale;
+  flashSale?: TFlashSale;
   weight?: {
     value: number;
     unit: string;

@@ -24,11 +24,14 @@ import AddToFlashSaleModal from "@/components/dashboard/admin/flashSale/AddToFla
 
 const ProductsPage = () => {
   const [open, setOpen] = React.useState(false);
+  const [productId, setProductId] = React.useState("");
   const { data, isLoading } = useGetAllProductsQuery({});
   const products = data?.data;
 
-  const handleAddToFlashSaleModalOpen = () => {
-    setOpen(!open);
+  const handleAddToFlashSaleModalOpen = (productId: string) => {
+    console.log(productId);
+    setProductId(productId);
+    setOpen((prev) => !prev);
   };
 
   const columns: GridColDef[] = [
@@ -97,7 +100,7 @@ const ProductsPage = () => {
             gap={1}
           >
             <Button
-              onClick={handleAddToFlashSaleModalOpen}
+              onClick={() => handleAddToFlashSaleModalOpen(row.row?.productId)}
               variant="contained"
               color="info"
             >
@@ -161,7 +164,13 @@ const ProductsPage = () => {
             autoHeight
           />
         </Box>
-        {open && <AddToFlashSaleModal open={open} setOpen={setOpen} />}
+        {open && (
+          <AddToFlashSaleModal
+            productId={productId}
+            open={open}
+            setOpen={setOpen}
+          />
+        )}
       </Box>
     </Box>
   );

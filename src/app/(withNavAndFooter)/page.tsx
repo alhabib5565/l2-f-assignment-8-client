@@ -9,11 +9,11 @@ import Categories from "@/components/homePage/categorySection/Categories";
 
 const HomePage = () => {
   return (
-    <Box bgcolor="#f8f8f8">
+    <Box>
       <HeroSection />
       <FlashSale />
       <Categories />
-      <TopBrands />
+      {/* <TopBrands /> */}
       <PopularProductSection />
       <Sponser />
     </Box>

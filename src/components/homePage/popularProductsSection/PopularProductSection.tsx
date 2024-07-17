@@ -1,7 +1,7 @@
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
 import { TProduct } from "@/type";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 
 const PopularProductSection = async () => {
@@ -10,7 +10,7 @@ const PopularProductSection = async () => {
   });
   const products = await res.json();
   return (
-    <section className="lg:py-32 py-20">
+    <Box pt={{ xs: 6, md: 10 }}>
       <Container>
         <SectionHeader
           title="Popular Products"
@@ -23,7 +23,7 @@ const PopularProductSection = async () => {
           ))}
         </div>
       </Container>
-    </section>
+    </Box>
   );
 };
 

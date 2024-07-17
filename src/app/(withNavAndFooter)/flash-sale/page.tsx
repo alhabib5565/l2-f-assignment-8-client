@@ -1,7 +1,7 @@
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
 import { TProduct } from "@/type";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 
 const FlashSalePage = async () => {
@@ -9,10 +9,14 @@ const FlashSalePage = async () => {
   const products = await res.json();
 
   const flashSaleProducts = products.data.filter(
-    (product: TProduct) => product.flash_sale
+    (product: TProduct) =>
+      product.flashSale &&
+      new Date() >= new Date(product.flashSale.flashSaleStartDate) &&
+      new Date() <= new Date(product.flashSale.flashSaleEndDate)
   );
+
   return (
-    <section className="lg:py-32 py-20">
+    <Box py={{ xs: 6, md: 10 }}>
       <Container>
         <SectionHeader
           title=" Flash Sale"
@@ -25,7 +29,7 @@ const FlashSalePage = async () => {
           ))}
         </div>
       </Container>
-    </section>
+    </Box>
   );
 };
 

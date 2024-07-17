@@ -15,13 +15,13 @@ const ProductsPage = async (props: any) => {
   console.log(`${process.env.SERVER_URL}/products?${parms}`);
 
   return (
-    <Box py={4}>
+    <Box py={{ xs: 6, md: 10 }}>
       <Container>
         <div className="flex gap-8">
           <Filter />{" "}
           <div className="flex-1">
             <SectionHeader
-              title="Popular Products"
+              title="Our Products"
               description="Discover what's trending! Explore our selection of customer-favorite laundry essentials."
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mt-10">

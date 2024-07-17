@@ -2,10 +2,14 @@ import MyModal from "@/components/modal/MyModal";
 import FlashSaleForm from "./FlashSaleForm";
 import { TModalOpenProps } from "@/type";
 
-const AddToFlashSaleModal = ({ open, setOpen }: TModalOpenProps) => {
+const AddToFlashSaleModal = ({
+  open,
+  setOpen,
+  productId,
+}: TModalOpenProps & { productId: string }) => {
   return (
     <MyModal title="Add to flash sale" open={open} setOpen={setOpen}>
-      <FlashSaleForm />
+      <FlashSaleForm productId={productId} />
     </MyModal>
   );
 };

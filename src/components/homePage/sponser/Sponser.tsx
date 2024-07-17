@@ -4,13 +4,13 @@ import logo2 from "../../../assets/sponser/logo2.png";
 import logo3 from "../../../assets/sponser/logo3.png";
 import logo4 from "../../../assets/sponser/logo4.png";
 import logo5 from "../../../assets/sponser/logo5.png";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
 const logos = [logo1, logo2, logo3, logo4, logo5];
 const Sponser = () => {
   return (
-    <div className="py-50">
+    <Box pt={{ xs: 6, md: 10 }}>
       <Container>
         <Marquee>
           <Stack
@@ -30,7 +30,7 @@ const Sponser = () => {
           </Stack>
         </Marquee>
       </Container>
-    </div>
+    </Box>
   );
 };
 

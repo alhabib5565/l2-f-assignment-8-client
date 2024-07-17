@@ -12,11 +12,8 @@ type TDatePicker = {
 };
 
 export default function MyDatePicker({ name, label }: TDatePicker) {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
-  console.log(errors);
+  const { control } = useFormContext();
+
   return (
     <Controller
       name={name}

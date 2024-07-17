@@ -1,5 +1,5 @@
 import ProductCard from "@/components/ui/ProductCard";
-import { Container, Grid, Stack, Typography } from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import SectionHeader from "@/components/shared/SectionHeader";
 import { TProduct } from "@/type";
@@ -8,10 +8,13 @@ const FlashSale = async () => {
   const products = await res.json();
 
   const flashSaleProducts = products.data.filter(
-    (product: TProduct) => product.flash_sale
+    (product: TProduct) =>
+      product.flashSale &&
+      new Date() >= new Date(product.flashSale.flashSaleStartDate) &&
+      new Date() <= new Date(product.flashSale.flashSaleEndDate)
   );
   return (
-    <section className="lg:py-32 py-20">
+    <Box pt={{ xs: 6, md: 10 }}>
       <Container>
         <SectionHeader
           href="flash-sale"
@@ -24,7 +27,7 @@ const FlashSale = async () => {
           ))}
         </div>
       </Container>
-    </section>
+    </Box>
   );
 };
 

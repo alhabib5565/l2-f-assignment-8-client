@@ -11,7 +11,7 @@ const Categories = async () => {
   );
   const categories = await response.json();
   return (
-    <Box pb={{ xs: 10, md: 16 }}>
+    <Box pt={{ xs: 6, md: 10 }}>
       <Container>
         <SectionHeader
           title="Categories"

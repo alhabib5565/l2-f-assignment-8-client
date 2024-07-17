@@ -1,5 +1,5 @@
 import SectionHeader from "@/components/shared/SectionHeader";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 
 import Chaldal from "../../../assets/brands/Chaldal.png";
@@ -40,11 +40,12 @@ const brandsData = [
 
 const TopBrands = () => {
   return (
-    <section
+    <Box
+      mt={{ xs: 6, md: 10 }}
       style={{
         clipPath: "polygon(0% 0%, 100% 10%, 100% 100%, 0% 90%)",
       }}
-      className="lg:py-32 py-20 bg-slate-100"
+      className="lg:py-32 py-20 bg-white"
     >
       <Container>
         <SectionHeader
@@ -69,7 +70,7 @@ const TopBrands = () => {
           ))}
         </div>
       </Container>
-    </section>
+    </Box>
   );
 };
 
