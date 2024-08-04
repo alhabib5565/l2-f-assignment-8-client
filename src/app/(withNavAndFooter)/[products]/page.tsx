@@ -9,10 +9,8 @@ const ProductsPage = async (props: any) => {
   const parms = new URLSearchParams(props.searchParams).toString();
   const res = await fetch(`${process.env.SERVER_URL}/products?${parms}`, {
     cache: "no-store",
-    next: { revalidate: 30 },
   });
   const products = await res.json();
-  console.log(`${process.env.SERVER_URL}/products?${parms}`);
 
   return (
     <Box py={{ xs: 6, md: 10 }}>

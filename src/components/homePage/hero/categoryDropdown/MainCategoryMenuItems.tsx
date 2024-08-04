@@ -20,6 +20,7 @@ const MainCategoryMenuItems = ({
   const handleCloseDropdown = () => {
     setIsMainCategoryDropdownOpen(false);
   };
+
   return (
     <Box
       onMouseEnter={handleOpenDropdown}
@@ -38,7 +39,7 @@ const MainCategoryMenuItems = ({
               color: `${isMainCategoryDropdownOpen ? "red" : ""}`,
               background: `${isMainCategoryDropdownOpen ? "#f8f8f8" : ""}`,
             }}
-            href={""}
+            href={`products?mainCategory=${items._id}`}
           >
             <Box
               sx={{

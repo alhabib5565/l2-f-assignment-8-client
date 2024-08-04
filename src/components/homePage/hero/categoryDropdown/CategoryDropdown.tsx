@@ -38,7 +38,7 @@ const CategoryDropdown = ({
             padding: "5px 10px",
             gap: 8,
           }}
-          href={""}
+          href={`products?subCategory=${subCategory._id}`}
         >
           <Image height={20} width={20} src={subCategory.imageURL} alt="" />
           <Typography

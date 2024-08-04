@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import { Box, Rating } from "@mui/material";
+import { Badge, Box, Rating } from "@mui/material";
 import Link from "next/link";
 import { TProduct } from "@/type";
 import AddToCartButton from "./AddToCartButton";
@@ -12,9 +12,20 @@ const CountDownTimer = dynamic(() => import("../shared/CountDownTimer"), {
   ssr: true,
 });
 const ProductCard = ({ product }: { product: TProduct }) => {
+  const calculatePrice = (price: number, discount: number) => {
+    return (price - (discount / 100) * price).toFixed(2);
+  };
+
+  // Inside ProductCard component
   const currentPrice =
-    product.discountPercentage &&
-    ((product?.discountPercentage / 100) * product.price).toFixed(2);
+    product.currentlyFlashSale && product.flashSale
+      ? calculatePrice(
+          product.price,
+          product.flashSale.flashSaleDiscountPercentage
+        )
+      : product.discountPercentage
+      ? calculatePrice(product.price, product.discountPercentage)
+      : product.price.toFixed(2);
 
   return (
     <Link href={`products/${product?._id}`}>
@@ -46,6 +57,27 @@ const ProductCard = ({ product }: { product: TProduct }) => {
               transition: "transform 0.1s ease-in-out",
             }}
           />
+          {product.discountPercentage ? (
+            <Typography
+              sx={{
+                position: "absolute",
+                top: 10,
+                left: 10,
+                width: 70,
+                textAlign: "center",
+                bgcolor: "primary.main",
+                fontSize: 12,
+                color: "white",
+                px: 1,
+                py: 0.5,
+                borderRadius: "15px",
+              }}
+            >
+              {product.discountPercentage}% OFF
+            </Typography>
+          ) : (
+            ""
+          )}
           <Box
             className="add-to-cart-button"
             sx={{
@@ -83,17 +115,18 @@ const ProductCard = ({ product }: { product: TProduct }) => {
               alignItems: "center",
             }}
           >
-            {product?.discountPercentage ? (
-              <Box>
-                <Typography
-                  fontSize={14}
-                  fontWeight={600}
-                  textAlign="center"
-                  component="span"
-                  color="primary.main"
-                >
-                  Tk{currentPrice}
-                </Typography>
+            <Box>
+              <Typography
+                fontSize={14}
+                fontWeight={600}
+                textAlign="center"
+                component="span"
+                color="primary.main"
+              >
+                Tk{currentPrice}
+              </Typography>
+
+              {product?.discountPercentage ? (
                 <Typography
                   fontSize={14}
                   fontWeight={600}
@@ -103,11 +136,12 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                 >
                   TK{product?.price}
                 </Typography>
-              </Box>
-            ) : (
-              <>${product?.price} </>
-            )}
-            {product.flashSale && (
+              ) : (
+                ""
+              )}
+            </Box>
+
+            {product.flashSale && product.currentlyFlashSale && (
               <CountDownTimer endDate={product.flashSale.flashSaleEndDate} />
             )}
           </Box>

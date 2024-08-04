@@ -2,7 +2,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Link from "next/link";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { TCategoryItemsData } from "./category.dropdown.type";
 import CategoryDropdown from "./CategoryDropdown";
 import Image from "next/image";
@@ -28,7 +27,7 @@ const CategoryMenuItems = ({ category }: { category: TCategoryItemsData }) => {
               color: `${isCategoryDropdownOpen ? "red" : ""}`,
               background: `${isCategoryDropdownOpen ? "#f8f8f8" : "white"}`,
             }}
-            href={""}
+            href={`products?category=${category._id}`}
           >
             <Box
               sx={{

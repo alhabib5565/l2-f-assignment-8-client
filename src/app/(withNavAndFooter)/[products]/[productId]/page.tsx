@@ -33,7 +33,7 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
   );
   const { data } = await res.json();
   return (
-    <Container sx={{ my: 8 }}>
+    <Container sx={{ py: 8 }}>
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="w-full lg:w-1/2">
           <ProductDetailsCarousel

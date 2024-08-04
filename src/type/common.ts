@@ -48,6 +48,7 @@ export type TProduct = {
   features?: string[];
   metaTitle?: string;
   metaDescription?: string;
+  currentlyFlashSale: boolean;
 };
 
 export type TSidebarRoute = {
