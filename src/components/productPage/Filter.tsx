@@ -1,31 +1,29 @@
 "use client";
-import { Typography } from "@mui/material";
+import { Box, Divider, Rating, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { TCategory } from "@/type/category.type";
 
-const brands = ["OxiClean", "Chaldal", "Downy", "Charlie's Soap", "Tide"];
+const ratings = [5, 4, 3, 2, 1];
 
-const ratings = [1, 2, 3, 4, 5];
-
-const Filter = () => {
+const Filter = ({ categories }: { categories: TCategory[] }) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
   const parmas = new URLSearchParams(searchParams);
 
-  const [selectedBrand, setSelectedBrand] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedRatings, setSelectedRatings] = useState<number>(0);
 
-  const addBrands = (brand: string) => {
-    setSelectedBrand((prev) => (prev = brand));
-    if (brand && brand !== selectedBrand) {
-      parmas.set("brand", brand);
-    } else if (brand && brand === selectedBrand) {
-      setSelectedBrand((prev) => (prev = ""));
-      parmas.delete("brand");
+  const addCategories = (category: string) => {
+    setSelectedCategory((prev) => (prev = category));
+    if (category && category !== selectedCategory) {
+      parmas.set("category", category);
+    } else if (category && category === selectedCategory) {
+      setSelectedCategory((prev) => (prev = ""));
+      parmas.delete("category");
     }
 
     router.replace(`${pathName}?${parmas.toString()}`);
@@ -34,67 +32,94 @@ const Filter = () => {
   const ratingChange = (rating: any) => {
     if (selectedRatings && selectedRatings === rating) {
       setSelectedRatings(0);
-      parmas.delete("minRating");
+      parmas.delete("rating[$gte]");
     } else {
       setSelectedRatings(rating);
-      parmas.set("minRating", rating);
+      parmas.set("rating[$gte]", rating);
     }
     router.replace(`${pathName}?${parmas.toString()}`);
   };
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setPrice(newValue as number);
-    parmas.set("minPrice", newValue.toString());
+  const handlePriceChange = (event: Event, newValue: number | number[]) => {
+    parmas.set("price[$gte]", newValue.toString());
     router.replace(`${pathName}?${parmas.toString()}`);
   };
 
   return (
-    <div className="w-[250px] border border-slate-300 rounded-md p-3 h-fit">
-      <div className="space-y-2">
-        <h5 className="text-lg font-medium text-slate-700">Brands</h5>
-        {brands.map((brand) => (
-          <div key={brand}>
+    <Box
+      sx={{
+        width: 250,
+        border: "1px solid lightgray",
+        borderRadius: "6px",
+        padding: 2,
+        bgcolor: "white",
+      }}
+    >
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+        <Typography fontSize={15} fontWeight={600} variant="body1">
+          Categorys
+        </Typography>
+        {categories.slice(0, 6).map((category) => (
+          <Box key={category._id}>
             <Checkbox
               sx={{ margin: 0, padding: 0 }}
-              checked={selectedBrand === brand}
-              onChange={() => addBrands(brand)}
+              checked={selectedCategory === category._id}
+              onChange={() => addCategories(category._id)}
             />{" "}
             <Typography variant="body1" component="span" px={1}>
-              {brand}
+              {category.categoryName}
             </Typography>
-          </div>
+          </Box>
         ))}
-      </div>
-      <div className=" space-y-2 py-4">
-        <h5 className="text-lg font-medium text-slate-700">Price Range</h5>
-        <p className="text-end">$0 to $200</p>
+      </Box>
+      <Divider sx={{ my: 1 }} />
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+        <Typography fontSize={15} fontWeight={600} variant="body1">
+          Price Range
+        </Typography>
+        <Typography component={"p"} variant="body1" textAlign={"end"}>
+          TK 0 to 10000
+        </Typography>
         <Slider
           size="medium"
           defaultValue={0}
           min={0}
-          max={100}
-          onChange={handleChange}
+          max={10000}
+          onChange={handlePriceChange}
           aria-label="medium"
           valueLabelDisplay="auto"
         />
-      </div>
-      <div className="space-y-2">
+      </Box>
+      <Divider sx={{ my: 1 }} />
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
         {/* ratings */}
-        <h5 className="text-lg font-medium text-slate-700">Ratings</h5>
+        <Typography fontSize={15} fontWeight={600} variant="body1">
+          Ratings
+        </Typography>
         {ratings.map((rating) => (
-          <div key={rating}>
-            <Checkbox
-              sx={{ margin: 0, padding: 0 }}
-              checked={selectedRatings === rating}
-              onChange={() => ratingChange(rating)}
-            />{" "}
-            <Typography variant="body1" component="span" px={1}>
-              {rating} Star
+          <Box key={rating}>
+            <Typography
+              variant="body1"
+              component="span"
+              onClick={() => ratingChange(rating)}
+              sx={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+            >
+              <Rating value={rating} readOnly size="small" />
+              {rating !== 5 && (
+                <Typography
+                  color={selectedRatings === rating ? "primary.main" : ""}
+                  component={"span"}
+                  ml={1}
+                  fontSize={14}
+                >
+                  And Up
+                </Typography>
+              )}
             </Typography>
-          </div>
+          </Box>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

@@ -12,11 +12,16 @@ const ProductsPage = async (props: any) => {
   });
   const products = await res.json();
 
+  const response = await fetch(
+    "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/categories/top/categories"
+  );
+  const categories = await response.json();
+
   return (
     <Box py={{ xs: 6, md: 10 }}>
       <Container>
         <div className="flex gap-8">
-          <Filter />{" "}
+          <Filter categories={categories?.data || []} />{" "}
           <div className="flex-1">
             <SectionHeader
               title="Our Products"

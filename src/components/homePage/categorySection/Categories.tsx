@@ -7,7 +7,7 @@ import CategoryCard from "./CategoryCard";
 
 const Categories = async () => {
   const response = await fetch(
-    "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/categories?limit=12"
+    "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/categories/top/categories"
   );
   const categories = await response.json();
   return (

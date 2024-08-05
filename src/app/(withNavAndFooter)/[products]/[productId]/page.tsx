@@ -32,6 +32,7 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
     `${process.env.SERVER_URL}/products/${params.productId}`
   );
   const { data } = await res.json();
+
   return (
     <Container sx={{ py: 8 }}>
       <div className="flex flex-col lg:flex-row gap-8">

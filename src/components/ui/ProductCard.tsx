@@ -16,7 +16,6 @@ const ProductCard = ({ product }: { product: TProduct }) => {
     return (price - (discount / 100) * price).toFixed(2);
   };
 
-  // Inside ProductCard component
   const currentPrice =
     product.currentlyFlashSale && product.flashSale
       ? calculatePrice(
@@ -25,7 +24,14 @@ const ProductCard = ({ product }: { product: TProduct }) => {
         )
       : product.discountPercentage
       ? calculatePrice(product.price, product.discountPercentage)
-      : product.price.toFixed(2);
+      : product.price.toFixed(1);
+
+  const currentDiscount =
+    product.currentlyFlashSale && product.flashSale
+      ? product.flashSale.flashSaleDiscountPercentage
+      : product.discountPercentage
+      ? product.discountPercentage
+      : false;
 
   return (
     <Link href={`products/${product?._id}`}>
@@ -57,7 +63,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
               transition: "transform 0.1s ease-in-out",
             }}
           />
-          {product.discountPercentage ? (
+          {currentDiscount ? (
             <Typography
               sx={{
                 position: "absolute",
@@ -73,7 +79,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                 borderRadius: "15px",
               }}
             >
-              {product.discountPercentage}% OFF
+              {currentDiscount}% OFF
             </Typography>
           ) : (
             ""
@@ -146,6 +152,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             )}
           </Box>
           <Rating
+            precision={0.5}
             value={product.rating}
             readOnly
             size="medium"
