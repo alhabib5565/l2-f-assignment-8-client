@@ -21,6 +21,14 @@ export type TFlashSale = {
 export type TVariants = {
   color?: string[];
 };
+
+export type TMeta = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPage: number;
+};
+
 export type TProduct = {
   _id: string;
   productId: string;

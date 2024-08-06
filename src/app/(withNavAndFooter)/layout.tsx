@@ -10,7 +10,7 @@ const layout = ({ children }: { children: ReactNode }) => {
       <Box
         pt={8}
         bgcolor="#f8f8f8"
-        pb={{ xs: 6, md: 10 }}
+        // pb={{ xs: 6, md: 10 }}
         sx={{ minHeight: "100vh", height: "100%" }}
       >
         {children}

@@ -1,22 +1,24 @@
 import Filter from "@/components/productPage/Filter";
+import ProductPagination from "@/components/productPage/ProductPagination";
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
 import { TProduct } from "@/type";
 import { Box, Container } from "@mui/material";
-import React from "react";
 
 const ProductsPage = async (props: any) => {
   const parms = new URLSearchParams(props.searchParams).toString();
-  const res = await fetch(`${process.env.SERVER_URL}/products?${parms}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.SERVER_URL}/products?${parms}&limit=12`,
+    {
+      cache: "no-store",
+    }
+  );
   const products = await res.json();
 
   const response = await fetch(
     "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/categories/top/categories"
   );
   const categories = await response.json();
-
   return (
     <Box py={{ xs: 6, md: 10 }}>
       <Container>
@@ -34,6 +36,7 @@ const ProductsPage = async (props: any) => {
             </div>
           </div>
         </div>
+        <ProductPagination meta={products?.meta} />
       </Container>
     </Box>
   );

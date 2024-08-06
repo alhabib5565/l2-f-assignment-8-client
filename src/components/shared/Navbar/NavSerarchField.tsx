@@ -1,10 +1,11 @@
 "use client";
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { useGetAllProductsQuery } from "@/redux/api/product.api";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import Link from "next/link";
 import { TProduct } from "@/type";
 import useDebounce from "@/hooks/common/useDebounce";
+import SearchIcon from "@mui/icons-material/Search";
 
 type TSearchOptions = Pick<TProduct, "productName" | "_id">;
 
@@ -46,11 +47,15 @@ const NavSearchField = () => {
         return (
           <Link
             style={{ height: "100%", width: "100%" }}
-            href={`/${option._id}`}
+            href={`products/${option._id}`}
             passHref
             key={option._id}
           >
-            <Typography {...restProps}>{option.productName}</Typography>
+            <Typography {...restProps}>
+              {" "}
+              <SearchIcon sx={{ mr: 2 }} fontSize="medium" />{" "}
+              {option.productName}
+            </Typography>
           </Link>
         );
       }}
