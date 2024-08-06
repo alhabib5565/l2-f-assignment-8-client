@@ -9,40 +9,10 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-
-const pages = [
-  {
-    href: "/",
-    name: "Home",
-  },
-  {
-    href: "/categories",
-    name: "Categories",
-  },
-  {
-    href: "/products",
-    name: "Products",
-  },
-  {
-    href: "/flash-sale",
-    name: "Flash Sale",
-  },
-  {
-    href: "/dashboard",
-    name: "Dashboard",
-  },
-  // {
-  //   href: "/about-us",
-  //   name: "About Us",
-  // },
-  // {
-  //   href: "/contact-us",
-  //   name: "Contact Us",
-  // },
-];
+import { pages } from "@/constent";
+import NavSerarchField from "./NavSerarchField";
 
 const AuthButton = dynamic(() => import("./AuthButton"), { ssr: false });
 
@@ -60,20 +30,20 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar component="nav" position="fixed">
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
-            noWrap
             component="a"
             href="/"
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
+              // display: { xs: "none", md: "flex" },
               fontWeight: 700,
-              color: "inherit",
+              // color: "inherit",
+
               textDecoration: "none",
             }}
           >
@@ -106,7 +76,7 @@ const Navbar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                height: 200,
+                height: 300,
                 display: { xs: "block", md: "none" },
               }}
             >
@@ -120,31 +90,30 @@ const Navbar = () => {
             </Menu>
           </Box>
 
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            QuickShop
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Link key={page.href} href={page.href}>
                 <MenuItem
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ color: "white", display: "block" }}
                 >
                   {page.name}
                 </MenuItem>
@@ -152,21 +121,8 @@ const Navbar = () => {
             ))}
           </Box>
 
+          <NavSerarchField />
           <AuthButton />
-          {/* {user?.email ? (
-            <Button variant="outlined" color="error" sx={{ bgcolor: "white" }}>
-              Log out
-            </Button>
-          ) : (
-            <Button
-              href="/login"
-              variant="outlined"
-              color="error"
-              sx={{ bgcolor: "white" }}
-            >
-              Login
-            </Button>
-          )} */}
         </Toolbar>
       </Container>
     </AppBar>

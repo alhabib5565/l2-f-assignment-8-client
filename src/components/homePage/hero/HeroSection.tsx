@@ -5,7 +5,7 @@ import MainCategoryDropdown from "./categoryDropdown/DropdownContainer";
 
 const HeroSection = () => {
   return (
-    <Container sx={{ mt: 3 }}>
+    <Container sx={{ mt: 4 }}>
       <Grid container spacing={2}>
         <Grid display={{ xs: "none", md: "grid" }} item md={3}>
           <MainCategoryDropdown />

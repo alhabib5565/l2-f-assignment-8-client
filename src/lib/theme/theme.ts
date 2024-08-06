@@ -1,30 +1,31 @@
-'use client'
-import { createTheme } from '@mui/material/styles';
+"use client";
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#017ADA'
-        },
-        secondary: {
-            main: '#F4F7FE'
-        }
+  palette: {
+    primary: {
+      main: "#017ADA",
     },
-    components: {
-        MuiButton: {
-            defaultProps: {
-                variant: 'contained'
-            }
-        },
-        MuiContainer: {
-            defaultProps: {
-                maxWidth: 'lg'
-            }
-        },
+    secondary: {
+      main: "#F4F7FE",
     },
-    typography: {
-        body1: {
-            color: '#0B1134CC'
-        }
-    }
-})
+  },
+
+  components: {
+    MuiButton: {
+      defaultProps: {
+        variant: "contained",
+      },
+    },
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: "lg",
+      },
+    },
+  },
+  typography: {
+    body1: {
+      color: "#0B1134CC",
+    },
+  },
+});

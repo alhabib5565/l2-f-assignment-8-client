@@ -24,7 +24,6 @@ const CategoryMenuItems = ({ category }: { category: TCategoryItemsData }) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              color: `${isCategoryDropdownOpen ? "red" : ""}`,
               background: `${isCategoryDropdownOpen ? "#f8f8f8" : "white"}`,
             }}
             href={`products?category=${category._id}`}
@@ -38,14 +37,16 @@ const CategoryMenuItems = ({ category }: { category: TCategoryItemsData }) => {
             >
               <Image height={20} width={20} src={category.imageURL} alt="" />
               <Typography
-                color={`${isCategoryDropdownOpen ? "red" : ""}`}
+                color={`${isCategoryDropdownOpen ? "primary.main" : ""}`}
                 fontSize={14}
               >
                 {category.categoryName}
               </Typography>{" "}
             </Box>
             {category.subCategories && category.subCategories.length ? (
-              <KeyboardArrowRight />
+              <KeyboardArrowRight
+                color={`${isCategoryDropdownOpen ? "primary" : "inherit"}`}
+              />
             ) : (
               ""
             )}

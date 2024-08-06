@@ -42,7 +42,7 @@ const CategoryDropdown = ({
         >
           <Image height={20} width={20} src={subCategory.imageURL} alt="" />
           <Typography
-            color={`${isCategoryDropdownOpen ? "red" : ""}`}
+            color={`${isCategoryDropdownOpen ? "primary.main" : ""}`}
             fontSize={14}
           >
             {subCategory.categoryName}

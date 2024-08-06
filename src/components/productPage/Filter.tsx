@@ -1,10 +1,11 @@
 "use client";
-import { Box, Divider, Rating, Typography } from "@mui/material";
+import { Box, Button, Divider, Rating, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { TCategory } from "@/type/category.type";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ratings = [5, 4, 3, 2, 1];
 
@@ -45,6 +46,15 @@ const Filter = ({ categories }: { categories: TCategory[] }) => {
     router.replace(`${pathName}?${parmas.toString()}`);
   };
 
+  const handleClearFiltering = () => {
+    parmas.delete("rating[$gte]");
+    parmas.delete("price[$gte]");
+    parmas.delete("category");
+    setSelectedCategory("");
+    setSelectedRatings(0);
+    router.replace(`${pathName}?${parmas.toString()}`);
+  };
+
   return (
     <Box
       sx={{
@@ -53,8 +63,22 @@ const Filter = ({ categories }: { categories: TCategory[] }) => {
         borderRadius: "6px",
         padding: 2,
         bgcolor: "white",
+        height: 500,
+        overflowY: "auto",
+        position: "sticky",
+        top: 100,
       }}
     >
+      <Box sx={{ display: "flex", justifyContent: "end" }}>
+        <Button
+          onClick={handleClearFiltering}
+          color="error"
+          variant="text"
+          size="small"
+        >
+          Clear <CloseIcon fontSize="small" />
+        </Button>
+      </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
         <Typography fontSize={15} fontWeight={600} variant="body1">
           Categorys

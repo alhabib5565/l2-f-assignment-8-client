@@ -36,7 +36,7 @@ const MainCategoryMenuItems = ({
               justifyContent: "space-between",
               alignItems: "center",
               padding: "5px 10px",
-              color: `${isMainCategoryDropdownOpen ? "red" : ""}`,
+              // color: `${isMainCategoryDropdownOpen ? "primary.main" : ""}`,
               background: `${isMainCategoryDropdownOpen ? "#f8f8f8" : ""}`,
             }}
             href={`products?mainCategory=${items._id}`}
@@ -50,14 +50,16 @@ const MainCategoryMenuItems = ({
             >
               <Image height={20} width={20} src={items.imageURL} alt="" />
               <Typography
-                color={`${isMainCategoryDropdownOpen ? "red" : ""}`}
+                color={`${isMainCategoryDropdownOpen ? "primary.main" : ""}`}
                 fontSize={14}
               >
                 {items.mainCategoryName}
               </Typography>
             </Box>
             {items.categories && items.categories.length ? (
-              <KeyboardArrowRight />
+              <KeyboardArrowRight
+                color={`${isMainCategoryDropdownOpen ? "primary" : "inherit"}`}
+              />
             ) : (
               ""
             )}{" "}

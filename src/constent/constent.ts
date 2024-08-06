@@ -31,3 +31,22 @@ export const months = [
   "November",
   "December",
 ];
+
+export const pages = [
+  {
+    href: "/categories",
+    name: "Categories",
+  },
+  {
+    href: "/products",
+    name: "Products",
+  },
+  {
+    href: "/flash-sale",
+    name: "Flash Sale",
+  },
+  {
+    href: "/dashboard",
+    name: "Dashboard",
+  },
+];

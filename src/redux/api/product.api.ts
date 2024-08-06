@@ -10,12 +10,14 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+
     getAllProducts: builder.query({
-      query: () => ({
-        url: "/products",
+      query: ({ query }) => ({
+        url: `/products/?${query || ""}`,
       }),
       providesTags: ["product"],
     }),
+
     addToFlashSale: builder.mutation({
       query: ({ id, data }) => ({
         url: `/products/add-flash-sale/${id}`,
@@ -30,4 +32,5 @@ export const {
   useCreateProductMutation,
   useGetAllProductsQuery,
   useAddToFlashSaleMutation,
+  // useGetAllProductsNameQuery,
 } = productApi;
