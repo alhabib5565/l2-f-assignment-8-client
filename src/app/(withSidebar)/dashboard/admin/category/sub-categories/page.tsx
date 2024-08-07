@@ -20,6 +20,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 import React, { useState } from "react";
 const SubCategoryPage = () => {
+  //state
   const [sortOrder, setSortOrder] = useState("");
   const [status, setStatus] = useState<TStatus | "">("");
   const [createSubCategoryModalOpen, setCreateSubCategoryModalOpen] =
@@ -29,8 +30,10 @@ const SubCategoryPage = () => {
     page: 0,
     searchTerm: "",
   });
+
   const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
 
+  //query
   const { data, isLoading } = useGetSubCategoriesQuery({
     query: `page=${queryInfo.page + 1}&limit=${
       queryInfo.rowsPerPage
@@ -38,6 +41,7 @@ const SubCategoryPage = () => {
   });
   const meta = data?.meta;
 
+  //handler
   const handleChange = (event: SelectChangeEvent) => {
     setSortOrder(event.target.value);
   };
@@ -52,6 +56,7 @@ const SubCategoryPage = () => {
     setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
   };
 
+  // table columns
   const columns: GridColDef[] = [
     { field: "subCategoryId", headerName: "ID", width: 90 },
     {

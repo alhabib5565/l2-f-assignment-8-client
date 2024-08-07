@@ -66,7 +66,7 @@ const Filter = ({ categories }: { categories: TCategory[] }) => {
         height: 500,
         overflowY: "auto",
         position: "sticky",
-        top: 100,
+        top: 68,
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "end" }}>

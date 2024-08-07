@@ -20,11 +20,13 @@ const FlashSale = async () => {
           title=" Flash Sale"
           description=" Limited time, unlimited savings!"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-          {flashSaleProducts.data.map((product: TProduct) => (
-            <ProductCard key={product._id} product={product} />
+        <Grid container spacing={2} mt={3}>
+          {flashSaleProducts.data.slice(0, 10).map((product: TProduct) => (
+            <Grid item xs={12} sm={6} md={4} lg={2.4} key={product._id}>
+              <ProductCard product={product} />
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </Container>
     </Box>
   );

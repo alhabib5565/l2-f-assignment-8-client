@@ -30,7 +30,7 @@ const HeroCarousel = () => {
     <div className="slider-container">
       <Slider {...settings}>
         {images.map((img, index) => (
-          <Box height="350px" maxWidth={910} key={index}>
+          <Box height="350px" maxWidth={"100%"} key={index}>
             <Image
               src={img}
               alt={`Hero Carousel Image ${index} `}

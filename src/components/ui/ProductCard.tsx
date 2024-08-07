@@ -116,9 +116,10 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           <Box
             sx={{
               display: "flex",
-              gap: 2,
+              gapx: 1,
               justifyContent: "space-between",
               alignItems: "center",
+              flexWrap: "wrap",
             }}
           >
             <Box>

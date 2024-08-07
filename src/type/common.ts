@@ -57,6 +57,8 @@ export type TProduct = {
   metaTitle?: string;
   metaDescription?: string;
   currentlyFlashSale: boolean;
+
+  createdAt: Date;
 };
 
 export type TSidebarRoute = {

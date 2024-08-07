@@ -22,8 +22,6 @@ const ProductPagination = ({ meta }: { meta: TMeta }) => {
         variant="outlined"
         shape="rounded"
         color="primary"
-
-        // page={meta?.totalPage}
       />
     </Box>
   );

@@ -21,6 +21,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 import React, { useState } from "react";
 const CategoryPage = () => {
+  //stat
   const [sortOrder, setSortOrder] = useState("");
   const [status, setStatus] = useState<TStatus | "">("");
   const [queryInfo, setQueryInfo] = React.useState({
@@ -29,8 +30,10 @@ const CategoryPage = () => {
     searchTerm: "",
   });
   const [createCategoryModalOpen, setCreateCategoryModalOpen] = useState(false);
+
   const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
 
+  //query
   const { data, isLoading } = useGetCategoriesQuery({
     query: `page=${queryInfo.page + 1}&limit=${
       queryInfo.rowsPerPage
@@ -38,6 +41,7 @@ const CategoryPage = () => {
   });
   const meta = data?.meta as TMeta;
 
+  //handler
   const handleChange = (event: SelectChangeEvent) => {
     setSortOrder(event.target.value);
   };
@@ -52,6 +56,7 @@ const CategoryPage = () => {
     setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
   };
 
+  // table columns
   const columns: GridColDef[] = [
     { field: "categoryId", headerName: "Category ID", width: 120 },
     {

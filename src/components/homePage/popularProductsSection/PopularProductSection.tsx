@@ -1,7 +1,7 @@
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
 import { TProduct } from "@/type";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 
 const PopularProductSection = async () => {
@@ -17,11 +17,13 @@ const PopularProductSection = async () => {
           description="Discover what's trending! Explore our selection of customer-favorite laundry essentials."
           href="products"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-          {products.data.slice(0, 8).map((product: TProduct) => (
-            <ProductCard product={product} key={product._id} />
+        <Grid container spacing={2} mt={3}>
+          {products.data.slice(0, 10).map((product: TProduct) => (
+            <Grid item xs={12} sm={6} md={4} lg={2.4} key={product._id}>
+              <ProductCard product={product} />
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </Container>
     </Box>
   );
