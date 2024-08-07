@@ -22,11 +22,11 @@ import Image from "next/image";
 import React, { useState } from "react";
 const MainCategorypage = () => {
   //state
-  const [sortOrder, setSortOrder] = useState("");
   const [queryInfo, setQueryInfo] = React.useState({
     rowsPerPage: 10,
     page: 0,
     searchTerm: "",
+    sortOrder: "",
   });
   const [status, setStatus] = useState<TStatus | "">("");
   const [createMainCategoryModalOpen, setCreateMainCategoryModalOpen] =
@@ -38,7 +38,7 @@ const MainCategorypage = () => {
   const { data, isLoading } = useGetMainCategoriesQuery({
     query: `page=${queryInfo.page + 1}&limit=${
       queryInfo.rowsPerPage
-    }&searchTerm=${debouncedValue}`,
+    }&searchTerm=${debouncedValue}&sort=${queryInfo.sortOrder}`,
   });
   const meta = data?.meta as TMeta;
 
@@ -53,8 +53,8 @@ const MainCategorypage = () => {
     setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setSortOrder(event.target.value);
+  const handleSortOrderChange = (event: SelectChangeEvent) => {
+    setQueryInfo((prev) => ({ ...prev, sortOrder: event.target.value }));
   };
 
   //columns
@@ -164,16 +164,16 @@ const MainCategorypage = () => {
           />
           <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
-              value={sortOrder}
-              onChange={handleChange}
+              value={queryInfo.sortOrder}
+              onChange={handleSortOrderChange}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value="">
                 <em>Short by date</em>
               </MenuItem>
-              <MenuItem value={10}>Newest</MenuItem>
-              <MenuItem value={20}>Lowest</MenuItem>
+              <MenuItem value="-createAt">Newest</MenuItem>
+              <MenuItem value="createAt">Lowest</MenuItem>
             </Select>
           </FormControl>
         </Stack>

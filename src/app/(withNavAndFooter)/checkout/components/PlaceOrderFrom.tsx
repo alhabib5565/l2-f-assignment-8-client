@@ -9,7 +9,6 @@ import {
 } from "@/validationSchema/validation.procedCheckout";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import MySelect from "@/components/form/MySelect";
@@ -23,6 +22,7 @@ import { useGetUpazilaOptions } from "@/hooks/locationOptionHook/useGetUpazilaOp
 
 const PlaceOrderFrom = () => {
   const { user } = useAppSelector((state) => state.auth);
+  console.log(user);
 
   const divisionOptions = useGetDivisionOptions();
   const districtOptions = useGetDistrictOptions();

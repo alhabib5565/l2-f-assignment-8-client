@@ -29,6 +29,7 @@ const SubCategoryPage = () => {
     rowsPerPage: 10,
     page: 0,
     searchTerm: "",
+    sortOrder: "",
   });
 
   const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
@@ -37,13 +38,14 @@ const SubCategoryPage = () => {
   const { data, isLoading } = useGetSubCategoriesQuery({
     query: `page=${queryInfo.page + 1}&limit=${
       queryInfo.rowsPerPage
-    }&searchTerm=${debouncedValue}`,
+    }&searchTerm=${debouncedValue}&sort=${queryInfo.sortOrder}`,
   });
   const meta = data?.meta;
 
   //handler
-  const handleChange = (event: SelectChangeEvent) => {
-    setSortOrder(event.target.value);
+
+  const handleSortOrderChange = (event: SelectChangeEvent) => {
+    setQueryInfo((prev) => ({ ...prev, sortOrder: event.target.value }));
   };
 
   const handleCeateSubCategoryModalOpen = () => {
@@ -165,16 +167,16 @@ const SubCategoryPage = () => {
           />
           <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
-              value={sortOrder}
-              onChange={handleChange}
+              value={queryInfo.sortOrder}
+              onChange={handleSortOrderChange}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value="">
                 <em>Short by date</em>
               </MenuItem>
-              <MenuItem value={10}>Newest</MenuItem>
-              <MenuItem value={20}>Lowest</MenuItem>
+              <MenuItem value="-createAt">Newest</MenuItem>
+              <MenuItem value="createAt">Lowest</MenuItem>
             </Select>
           </FormControl>
         </Stack>

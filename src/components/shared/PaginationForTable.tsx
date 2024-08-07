@@ -6,6 +6,7 @@ type TPaginationInfo = {
   rowsPerPage: number;
   page: number;
   searchTerm: string;
+  sortOrder: string;
 };
 
 type TPaginationForTableProps = {

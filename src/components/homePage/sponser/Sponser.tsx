@@ -10,25 +10,27 @@ import Marquee from "react-fast-marquee";
 const logos = [logo1, logo2, logo3, logo4, logo5];
 const Sponser = () => {
   return (
-    <Box pt={{ xs: 6, md: 10 }}>
+    <Box pt={{ xs: 6, md: 10 }} mb={3}>
       <Container>
-        <Marquee>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            {logos.map((logo, index) => (
+        {/* <Marquee> */}
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          {logos.map((logo, index) => (
+            <Box width={200} height={100} key={index} overflow="hidden">
               <Image
-                key={index}
                 src={logo}
                 alt="logo"
                 width={200}
                 height={100}
+                style={{ width: "100%", height: "100%" }}
               />
-            ))}
-          </Stack>
-        </Marquee>
+            </Box>
+          ))}
+        </Stack>
+        {/* </Marquee> */}
       </Container>
     </Box>
   );

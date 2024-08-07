@@ -6,8 +6,12 @@ import { useGetAllProductsQuery } from "@/redux/api/product.api";
 import {
   Avatar,
   Button,
+  FormControl,
   Input,
+  MenuItem,
   Rating,
+  Select,
+  SelectChangeEvent,
   Stack,
   TablePagination,
   Typography,
@@ -27,20 +31,23 @@ import PaginationForTable from "@/components/shared/PaginationForTable";
 import useDebounce from "@/hooks/common/useDebounce";
 
 const ProductsPage = () => {
+  //state
   const [open, setOpen] = React.useState(false);
   const [productId, setProductId] = React.useState("");
   const [queryInfo, setQueryInfo] = React.useState({
     rowsPerPage: 10,
     page: 0,
     searchTerm: "",
+    sortOrder: "",
   });
 
   const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
 
+  //query
   const { data, isLoading } = useGetAllProductsQuery({
     query: `page=${queryInfo.page + 1}&limit=${
       queryInfo.rowsPerPage
-    }&searchTerm=${debouncedValue}`,
+    }&searchTerm=${debouncedValue}&sort=${queryInfo.sortOrder}`,
   });
 
   const products = data?.data;
@@ -55,6 +62,10 @@ const ProductsPage = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
+  };
+
+  const handleSortOrderChange = (event: SelectChangeEvent) => {
+    setQueryInfo((prev) => ({ ...prev, sortOrder: event.target.value }));
   };
 
   const columns: GridColDef[] = [
@@ -165,11 +176,27 @@ const ProductsPage = () => {
           my={2}
         >
           <Input placeholder="Search..." onChange={handleSearchInputChage} />
-          <Link href="/dashboard/admin/products/add-product">
-            <Button>
-              Add Product <Add />
-            </Button>
-          </Link>
+          <Box display="flex" gap={1}>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <Select
+                value={queryInfo.sortOrder}
+                onChange={handleSortOrderChange}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>Short by date</em>
+                </MenuItem>
+                <MenuItem value="-createAt">Newest</MenuItem>
+                <MenuItem value="createAt">Lowest</MenuItem>
+              </Select>
+            </FormControl>
+            <Link href="/dashboard/admin/products/add-product">
+              <Button>
+                Add Product <Add />
+              </Button>
+            </Link>
+          </Box>
         </Stack>
         <Box sx={{ width: "100%" }}>
           <DataGrid
