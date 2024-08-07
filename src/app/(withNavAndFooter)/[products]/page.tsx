@@ -16,7 +16,7 @@ const ProductsPage = async (props: any) => {
   const products = await res.json();
 
   const response = await fetch(
-    "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/categories/top/categories"
+    `${process.env.SERVER_URL}/categories/top/categories`
   );
   const categories = await response.json();
   return (

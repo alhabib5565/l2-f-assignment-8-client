@@ -9,6 +9,7 @@ import {
   Input,
   Rating,
   Stack,
+  TablePagination,
   Typography,
 } from "@mui/material";
 import {
@@ -21,17 +22,39 @@ import {
 import Link from "next/link";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
 import AddToFlashSaleModal from "@/components/dashboard/admin/flashSale/AddToFlashSaleModal";
+import { TMeta } from "@/type";
+import PaginationForTable from "@/components/shared/PaginationForTable";
+import useDebounce from "@/hooks/common/useDebounce";
 
 const ProductsPage = () => {
   const [open, setOpen] = React.useState(false);
   const [productId, setProductId] = React.useState("");
-  const { data, isLoading } = useGetAllProductsQuery({});
+  const [queryInfo, setQueryInfo] = React.useState({
+    rowsPerPage: 10,
+    page: 0,
+    searchTerm: "",
+  });
+
+  const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
+
+  const { data, isLoading } = useGetAllProductsQuery({
+    query: `page=${queryInfo.page + 1}&limit=${
+      queryInfo.rowsPerPage
+    }&searchTerm=${debouncedValue}`,
+  });
+
   const products = data?.data;
+  const meta = data?.meta as TMeta;
 
   const handleAddToFlashSaleModalOpen = (productId: string) => {
-    console.log(productId);
     setProductId(productId);
     setOpen((prev) => !prev);
+  };
+
+  const handleSearchInputChage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
   };
 
   const columns: GridColDef[] = [
@@ -141,7 +164,7 @@ const ProductsPage = () => {
           mx={1}
           my={2}
         >
-          <Input placeholder="Search..." />
+          <Input placeholder="Search..." onChange={handleSearchInputChage} />
           <Link href="/dashboard/admin/products/add-product">
             <Button>
               Add Product <Add />
@@ -153,17 +176,24 @@ const ProductsPage = () => {
             sx={{
               border: "none",
               borderTop: "1px solid lightgray",
-              borderTopRightRadius: 0,
-              borderTopLeftRadius: 0,
+              borderBottom: "1px solid lightgray",
+              borderRadius: 0,
             }}
             loading={isLoading}
-            pageSizeOptions={[10, 20, { value: 30, label: "30" }]}
+            // pagination={false}
+            hideFooter
             getRowId={(row) => row._id}
             rows={products ?? []}
             columns={columns}
             autoHeight
           />
         </Box>
+
+        <PaginationForTable
+          meta={meta}
+          paginationInfo={queryInfo}
+          setPaginationInfo={setQueryInfo}
+        />
         {open && (
           <AddToFlashSaleModal
             productId={productId}

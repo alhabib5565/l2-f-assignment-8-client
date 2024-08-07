@@ -1,7 +1,10 @@
 "use client";
 import CreateSubCategoryModal from "@/components/dashboard/categories/subCategory/CreateSubCategoryModal";
+import PaginationForTable from "@/components/shared/PaginationForTable";
+import useDebounce from "@/hooks/common/useDebounce";
+import { useGetSubCategoriesQuery } from "@/redux/api/categories/subCategory.api";
 import { TStatus } from "@/type/category.type";
-import { Add } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -17,21 +20,40 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 import React, { useState } from "react";
 const SubCategoryPage = () => {
-  const [age, setAge] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
   const [status, setStatus] = useState<TStatus | "">("");
   const [createSubCategoryModalOpen, setCreateSubCategoryModalOpen] =
     useState(false);
+  const [queryInfo, setQueryInfo] = React.useState({
+    rowsPerPage: 10,
+    page: 0,
+    searchTerm: "",
+  });
+  const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
+
+  const { data, isLoading } = useGetSubCategoriesQuery({
+    query: `page=${queryInfo.page + 1}&limit=${
+      queryInfo.rowsPerPage
+    }&searchTerm=${debouncedValue}`,
+  });
+  const meta = data?.meta;
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
+    setSortOrder(event.target.value);
   };
 
   const handleCeateSubCategoryModalOpen = () => {
     setCreateSubCategoryModalOpen(true);
   };
 
+  const handleSearchInputChage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
+  };
+
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "subCategoryId", headerName: "ID", width: 90 },
     {
       field: "imageURL",
       headerName: "Image",
@@ -44,125 +66,57 @@ const SubCategoryPage = () => {
             alignItems: "center",
           }}
         >
-          <Image
-            height={50}
-            width={50}
-            src={
-              "https://dreamspos.dreamstechnologies.com/html/template/assets/img/products/product1.jpg"
-            }
-            alt=""
-          />
+          <Image height={50} width={50} src={row?.row.imageURL} alt="" />
         </Box>
       ),
     },
-    { field: "SubCategoryName", headerName: "Sub Category Name", flex: 1 },
+    { field: "subCategoryName", headerName: "Sub Category Name", flex: 1 },
     { field: "metaTitle", headerName: "Meta Title", flex: 1 },
     {
       field: "isDeleted",
       headerName: "Status",
-      width: 200,
+      width: 150,
       renderCell: (row) => (
-        <Box
-          sx={{
-            display: "flex",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              padding: "0px 10px",
-              border: "2px solid green",
-              borderRadius: 10,
-            }}
+        <FormControl size="small" sx={{ m: 1, minWidth: 100 }}>
+          <Select
+            value={row.row.status}
+            onChange={(e) => setStatus(e.target.value as typeof status)}
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
           >
-            {`${row.row.isDeleted}`}
-          </Typography>
-          <FormControl size="small" sx={{ m: 1, minWidth: 100 }}>
-            <Select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as typeof status)}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              <MenuItem value="">
-                <em>Status</em>
-              </MenuItem>
-              <MenuItem value={"Active"}>Active</MenuItem>
-              <MenuItem value={"Blocked"}>Blocked</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+            <MenuItem value={"Active"}>Active</MenuItem>
+            <MenuItem value={"Blocked"}>Blocked</MenuItem>
+          </Select>
+        </FormControl>
       ),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      headerAlign: "right",
+      renderCell: (row) => {
+        return (
+          <Stack
+            height="100%"
+            direction="row"
+            alignItems="center"
+            justifyContent="end"
+            flexShrink={"inherit"}
+            gap={1}
+          >
+            <Button variant="outlined" color="error">
+              <Delete />
+            </Button>
+            <Button variant="outlined" color="info">
+              <Edit />
+            </Button>
+          </Stack>
+        );
+      },
     },
   ];
 
-  const rows = [
-    {
-      id: "1",
-      SubCategoryName: "Electronics",
-      imageURL: "https://example.com/images/electronics.jpg",
-      metaTitle: "Electronics - Latest Gadgets and Devices",
-      // metaDescription:
-      // "Find the latest electronics including smartphones, laptops, and accessories.",
-      isDeleted: false,
-    },
-    {
-      id: "2",
-      SubCategoryName: "Books",
-      imageURL: "https://example.com/images/books.jpg",
-      metaTitle: "Books - Novels, Non-Fiction, and More",
-      metaDescription:
-        "Discover a wide range of books including bestsellers, novels, and educational materials.",
-      isDeleted: false,
-    },
-    {
-      id: "3",
-      SubCategoryName: "Fashion",
-      imageURL: "https://example.com/images/fashion.jpg",
-      metaTitle: "Fashion - Trendy Apparel and Accessories",
-      metaDescription:
-        "Shop the latest fashion trends including clothes, shoes, and accessories.",
-      isDeleted: false,
-    },
-    {
-      id: "4",
-      SubCategoryName: "Home & Garden",
-      imageURL: "https://example.com/images/home-garden.jpg",
-      metaTitle: "Home & Garden - Furniture, Decor, and More",
-      metaDescription:
-        "Find everything you need for your home and garden including furniture, decor, and tools.",
-      isDeleted: false,
-    },
-    {
-      id: "5",
-      SubCategoryName: "Toys",
-      imageURL: "https://example.com/images/toys.jpg",
-      metaTitle: "Toys - Fun and Educational Toys for Kids",
-      metaDescription:
-        "Explore a wide range of toys including educational and fun toys for kids of all ages.",
-      isDeleted: false,
-    },
-    {
-      id: "6",
-      SubCategoryName: "Sports",
-      imageURL: "https://example.com/images/sports.jpg",
-      metaTitle: "Sports - Equipment and Apparel",
-      metaDescription:
-        "Get the best sports equipment and apparel for all your favorite activities.",
-      isDeleted: false,
-    },
-    {
-      id: "7",
-      SubCategoryName: "Health & Beauty",
-      imageURL: "https://example.com/images/health-beauty.jpg",
-      metaTitle: "Health & Beauty - Skincare, Makeup, and Wellness",
-      metaDescription:
-        "Discover a range of health and beauty products including skincare, makeup, and wellness items.",
-      isDeleted: false,
-    },
-  ];
   return (
     <>
       <Stack
@@ -186,22 +140,27 @@ const SubCategoryPage = () => {
       </Stack>
       <Box
         sx={{
-          my: 3,
+          border: "1px solid lightgray",
         }}
         bgcolor="white"
-        padding={2}
         borderRadius={2}
       >
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          mb={3}
+          mx={1}
+          my={2}
         >
-          <TextField placeholder="Search..." size="small" type="search" />
-          <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
+          <TextField
+            onChange={handleSearchInputChage}
+            placeholder="Search..."
+            size="small"
+            type="search"
+          />
+          <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
-              value={age}
+              value={sortOrder}
               onChange={handleChange}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
@@ -214,7 +173,28 @@ const SubCategoryPage = () => {
             </Select>
           </FormControl>
         </Stack>
-        <DataGrid rowHeight={60} rows={rows} columns={columns} />
+        <DataGrid
+          sx={{
+            border: "none",
+            borderTop: "1px solid lightgray",
+            borderBottom: "1px solid lightgray",
+            borderRadius: 0,
+          }}
+          autoHeight
+          loading={isLoading}
+          hideFooter
+          rowHeight={60}
+          rows={data?.data || []}
+          getRowId={(row) => row._id}
+          columns={columns}
+        />
+
+        <PaginationForTable
+          meta={meta}
+          paginationInfo={queryInfo}
+          setPaginationInfo={setQueryInfo}
+        />
+
         {createSubCategoryModalOpen && (
           <CreateSubCategoryModal
             open={createSubCategoryModalOpen}

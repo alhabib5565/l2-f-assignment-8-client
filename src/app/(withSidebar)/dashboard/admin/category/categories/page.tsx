@@ -1,6 +1,9 @@
 "use client";
 import CreateCategoryModal from "@/components/dashboard/categories/category/CreateCategoryModal";
+import PaginationForTable from "@/components/shared/PaginationForTable";
+import useDebounce from "@/hooks/common/useDebounce";
 import { useGetCategoriesQuery } from "@/redux/api/categories/category.api";
+import { TMeta } from "@/type";
 import { TStatus } from "@/type/category.type";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import {
@@ -18,17 +21,35 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 import React, { useState } from "react";
 const CategoryPage = () => {
-  const [age, setAge] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
   const [status, setStatus] = useState<TStatus | "">("");
+  const [queryInfo, setQueryInfo] = React.useState({
+    rowsPerPage: 10,
+    page: 0,
+    searchTerm: "",
+  });
   const [createCategoryModalOpen, setCreateCategoryModalOpen] = useState(false);
-  const { data, isLoading } = useGetCategoriesQuery({});
+  const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
+
+  const { data, isLoading } = useGetCategoriesQuery({
+    query: `page=${queryInfo.page + 1}&limit=${
+      queryInfo.rowsPerPage
+    }&searchTerm=${debouncedValue}`,
+  });
+  const meta = data?.meta as TMeta;
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
+    setSortOrder(event.target.value);
   };
 
   const handleCeateMainCategoryModalOpen = () => {
     setCreateCategoryModalOpen(true);
+  };
+
+  const handleSearchInputChage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
   };
 
   const columns: GridColDef[] = [
@@ -148,22 +169,27 @@ const CategoryPage = () => {
       </Stack>
       <Box
         sx={{
-          my: 3,
+          border: "1px solid lightgray",
         }}
         bgcolor="white"
-        padding={2}
         borderRadius={2}
       >
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          mb={3}
+          mx={1}
+          my={2}
         >
-          <TextField placeholder="Search..." size="small" type="search" />
-          <FormControl size="small" sx={{ m: 1, minWidth: 120 }}>
+          <TextField
+            onChange={handleSearchInputChage}
+            placeholder="Search..."
+            size="small"
+            type="search"
+          />
+          <FormControl size="small" sx={{ minWidth: 120 }}>
             <Select
-              value={age}
+              value={sortOrder}
               onChange={handleChange}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
@@ -177,12 +203,25 @@ const CategoryPage = () => {
           </FormControl>
         </Stack>
         <DataGrid
+          sx={{
+            border: "none",
+            borderTop: "1px solid lightgray",
+            borderBottom: "1px solid lightgray",
+            borderRadius: 0,
+          }}
           autoHeight
           getRowId={(row) => row._id}
           loading={isLoading}
+          hideFooter
           rowHeight={60}
           rows={data?.data || []}
           columns={columns}
+        />
+
+        <PaginationForTable
+          meta={meta}
+          paginationInfo={queryInfo}
+          setPaginationInfo={setQueryInfo}
         />
         {createCategoryModalOpen && (
           <CreateCategoryModal
