@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { toast } from "sonner";
 import CartIcon from "./CartIcon";
+import { deleteCookies } from "@/actions/deleteCookie";
 
 const AuthButton = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -11,6 +12,7 @@ const AuthButton = () => {
   const handleLogout = () => {
     dispatch(logout());
     toast.success("Logout succesfull");
+    deleteCookies(["refreshToken"]);
   };
   return (
     <>

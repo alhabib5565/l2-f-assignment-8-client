@@ -1,14 +1,15 @@
-"use server";
-
 import { FieldValues } from "react-hook-form";
 
 export const loginUser = async (data: FieldValues) => {
-  const response = await fetch(`${process.env.SERVER_URL}/auth/login`, {
+  const res = await fetch(`http://localhost:5000/api/v1/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+    credentials: "include",
+    cache: "no-store",
   });
-  return await response.json();
+  const userInfo = await res.json();
+  return userInfo;
 };

@@ -41,7 +41,7 @@ const ShowReview = async ({ productId }: { productId: string }) => {
             key={index}
             sx={{ bgcolor: "secondary.main", padding: 2, borderRadius: 2 }}
           >
-            <Stack direction="row" alignItems="center" spacing={1}>
+            {/* <Stack direction="row" alignItems="center" spacing={1}>
               <Avatar alt="Remy Sharp" src="">
                 {review.userEmail.charAt(0).toUpperCase()}
               </Avatar>
@@ -58,12 +58,12 @@ const ShowReview = async ({ productId }: { productId: string }) => {
                   {review.userEmail}
                 </Typography>
               </Box>
-            </Stack>
+            </Stack> */}
             <Box sx={{ mt: 2 }}>
               <Rating
                 size="large"
                 name="read-only"
-                value={review?.ratings || 0}
+                value={review?.rating || 0}
                 readOnly
               />
               <Typography component="legend">{review.review}</Typography>

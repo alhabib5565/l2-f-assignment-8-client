@@ -8,7 +8,8 @@ import { Button, TextField } from "@mui/material";
 import MyModal, { TModalProps } from "@/components/modal/MyModal";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
-import { addReview } from "@/actions/addReview";
+// import { addReview } from "@/actions/addReview";
+import { useCreateFeedbackMutation } from "@/redux/api/productFeedback.api";
 
 const labels: { [index: string]: string } = {
   0.5: "Useless",
@@ -37,6 +38,8 @@ const ProvideReview = ({ open, setOpen, productId }: TProvideReviewModal) => {
   const [hover, setHover] = React.useState(-1);
   const [review, setReview] = React.useState("");
 
+  const [createFeedback] = useCreateFeedbackMutation();
+
   const user = useAppSelector((state) => state.auth.user);
   const handleAddReview = async () => {
     if (!user) {
@@ -46,15 +49,16 @@ const ProvideReview = ({ open, setOpen, productId }: TProvideReviewModal) => {
     }
     const reviewData = {
       review,
-      ratings: value,
+      rating: value,
       productId,
-      userEmail: user.email,
-      userName: user?.name || "",
     };
-    const response = await addReview(reviewData);
+    const response: any = await createFeedback(reviewData);
+    console.log(response);
     if (response?.success) {
       setOpen(false);
       toast.success(response?.message);
+    } else {
+      toast.error(response?.message);
     }
   };
 

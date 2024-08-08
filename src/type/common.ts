@@ -76,11 +76,9 @@ export type TSelectOptions = {
 };
 
 export type TAddReviewData = {
-  ratings: number | null;
+  rating: number | null;
   review: string;
   productId: string;
-  userEmail: string;
-  userName?: string;
 };
 
 export type TReviewData = TAddReviewData & {

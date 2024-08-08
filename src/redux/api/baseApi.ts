@@ -1,9 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { axiosBaseQuery } from "../../helper/axiosBaseQuery";
 
 export const baseApi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://cleaning-supplies-store-server-indol.vercel.app/api/v1",
+  baseQuery: axiosBaseQuery({
+    // baseUrl: "https://cleaning-supplies-store-server-indol.vercel.app/api/v1",
+    baseUrl: "http://localhost:5000/api/v1",
   }),
   endpoints: () => ({}),
   tagTypes: [
@@ -14,5 +16,6 @@ export const baseApi = createApi({
     "product",
     "color",
     "order",
+    "feedback",
   ],
 });

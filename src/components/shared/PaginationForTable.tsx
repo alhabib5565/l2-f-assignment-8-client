@@ -1,3 +1,4 @@
+"use client";
 import { TMeta } from "@/type";
 import { TablePagination } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
