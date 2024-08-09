@@ -1,23 +1,24 @@
 "use server";
 
-import { store } from "@/redux/store";
 import { TAddReviewData } from "@/type";
 import { revalidateTag } from "next/cache";
 
-export const addReview = async (data: TAddReviewData) => {
-  const accessToken = store.getState()?.auth?.token;
-
+export const createProductFeedback = async (
+  data: TAddReviewData,
+  accessToken: string
+) => {
   const response = await fetch(
     `${process.env.SERVER_URL}/feedbacks/create-feedback`,
+    // "http://localhost:5000/api/v1/feedbacks/create-feedback",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${accessToken}`,
+        Authorization: accessToken,
       },
       body: JSON.stringify(data),
     }
   );
-  revalidateTag("reviews");
+  revalidateTag("productDetails");
   return await response.json();
 };

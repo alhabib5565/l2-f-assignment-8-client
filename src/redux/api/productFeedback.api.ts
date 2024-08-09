@@ -4,7 +4,6 @@ const productFeedbackApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createFeedback: builder.mutation({
       query: (data) => {
-        console.log("data.......", data);
         return {
           url: "/feedbacks/create-feedback",
           body: data,

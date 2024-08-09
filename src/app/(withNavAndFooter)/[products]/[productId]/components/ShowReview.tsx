@@ -1,18 +1,27 @@
 import { Avatar, Box, Rating, Stack, Typography } from "@mui/material";
 import React from "react";
 import ReviewModalOpenButton from "./ReviewModalOpenButton";
-import { TReviewData } from "@/type";
 
-const ShowReview = async ({ productId }: { productId: string }) => {
-  const response = await fetch(
-    `${process.env.SERVER_URL}/review/${productId}`,
-    {
-      next: {
-        tags: ["reviews"],
-      },
-    }
-  );
-  const reviews = await response.json();
+type TShowProductFeedbackProps = {
+  rating: number;
+  review: string;
+  createdAt: string;
+  user: {
+    name: string;
+    email: string;
+  };
+};
+
+const ShowProductFeedback = async ({
+  productId,
+  feedbacks,
+}: {
+  productId: string;
+  feedbacks: TShowProductFeedbackProps[];
+}) => {
+  const hasFeedback =
+    feedbacks?.length > 0 && feedbacks[0]?.rating ? true : false;
+
   return (
     <Box>
       {" "}
@@ -31,48 +40,51 @@ const ShowReview = async ({ productId }: { productId: string }) => {
           fontWeight={600}
         >
           {" "}
-          Review <Typography>({reviews?.data?.length} reviews)</Typography>
+          Feedback{" "}
+          <Typography>({hasFeedback ? feedbacks?.length : 0})</Typography>
         </Typography>
         <ReviewModalOpenButton productId={productId} />
       </Stack>
-      <Box mt={3} display="flex" flexDirection="column" gap={3}>
-        {reviews?.data?.map((review: TReviewData, index: number) => (
-          <Box
-            key={index}
-            sx={{ bgcolor: "secondary.main", padding: 2, borderRadius: 2 }}
-          >
-            {/* <Stack direction="row" alignItems="center" spacing={1}>
-              <Avatar alt="Remy Sharp" src="">
-                {review.userEmail.charAt(0).toUpperCase()}
-              </Avatar>
-              <Box>
-                <Typography
-                  component="h6"
-                  variant="h6"
-                  fontSize={16}
-                  fontWeight={600}
-                >
-                  {review?.userName || "Not Available"}
-                </Typography>
-                <Typography component="p" variant="body1">
-                  {review.userEmail}
-                </Typography>
+      {hasFeedback && (
+        <Box mt={3} display="flex" flexDirection="column" gap={3}>
+          {feedbacks.map((feedback, index: number) => (
+            <Box
+              key={index}
+              sx={{ bgcolor: "white", padding: 3, borderRadius: 2 }}
+            >
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Avatar alt={feedback?.user?.name} src="">
+                  {feedback?.user?.email.charAt(0).toUpperCase()}
+                </Avatar>
+                <Box>
+                  <Typography
+                    component="h6"
+                    variant="h6"
+                    fontSize={14}
+                    fontWeight={600}
+                  >
+                    {feedback?.user?.name || "Not Available"}
+                  </Typography>
+                  <Typography fontSize={14} component="p" variant="body1">
+                    {feedback?.user?.email}
+                  </Typography>
+                </Box>
+              </Stack>
+              <Box sx={{ mt: 2 }}>
+                <Rating
+                  size="large"
+                  name="read-only"
+                  value={feedback?.rating || 0}
+                  readOnly
+                />
+                <Typography component="legend">{feedback.review}</Typography>
               </Box>
-            </Stack> */}
-            <Box sx={{ mt: 2 }}>
-              <Rating
-                size="large"
-                name="read-only"
-                value={review?.rating || 0}
-                readOnly
-              />
-              <Typography component="legend">{review.review}</Typography>
             </Box>
-          </Box>
-        ))}
-      </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
 
-export default ShowReview;
+export default ShowProductFeedback;

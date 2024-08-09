@@ -79,6 +79,7 @@ export type TAddReviewData = {
   rating: number | null;
   review: string;
   productId: string;
+  userId: string;
 };
 
 export type TReviewData = TAddReviewData & {

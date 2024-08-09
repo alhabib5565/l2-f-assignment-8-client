@@ -6,6 +6,7 @@ type TUser = {
   email: string;
   role: string;
   name?: string;
+  userId: string;
 };
 
 type TInitaialState = {

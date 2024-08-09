@@ -21,8 +21,6 @@ export const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, body, params, headers, contentType }) => {
-    console.log("Data being sent:", body); // Check what data is being passed
-
     try {
       const result = await axiosInstance({
         url: baseUrl + url,

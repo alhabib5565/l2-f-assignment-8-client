@@ -1,15 +1,8 @@
 import ProductDetailsCarousel from "@/components/productPage/ProductDetailsCarousel";
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { TProduct } from "@/type";
-import ShowReview from "./components/ShowReview";
+import ShowProductFeedback from "./components/ShowReview";
 import AddToCartButton from "@/components/ui/AddToCartButton";
 
 type TProductDetailPageProp = {
@@ -29,7 +22,12 @@ export const generateStaticParams = async () => {
 
 const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
   const res = await fetch(
-    `${process.env.SERVER_URL}/products/${params.productId}`
+    `${process.env.SERVER_URL}/products/${params.productId}`,
+    {
+      next: {
+        tags: ["productDetails"],
+      },
+    }
   );
   const { data } = await res.json();
 
@@ -107,7 +105,10 @@ const ProductDetailsPage = async ({ params }: TProductDetailPageProp) => {
       </div>
       <Divider sx={{ my: { xs: 4, md: 8 } }} />
       <Box>
-        <ShowReview productId={params.productId} />
+        <ShowProductFeedback
+          feedbacks={data?.productFeedbacks}
+          productId={params.productId}
+        />
       </Box>
     </Container>
   );

@@ -25,16 +25,17 @@ const LoginPage = () => {
   const onSubmit = async (value: FieldValues) => {
     try {
       const response = await loginUser(value);
-
-      if (response?.data.accessToken) {
-        const userInfo = jwtDecoder(response?.data.accessToken);
-        console.log(userInfo);
-        dispatch(login({ token: response?.data.accessToken, user: userInfo }));
+      console.log(response);
+      if (response?.data?.accessToken) {
+        const userInfo = jwtDecoder(response?.data?.accessToken);
+        dispatch(login({ token: response?.data?.accessToken, user: userInfo }));
         toast.success(response.message || "login succesfull");
         router.push("/");
+      } else {
+        toast.error(response?.message || "something went wrong");
       }
     } catch (error: any) {
-      toast.success(error.message || "something went wrong");
+      toast.success(error?.message || "something went wrong");
     }
   };
   return (

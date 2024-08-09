@@ -8,8 +8,8 @@ import { Button, TextField } from "@mui/material";
 import MyModal, { TModalProps } from "@/components/modal/MyModal";
 import { useAppSelector } from "@/redux/hooks";
 import { toast } from "sonner";
-// import { addReview } from "@/actions/addReview";
 import { useCreateFeedbackMutation } from "@/redux/api/productFeedback.api";
+import { createProductFeedback } from "@/actions/createProductFeedback";
 
 const labels: { [index: string]: string } = {
   0.5: "Useless",
@@ -38,12 +38,10 @@ const ProvideReview = ({ open, setOpen, productId }: TProvideReviewModal) => {
   const [hover, setHover] = React.useState(-1);
   const [review, setReview] = React.useState("");
 
-  const [createFeedback] = useCreateFeedbackMutation();
-
-  const user = useAppSelector((state) => state.auth.user);
+  const { token: acessToken, user } = useAppSelector((state) => state.auth);
   const handleAddReview = async () => {
-    if (!user) {
-      return toast.error("Please Login to giving review", {
+    if (!acessToken) {
+      return toast.error("Please Login to giving feedback", {
         className: "text-red-500",
       });
     }
@@ -51,9 +49,10 @@ const ProvideReview = ({ open, setOpen, productId }: TProvideReviewModal) => {
       review,
       rating: value,
       productId,
+      userId: user?.userId || "",
     };
-    const response: any = await createFeedback(reviewData);
-    console.log(response);
+    const response: any = await createProductFeedback(reviewData, acessToken);
+    console.log(response, "createProductFeedback");
     if (response?.success) {
       setOpen(false);
       toast.success(response?.message);
