@@ -1,20 +1,19 @@
+import { useGetAllUnionFromAUnionQuery } from "@/redux/api/bdLocation/union.api";
 import { TSelectOptions } from "@/type";
-import { useEffect, useState } from "react";
 
-export const useGetUnionOptions = () => {
-  const [unions, setUnions] = useState([]);
+export const useGetUnionOptions = (upazila: string) => {
+  const { data, isLoading: unionLoading } = useGetAllUnionFromAUnionQuery(
+    upazila,
+    {
+      skip: !upazila,
+    }
+  );
 
-  useEffect(() => {
-    fetch("/unions.json")
-      .then((response) => response.json())
-      .then((data) => setUnions(data));
-  }, []);
-
-  const divisionOptoins: TSelectOptions[] = unions.map(
-    (division: { name: string }) => ({
-      value: division.name,
-      label: division.name,
+  const unionOptions: TSelectOptions[] = data?.data?.map(
+    (union: { name: string }) => ({
+      value: union.name,
+      label: union.name,
     })
   );
-  return divisionOptoins;
+  return { unionOptions, unionLoading };
 };

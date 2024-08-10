@@ -1,3 +1,4 @@
+"use client";
 import { proceedOrder } from "@/actions/proceedOrder";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
@@ -19,15 +20,21 @@ import {
 import { useGetDivisionOptions } from "@/hooks/locationOptionHook/useGetDivisionOptions";
 import { useGetDistrictOptions } from "@/hooks/locationOptionHook/useGetDistrictOptions";
 import { useGetUpazilaOptions } from "@/hooks/locationOptionHook/useGetUpazilaOptions";
+import MySelectWithWatch from "@/components/form/MySelectWithWatch";
+import { useState } from "react";
+import { useGetUnionOptions } from "@/hooks/locationOptionHook/useGetUnionOption";
 
 const PlaceOrderFrom = () => {
-  const { user } = useAppSelector((state) => state.auth);
-  console.log(user);
+  const [division, setDivision] = useState("");
+  const [district, setDistrict] = useState("");
+  const [upazila, setUpazila] = useState("");
 
-  const divisionOptions = useGetDivisionOptions();
-  const districtOptions = useGetDistrictOptions();
-  const upazilaOptions = useGetUpazilaOptions();
-  const unionOptions = useGetUpazilaOptions();
+  const { user } = useAppSelector((state) => state.auth);
+
+  const { divisionOptions, divisionLoading } = useGetDivisionOptions();
+  const { districtOptions, districtLoading } = useGetDistrictOptions(division);
+  const { upazilaOptions, upazilaLoading } = useGetUpazilaOptions(district);
+  const { unionOptions, unionLoading } = useGetUnionOptions(upazila);
 
   const { products, selectedProducts, priceOfTotalSelectedProducts } =
     useAppSelector((state) => state.cart);
@@ -43,7 +50,8 @@ const PlaceOrderFrom = () => {
     }
     value.products = products;
     value.totalPrice = totalPrice;
-    value.paymentInfo.method = "Cash On Delivery";
+    value.paymentInfo = { method: "Cash On Delivery" };
+    console.log(value);
     const response = await proceedOrder(value);
     console.log(response);
     if (response?.success) {
@@ -87,26 +95,41 @@ const PlaceOrderFrom = () => {
           </Grid>
 
           <Grid item xs={6}>
-            <MySelect
+            <MySelectWithWatch
+              disabled={divisionLoading}
+              onValueChange={setDivision}
               name="division"
               label="Division"
-              options={divisionOptions}
+              options={divisionOptions || []}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <MySelectWithWatch
+              disabled={!division || districtLoading}
+              onValueChange={setDistrict}
+              name="district"
+              label="District"
+              options={districtOptions || []}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <MySelectWithWatch
+              onValueChange={setUpazila}
+              disabled={!district || upazilaLoading}
+              label="Upazila"
+              name="upazila"
+              options={upazilaOptions || []}
             />
           </Grid>
 
           <Grid item xs={6}>
             <MySelect
-              name="district"
-              label="District"
-              options={districtOptions}
+              disabled={!upazila || unionLoading}
+              name="union"
+              label="Union"
+              options={unionOptions}
             />
-          </Grid>
-          <Grid item xs={6}>
-            <MySelect label="Upazila" name="upazila" options={upazilaOptions} />
-          </Grid>
-
-          <Grid item xs={6}>
-            <MySelect name="union" label="Union" options={unionOptions} />
           </Grid>
 
           <Grid item xs={12}>

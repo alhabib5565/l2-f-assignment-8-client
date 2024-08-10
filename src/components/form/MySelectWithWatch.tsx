@@ -23,7 +23,7 @@ const MySelectWithWatch = ({
   disabled,
   onValueChange,
 }: TSelect) => {
-  // console.log(name, "selectWithWatchrender");
+  console.log(name, "selectWithWatchrender");
   const { control } = useFormContext();
   const selectValue = useWatch({
     control,

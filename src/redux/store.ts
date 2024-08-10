@@ -11,7 +11,6 @@ import {
   REGISTER,
 } from "redux-persist";
 import { cartPersistedReducer } from "./features/cartSlice/cartSlice";
-import { bdLocationApi } from "./api/bdLocation.api";
 // import { cartReducer } from './features/cartSlice/cartSlice';
 
 export const store = configureStore({
@@ -19,14 +18,13 @@ export const store = configureStore({
     auth: userPersistedReducer,
     cart: cartPersistedReducer,
     [baseApi.reducerPath]: baseApi.reducer,
-    [bdLocationApi.reducerPath]: bdLocationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat([baseApi.middleware, bdLocationApi.middleware]),
+    }).concat([baseApi.middleware]),
 });
 
 export let persistor = persistStore(store);

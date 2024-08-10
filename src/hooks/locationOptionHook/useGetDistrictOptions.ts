@@ -1,20 +1,25 @@
+import { useGetAllDistrictFromADivisionQuery } from "@/redux/api/bdLocation/district.api";
 import { TSelectOptions } from "@/type";
-import { useEffect, useState } from "react";
 
-export const useGetDistrictOptions = () => {
-  const [district, setdistrict] = useState([]);
+type TDistrictData = {
+  id: string;
+  division_id: string;
+  name: string;
+  bn_name: string;
+  url: string;
+};
 
-  useEffect(() => {
-    fetch("/district.json")
-      .then((response) => response.json())
-      .then((data) => setdistrict(data));
-  }, []);
+export const useGetDistrictOptions = (divisionId: string) => {
+  const { data, isLoading: districtLoading } =
+    useGetAllDistrictFromADivisionQuery(divisionId, {
+      skip: !divisionId,
+    });
 
-  const districtOptoins: TSelectOptions[] = district.map(
-    (district: { name: string }) => ({
-      value: district.name,
+  const districtOptions: TSelectOptions[] = data?.data?.map(
+    (district: TDistrictData) => ({
+      value: district.id,
       label: district.name,
     })
   );
-  return districtOptoins;
+  return { districtOptions, districtLoading };
 };

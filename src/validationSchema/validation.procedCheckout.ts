@@ -15,6 +15,7 @@ export const CheckoutValidationSchema = z.object({
   district: z.string().min(1, { message: "District is required" }),
   upazila: z.string().min(1, { message: "Upazila is required" }),
   union: z.string().min(1, { message: "Union is required" }),
+
   recipient_area: z
     .string({
       required_error: "Area is required",
@@ -34,10 +35,10 @@ export const CheckoutValidationSchema = z.object({
 
 // Example data to validate
 export const checkoutDefaultValue = {
-  recipient_name: "",
-  recipient_phone: "",
-  recipient_address: "",
-  recipient_area: "",
+  recipient_name: "Al-Habib",
+  recipient_phone: "01405468432",
+  recipient_area: "Bachur Alga",
+  // recipient_area: "Bachur ",
   item_type: "",
   delivery_type: "",
   division: "",

@@ -1,20 +1,15 @@
+import { useGetAllDivisionQuery } from "@/redux/api/bdLocation/division.api";
 import { TSelectOptions } from "@/type";
-import { useEffect, useState } from "react";
+
+type TDivisionData = { id: string; name: string; bn_name: string; url: string };
 
 export const useGetDivisionOptions = () => {
-  const [divisions, setDivisions] = useState([]);
-
-  useEffect(() => {
-    fetch("/divisions.json")
-      .then((response) => response.json())
-      .then((data) => setDivisions(data));
-  }, []);
-
-  const divisionOptoins: TSelectOptions[] = divisions.map(
-    (division: { name: string }) => ({
-      value: division.name,
+  const { data, isLoading: divisionLoading } = useGetAllDivisionQuery({});
+  const divisionOptions: TSelectOptions[] = data?.data?.map(
+    (division: TDivisionData) => ({
+      value: division.id,
       label: division.name,
     })
   );
-  return divisionOptoins;
+  return { divisionOptions, divisionLoading };
 };

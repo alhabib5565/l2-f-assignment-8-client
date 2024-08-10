@@ -1,20 +1,25 @@
+import { useGetAllUpazilaFromADistrictQuery } from "@/redux/api/bdLocation/upazila.api";
 import { TSelectOptions } from "@/type";
-import { useEffect, useState } from "react";
 
-export const useGetUpazilaOptions = () => {
-  const [upazilas, setUpazilas] = useState([]);
+type TUpazilaData = {
+  id: string;
+  district_id: string;
+  name: string;
+  bn_name: string;
+  url: string;
+};
 
-  useEffect(() => {
-    fetch("/upazilas.json")
-      .then((response) => response.json())
-      .then((data) => setUpazilas(data));
-  }, []);
+export const useGetUpazilaOptions = (district: string) => {
+  const { data, isLoading: upazilaLoading } =
+    useGetAllUpazilaFromADistrictQuery(district, {
+      skip: !district,
+    });
 
-  const upazilaOptoins: TSelectOptions[] = upazilas.map(
-    (upazila: { name: string }) => ({
-      value: upazila.name,
+  const upazilaOptions: TSelectOptions[] = data?.data.map(
+    (upazila: TUpazilaData) => ({
+      value: upazila.id,
       label: upazila.name,
     })
   );
-  return upazilaOptoins;
+  return { upazilaOptions, upazilaLoading };
 };
