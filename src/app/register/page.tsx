@@ -16,6 +16,7 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import registerImage from "../../assets/authentication/register.png";
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
@@ -42,17 +43,12 @@ const RegisterPage = () => {
   const onSubmit = async (value: FieldValues) => {
     try {
       const response = await registerUser(value);
-      if (response?.success) {
-        const loginResponse = await loginUser(value);
-        console.log({ response, loginResponse });
-        if (loginResponse?.data.accessToken) {
-          const userInfo = jwtDecoder(loginResponse?.data.accessToken);
-          dispatch(
-            login({ token: loginResponse?.data?.accessToken, user: userInfo })
-          );
-          toast.success(response.message || "User register succesfully");
-          router.push("/");
-        }
+      console.log(response);
+      if (response?.success && response?.data) {
+        router.push(
+          `/verify-email?email=${response.data?.email}&verificationExpires=${response?.data?.verificationExpires}`
+        );
+        // toast.success(response.message || "User register succesfully");
       }
     } catch (error: any) {
       toast.success(error.message || "something went wrong");
@@ -63,75 +59,96 @@ const RegisterPage = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        display: "grid",
-        placeItems: "center",
-        bgcolor: "secondary.main",
-        py: 10,
+        display: "flex",
       }}
     >
       <Box
         sx={{
-          maxWidth: 500,
-          width: "100%",
+          flex: 1,
           backgroundColor: "white",
+          display: "grid",
           padding: 3,
+          placeItems: "center",
           borderRadius: 2,
         }}
       >
-        <Stack
-          mb={3}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Image
-            src={icon_logo}
-            width={100}
-            height={100}
-            objectFit="cover"
-            alt="logo icon"
-          />
-          <Typography mt={-2} component="h4" variant="h4" fontWeight={600}>
-            Please Register
-          </Typography>
-        </Stack>
-
-        {/* form */}
-        <MyForm
-          resolver={zodResolver(registerFormValidation)}
-          onSubmit={onSubmit}
-        >
-          <Grid container spacing={2}>
-            <Grid xs={12} item>
-              <MyInput label="Name" name="name" type="text" />
-            </Grid>
-            <Grid xs={12} item>
-              <MyInput label="Email" name="email" type="email" />
-            </Grid>
-            <Grid xs={12} item>
-              <MyInput label="Password" name="password" type="password" />
-            </Grid>
-          </Grid>
-
-          <Button
-            sx={{
-              mt: 3,
-            }}
-            fullWidth={true}
-            type="submit"
-          >
-            Register
-          </Button>
-          <Typography mt={1} component="p" fontWeight={300}>
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="text-blue-400 hover:text-blue-600 duration-200"
+        <Box maxWidth={500}>
+          <Stack mb={3} direction="column" gap={2}>
+            <Box display={"flex"} justifyContent="center">
+              <Image
+                src={icon_logo}
+                width={100}
+                height={100}
+                objectFit="cover"
+                alt="logo icon"
+              />
+            </Box>
+            <Typography
+              mt={-2}
+              component="h4"
+              variant="h4"
+              fontWeight={600}
+              fontSize={20}
             >
-              Please login
-            </Link>
-          </Typography>
-        </MyForm>
+              Create Your QuickShop Account
+            </Typography>
+            <Typography component="p" variant="body1" fontSize={14}>
+              Join QuickShop today! Create an account to start shopping, manage
+              your orders, and enjoy exclusive offers.
+            </Typography>
+          </Stack>
+
+          {/* form */}
+          <MyForm
+            resolver={zodResolver(registerFormValidation)}
+            onSubmit={onSubmit}
+          >
+            <Grid container spacing={3}>
+              <Grid xs={12} item>
+                <MyInput label="Name" name="name" type="text" />
+              </Grid>
+              <Grid xs={12} item>
+                <MyInput label="Email" name="email" type="email" />
+              </Grid>
+              <Grid xs={12} item>
+                <MyInput label="Password" name="password" type="password" />
+              </Grid>
+            </Grid>
+
+            <Button
+              sx={{
+                mt: 3,
+              }}
+              fullWidth={true}
+              type="submit"
+            >
+              Register
+            </Button>
+            <Typography mt={1} component="p" fontWeight={300}>
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-blue-400 hover:text-blue-600 duration-200"
+              >
+                Please login
+              </Link>
+            </Typography>
+          </MyForm>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          flex: 1,
+          height: "100vh",
+          bgcolor: "primary.main",
+          display: { md: "flex", xs: "none" },
+        }}
+      >
+        <Image
+          style={{ width: "100%", height: "100%" }}
+          src={registerImage}
+          alt=""
+        />
       </Box>
     </Box>
   );

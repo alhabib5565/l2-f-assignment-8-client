@@ -29,7 +29,7 @@ const PlaceOrderFrom = () => {
   const [district, setDistrict] = useState("");
   const [upazila, setUpazila] = useState("");
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, token } = useAppSelector((state) => state.auth);
 
   const { divisionOptions, divisionLoading } = useGetDivisionOptions();
   const { districtOptions, districtLoading } = useGetDistrictOptions(division);
@@ -43,7 +43,7 @@ const PlaceOrderFrom = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = async (value: FieldValues) => {
-    if (!user) {
+    if (!user || !token) {
       return toast.error("Please login", {
         duration: 5000,
       });
@@ -52,7 +52,7 @@ const PlaceOrderFrom = () => {
     value.totalPrice = totalPrice;
     value.paymentInfo = { method: "Cash On Delivery" };
     console.log(value);
-    const response = await proceedOrder(value);
+    const response = await proceedOrder(value, token);
     console.log(response);
     if (response?.success) {
       toast.success(response?.message || "Order place sucesfully");

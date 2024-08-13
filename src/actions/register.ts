@@ -3,6 +3,7 @@
 import { FieldValues } from "react-hook-form";
 
 export const registerUser = async (data: FieldValues) => {
+  console.log(data, "register data");
   const response = await fetch(`${process.env.SERVER_URL}/auth/create-user`, {
     method: "POST",
     headers: {
@@ -11,5 +12,7 @@ export const registerUser = async (data: FieldValues) => {
     body: JSON.stringify(data),
     cache: "no-store",
   });
-  return await response.json();
+  const res = await response.json();
+  console.log(res, "........");
+  return res;
 };

@@ -49,7 +49,7 @@ const ProvideReview = ({ open, setOpen, productId }: TProvideReviewModal) => {
       review,
       rating: value,
       productId,
-      userId: user?.userId || "",
+      userId: "",
     };
     const response: any = await createProductFeedback(reviewData, acessToken);
     console.log(response, "createProductFeedback");

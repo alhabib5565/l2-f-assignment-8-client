@@ -35,9 +35,9 @@ export const CheckoutValidationSchema = z.object({
 
 // Example data to validate
 export const checkoutDefaultValue = {
-  recipient_name: "Al-Habib",
-  recipient_phone: "01405468432",
-  recipient_area: "Bachur Alga",
+  recipient_name: "",
+  recipient_phone: "",
+  recipient_area: "",
   // recipient_area: "Bachur ",
   item_type: "",
   delivery_type: "",
