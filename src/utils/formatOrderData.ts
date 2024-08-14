@@ -11,3 +11,16 @@ export const formatOrderDate = (value: string) => {
 
   return `${day} ${month} ${year} ${hours}:${minutes}`;
 };
+
+export const calculateEstimatedDeliveryDate = (orderDate: Date) => {
+  const estimatedDeliveryDate = new Date(orderDate);
+  estimatedDeliveryDate.setDate(orderDate.getDate() + 7);
+
+  // Formatting the date
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return estimatedDeliveryDate.toLocaleDateString("en-GB", options);
+};

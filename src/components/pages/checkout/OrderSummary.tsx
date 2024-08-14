@@ -1,4 +1,3 @@
-import { useAppSelector } from "@/redux/hooks";
 import { Product } from "@/type/order.type";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
@@ -15,10 +14,9 @@ const OrderSummary = ({ products, subTotalPrice }: TOrderSummeryPrpos) => {
 
   const deliveryCharge = products.length * 15;
 
-  const estimatedTax = (
-    (4 / 100) *
-    (subTotalPrice + deliveryCharge)
-  ).toPrecision(2);
+  const estimatedTax = ((4 / 100) * (subTotalPrice + deliveryCharge)).toFixed(
+    2
+  );
 
   const totalPrice = subTotalPrice + deliveryCharge + Number(estimatedTax);
   return (

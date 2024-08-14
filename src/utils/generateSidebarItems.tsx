@@ -64,11 +64,18 @@ export const generageSidebarItems = (role: TUserRole) => {
       );
       break;
     case user_role.CUSTOMER:
-      sidebarItems.push({
-        name: "Products",
-        href: `/dashboard/${lowerCaseRole}/products`,
-        icon: ViewListIcon,
-      });
+      sidebarItems.push(
+        // {
+        //   name: "Products",
+        //   href: `/dashboard/${lowerCaseRole}/products`,
+        //   icon: ViewListIcon,
+        // },
+        {
+          name: "Your Orders",
+          href: `/dashboard/${lowerCaseRole}/your-orders`,
+          icon: ShoppingCartOutlined,
+        }
+      );
       break;
 
     default:

@@ -1,3 +1,4 @@
+"use client";
 import List from "@mui/material/List";
 import { Divider, Toolbar } from "@mui/material";
 import { generageSidebarItems } from "@/utils/generateSidebarItems";
@@ -6,8 +7,10 @@ import SidebarItem from "./SidebarItem";
 import Image from "next/image";
 import store_logo from "../../../assets/store_logo.png";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/hooks";
 
 const Sidebar = () => {
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <div>
       <Toolbar>
@@ -23,7 +26,7 @@ const Sidebar = () => {
       </Toolbar>
       <Divider />
       <List>
-        {generageSidebarItems("Admin" as TUserRole).map((item, index) => (
+        {generageSidebarItems(user?.role as TUserRole).map((item, index) => (
           <SidebarItem key={index} item={item} />
         ))}
       </List>

@@ -13,16 +13,20 @@ import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import MySelect from "@/components/form/MySelect";
-import {
-  deliveryTypeOptions,
-  itemTypeOptions,
-} from "./procedOrderSelectOptions";
+// import {
+//   deliveryTypeOptions,
+//   itemTypeOptions,
+// } from "./procedOrderSelectOptions";
 import { useGetDivisionOptions } from "@/hooks/locationOptionHook/useGetDivisionOptions";
 import { useGetDistrictOptions } from "@/hooks/locationOptionHook/useGetDistrictOptions";
 import { useGetUpazilaOptions } from "@/hooks/locationOptionHook/useGetUpazilaOptions";
 import MySelectWithWatch from "@/components/form/MySelectWithWatch";
 import { useState } from "react";
 import { useGetUnionOptions } from "@/hooks/locationOptionHook/useGetUnionOption";
+import {
+  deliveryTypeOptions,
+  itemTypeOptions,
+} from "./procedOrderSelectOptions";
 
 const PlaceOrderFrom = () => {
   const [division, setDivision] = useState("");

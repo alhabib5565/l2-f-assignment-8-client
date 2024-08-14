@@ -1,14 +1,27 @@
-import { HeaderText } from "@/app/(withNavAndFooter)/checkout/components/CartProductRow";
+import { HeaderText } from "@/components/pages/checkout/CartProductRow";
 import { TOrder } from "@/type/order.type";
 import { MailOutline, PhoneOutlined, PlaceOutlined } from "@mui/icons-material";
 import { Box, Divider, Stack, Avatar, Typography } from "@mui/material";
 
-type TShippingAddressBoxProps = Pick<
-  TOrder,
-  "recipient_phone" | "recipient_name"
->;
+type TShippingAddressBoxProps = {
+  recipient_phone: string | number;
+  recipient_area: string;
+  union: string;
+  division: string;
+  district: string;
+  upazila: string;
+};
 
-const ShippingAddressBox = (customerInfo: TShippingAddressBoxProps) => {
+const ShippingAddressBox = ({
+  recipient_phone,
+  recipient_area,
+  division,
+  district,
+  upazila,
+  union,
+}: TShippingAddressBoxProps) => {
+  const locationString = `${division}, ${district}, ${upazila}, ${union}`;
+
   return (
     <Box
       sx={{
@@ -35,20 +48,20 @@ const ShippingAddressBox = (customerInfo: TShippingAddressBoxProps) => {
         }}
         gap={1}
       >
-        <Typography variant="body1" fontWeight={600} fontSize={14}>
-          {customerInfo.recipient_name}
-        </Typography>
+        {/* <Typography variant="body1" fontWeight={600} fontSize={14}>
+          {recipient_name}
+        </Typography> */}
         <Typography variant="body1">
           <PhoneOutlined sx={{ mr: 2 }} />
-          {customerInfo.recipient_phone}
+          {recipient_phone}
         </Typography>
         <Typography variant="body1">
           <PlaceOutlined sx={{ mr: 2 }} />
-          Chandrakona Bazar
+          {recipient_area}
         </Typography>
         <Typography variant="body1">
           <PlaceOutlined sx={{ mr: 2 }} />
-          Mymenshingh, Sherpur, Nakla
+          {locationString}
         </Typography>
       </Stack>
     </Box>

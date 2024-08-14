@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Sidebar from "./sidebar/Sidebar";
+import { useAppSelector } from "@/redux/hooks";
 
 const drawerWidth = 240;
 
@@ -35,6 +36,8 @@ export default function DashboardLayout({
     }
   };
 
+  const { user } = useAppSelector((state) => state.auth);
+  console.log(user);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -60,7 +63,7 @@ export default function DashboardLayout({
           </IconButton>
           <Box>
             <Typography color="grey" variant="body1" noWrap component="p">
-              Hi, Al-Habib!
+              Hi, {user?.name}
             </Typography>
             <Typography
               color="primary.main"

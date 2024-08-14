@@ -8,8 +8,8 @@ import {
 import { ORDER_STATUS } from "@/constent";
 import { TOrderStatus } from "@/type/order.type";
 
-export const getOrderStatus = (status: TOrderStatus) => {
-  const iconStyle = { color: "", fontSize: "50px" };
+export const getOrderStatus = (status: TOrderStatus, fontSize: string) => {
+  const iconStyle = { color: "", fontSize };
 
   switch (status) {
     case ORDER_STATUS.Pending:

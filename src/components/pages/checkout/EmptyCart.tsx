@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import cartImage from "../../../../assets/cart_image.png";
+import cartImage from "../../../assets/cart_image.png";
 
 const EmptyCart = () => {
   return (

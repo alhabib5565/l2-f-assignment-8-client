@@ -6,8 +6,8 @@ import {
   useUpdateOrderMutation,
 } from "@/redux/api/orders.api";
 import {
+  Cancel,
   Delete,
-  Edit,
   LocalShipping,
   Pending,
   RemoveCircle,
@@ -20,8 +20,9 @@ import {
   Avatar,
   Box,
   Button,
-  FormControl,
+  Chip,
   Grid,
+  IconButton,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -33,21 +34,24 @@ import { TOrder } from "@/type/order.type";
 import Image from "next/image";
 import { ORDER_STATUS } from "@/constent";
 import Link from "next/link";
-import { formatOrderDate } from "@/utils/formatOrderData";
+import {
+  calculateEstimatedDeliveryDate,
+  formatOrderDate,
+} from "@/utils/formatOrderData";
 import { toast } from "sonner";
+import dayjs from "dayjs";
+import { getOrderStatus } from "@/utils/orderStatusWithIcon";
 
-const OrderList = () => {
+const YourOrdersPage = () => {
   const [updateStatus, { isLoading: updateStatusLoading }] =
     useUpdateOrderMutation();
-  const handleStatusUpdate = useCallback(
-    async (event: SelectChangeEvent, id: string) => {
-      const response = (await updateStatus({
-        id,
-        data: { orderStatus: event.target.value },
-      })) as any;
+
+  const handleUpdateOrderInfo = useCallback(
+    async (data: any, id: string) => {
+      const response = (await updateStatus({ id, data })) as any;
 
       if (response.data?.success) {
-        toast.success(response.data?.message);
+        toast.success("Order Canceled" || response.data?.message);
       } else {
         toast.error(response.error.message);
       }
@@ -96,7 +100,6 @@ const OrderList = () => {
       {
         field: "products",
         headerName: "Products",
-        type: "string",
         width: 150,
         renderCell: (row) => (
           <Typography
@@ -114,7 +117,6 @@ const OrderList = () => {
       {
         field: "orderStatus",
         headerName: "Order Status",
-        type: "singleSelect",
         width: 150,
 
         renderCell: (row) => (
@@ -126,42 +128,40 @@ const OrderList = () => {
               alignItems: "center",
             }}
           >
-            <FormControl size="small" sx={{ minWidth: 100 }}>
-              <Select
-                value={row.row.orderStatus}
-                disabled={updateStatusLoading}
-                onChange={(e) => handleStatusUpdate(e, row.row?.orderId)}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                {Object.keys(ORDER_STATUS).map((status) => (
-                  <MenuItem key={status} value={status}>
-                    {status}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <Chip
+              // @ts-ignore
+              icon={getOrderStatus(row.row.orderStatus, "20px")}
+              label={row.row.orderStatus}
+            />
           </Box>
         ),
       },
       {
         field: "createdAt",
         headerName: "Created Time",
-        type: "number",
+        type: "string",
         width: 200,
         valueGetter: (value) => formatOrderDate(value),
       },
+      // {
+      //   field: "createdAt",
+      //   headerName: "Estimated Delivery Time",
+      //   type: "number",
+      //   width: 200,
+      //   valueGetter: (value) =>
+      //     dayjs(value).add(7, "day").format("D MMMM YYYY"),
+      // },
       {
         field: "totalPrice",
         headerName: "Total Price",
-        type: "number",
-        width: 100,
+        width: 150,
         valueGetter: (value) => `TK ${value}`,
       },
       {
         field: "action",
         headerName: "Action",
-        flex: 1,
+        type: "number",
+        width: 150,
         renderCell: (row) => {
           return (
             <Stack
@@ -171,35 +171,30 @@ const OrderList = () => {
               justifyContent="end"
               gap={1}
             >
-              <Link href={`order-list/${row.row.orderId}`}>
-                <Button
-                  variant="outlined"
-                  sx={{ height: 40, width: 40, px: 0 }}
-                  color="success"
-                >
+              <Link href={`your-orders/${row.row.orderId}`}>
+                <IconButton color="success">
                   <Visibility />
-                </Button>
+                </IconButton>
               </Link>
-              <Button
-                variant="outlined"
-                sx={{ height: 40, width: 40, px: 0 }}
+              <IconButton
+                onClick={() =>
+                  handleUpdateOrderInfo(
+                    {
+                      orderStatus: ORDER_STATUS.Cancelled,
+                    },
+                    row.row.orderId
+                  )
+                }
                 color="error"
               >
-                <Delete />
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{ height: 40, width: 40, px: 0 }}
-                color="info"
-              >
-                <Edit />
-              </Button>
+                <Cancel />
+              </IconButton>
             </Stack>
           );
         },
       },
     ],
-    [handleStatusUpdate, updateStatusLoading]
+    []
   );
 
   return (
@@ -261,4 +256,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default YourOrdersPage;

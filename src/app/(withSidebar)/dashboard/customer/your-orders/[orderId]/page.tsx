@@ -15,7 +15,7 @@ type TOrderDetailPageProp = {
   };
 };
 
-const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
+const YourOrderDetails = ({ params }: TOrderDetailPageProp) => {
   const { data, isLoading } = useGetSingleOrderQuery({ id: params.orderId });
   if (isLoading) {
     return <p>Loading...</p>;
@@ -74,12 +74,12 @@ const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
                   }}
                 >
                   <Avatar
+                    src={product.thumbnail}
                     // src="https://themesbrand.com/velzon/html/modern/assets/images/products/img-8.png"
                     sx={{ width: 56, height: 56, bgcolor: "lightgray" }}
                     variant="rounded"
-                  >
-                    {(orderInfo.user?.name as string).slice(0, 2)}
-                  </Avatar>
+                  />
+
                   <Typography
                     variant="h6"
                     component="h6"
@@ -141,4 +141,4 @@ const AdminOrderDetailPage = ({ params }: TOrderDetailPageProp) => {
   );
 };
 
-export default AdminOrderDetailPage;
+export default YourOrderDetails;

@@ -2,15 +2,22 @@
 import { Box, Container, Grid, SxProps, Typography } from "@mui/material";
 import React from "react";
 import dynamic from "next/dynamic";
-import PlaceOrderFrom from "./components/PlaceOrderFrom";
 import { useAppSelector } from "@/redux/hooks";
 import { Product } from "@/type/order.type";
-const CartProductRow = dynamic(() => import("./components/CartProductRow"), {
-  ssr: false,
-});
-const OrderSummary = dynamic(() => import("./components/OrderSummary"), {
-  ssr: false,
-});
+
+import PlaceOrderFrom from "@/components/pages/checkout/PlaceOrderFrom";
+const CartProductRow = dynamic(
+  () => import("@/components/pages/checkout/CartProductRow"),
+  {
+    ssr: false,
+  }
+);
+const OrderSummary = dynamic(
+  () => import("@/components/pages/checkout/OrderSummary"),
+  {
+    ssr: false,
+  }
+);
 
 const CheckoutPage = () => {
   const { priceOfTotalSelectedProducts, selectedProducts, products } =

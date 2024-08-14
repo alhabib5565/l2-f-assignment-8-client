@@ -1,4 +1,4 @@
-import { HeaderText } from "@/app/(withNavAndFooter)/checkout/components/CartProductRow";
+import { HeaderText } from "@/components/pages/checkout/CartProductRow";
 import { TOrder } from "@/type/order.type";
 import { formatOrderDate } from "@/utils/formatOrderData";
 import { getOrderStatus } from "@/utils/orderStatusWithIcon";
@@ -39,7 +39,7 @@ const OrderDetailsBox = (orderInfo: TOrderDetailsBoxProps) => {
           gap: 1,
         }}
       >
-        {getOrderStatus(orderInfo.orderStatus)}
+        {getOrderStatus(orderInfo.orderStatus, "50px")}
         <Chip variant="outlined" label={orderInfo.orderStatus} />
         <Typography variant="body1">OrderId: #{orderInfo.orderId}</Typography>
         <Typography variant="body1">

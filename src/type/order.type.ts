@@ -1,4 +1,5 @@
 import { ORDER_STATUS } from "@/constent";
+import { TDistrict, TDivision, TUpazila } from "./location.type";
 
 export type TOrder = {
   _id: string;
@@ -8,14 +9,15 @@ export type TOrder = {
   products: Product[];
   totalPrice: number;
   orderStatus: TOrderStatus;
-  division: string;
-  district: string;
-  upazila: string;
+  division: TDivision;
+  district: TDistrict;
+  upazila: TUpazila;
   union: string;
   recipient_area: string;
   paymentInfo: TPaymentInfo;
   createdAt: string;
   updatedAt: string;
+  user?: TUser;
 };
 
 export type TOrderStatus = keyof typeof ORDER_STATUS;
