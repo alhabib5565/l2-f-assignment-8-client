@@ -7,6 +7,7 @@ import {
   ListAltOutlined,
   SubdirectoryArrowRightOutlined,
   ShoppingCartOutlined,
+  PeopleOutline,
 } from "@mui/icons-material";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ViewListIcon from "@mui/icons-material/ViewList";
@@ -14,23 +15,30 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 export const generageSidebarItems = (role: TUserRole) => {
   const sidebarItems: TSidebarItem[] = [];
 
+  const lowerCaseRole = role.toLocaleLowerCase();
+
   switch (role) {
     case user_role.ADMIN:
       sidebarItems.push(
         {
           name: "Dashboard",
-          href: `/dashboard/${role}`,
+          href: `/dashboard/${lowerCaseRole}`,
           icon: DashboardOutlinedIcon,
         },
         {
           name: "Products",
-          href: `/dashboard/${role}/products`,
+          href: `/dashboard/${lowerCaseRole}/products`,
           icon: ViewListOutlined,
         },
         {
           name: "Orders",
-          href: `/dashboard/${role}/order-list`,
+          href: `/dashboard/${lowerCaseRole}/order-list`,
           icon: ShoppingCartOutlined,
+        },
+        {
+          name: "users",
+          href: `/dashboard/${lowerCaseRole}/users`,
+          icon: PeopleOutline,
         },
         {
           name: "Categories",
@@ -38,17 +46,17 @@ export const generageSidebarItems = (role: TUserRole) => {
           nestedRoutes: [
             {
               name: "Main Category",
-              href: `/dashboard/${role}/category/main-categories`,
+              href: `/dashboard/${lowerCaseRole}/category/main-categories`,
               icon: CategoryOutlined,
             },
             {
               name: "Category",
-              href: `/dashboard/${role}/category/categories`,
+              href: `/dashboard/${lowerCaseRole}/category/categories`,
               icon: ListAltOutlined,
             },
             {
               name: "Sub Category",
-              href: `/dashboard/${role}/category/sub-categories`,
+              href: `/dashboard/${lowerCaseRole}/category/sub-categories`,
               icon: SubdirectoryArrowRightOutlined,
             },
           ],
@@ -58,7 +66,7 @@ export const generageSidebarItems = (role: TUserRole) => {
     case user_role.CUSTOMER:
       sidebarItems.push({
         name: "Products",
-        href: `/dashboard/${role}/products`,
+        href: `/dashboard/${lowerCaseRole}/products`,
         icon: ViewListIcon,
       });
       break;

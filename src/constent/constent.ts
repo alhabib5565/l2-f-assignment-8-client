@@ -1,6 +1,11 @@
 export const user_role = {
-  ADMIN: "admin",
-  CUSTOMER: "customer",
+  ADMIN: "Admin",
+  CUSTOMER: "Customer",
+};
+
+export const ACTIVE_STATUS = {
+  Active: "Active",
+  Blocked: "Blocked",
 };
 
 export const PRODUCT_STATUS = {

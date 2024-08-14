@@ -17,5 +17,6 @@ export const baseApi = createApi({
     "color",
     "order",
     "feedback",
+    "users",
   ],
 });

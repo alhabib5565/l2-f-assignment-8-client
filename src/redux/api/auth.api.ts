@@ -9,6 +9,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
+
     resendVerificationCode: builder.mutation({
       query: (data) => ({
         url: "/auth/resend-verification-code",
@@ -16,13 +17,28 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    // getSingleUser: builder.query({
-    //     query:() =>  ({
-    //         url: '/'
-    //     })
-    // })
+
+    getAllUser: builder.query({
+      query: ({ query }) => ({
+        url: `/users?${query || ""}`,
+      }),
+      providesTags: ["users"],
+    }),
+
+    updateUser: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/users/${id || ""}`,
+        body: data,
+        method: "PUT",
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
-export const { useVerifyEmailMutation, useResendVerificationCodeMutation } =
-  authApi;
+export const {
+  useVerifyEmailMutation,
+  useResendVerificationCodeMutation,
+  useGetAllUserQuery,
+  useUpdateUserMutation,
+} = authApi;

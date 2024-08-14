@@ -21,7 +21,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 const SubCategoryPage = () => {
   //state
-  const [sortOrder, setSortOrder] = useState("");
   const [status, setStatus] = useState<TStatus | "">("");
   const [createSubCategoryModalOpen, setCreateSubCategoryModalOpen] =
     useState(false);
@@ -175,8 +174,8 @@ const SubCategoryPage = () => {
               <MenuItem value="">
                 <em>Short by date</em>
               </MenuItem>
-              <MenuItem value="-createAt">Newest</MenuItem>
-              <MenuItem value="createAt">Lowest</MenuItem>
+              <MenuItem value="-createdAt">Newest</MenuItem>
+              <MenuItem value="createdAt">Lowest</MenuItem>
             </Select>
           </FormControl>
         </Stack>

@@ -131,15 +131,6 @@ const VerifyEmailPage = ({ searchParams }: TVerifyEmailParams) => {
             >
               Verify Email
             </Button>
-            {/* <Typography mt={1} component="p" fontWeight={300}>
-              Already have an account?{" "}
-              <Link
-                href="/login"
-                className="text-blue-400 hover:text-blue-600 duration-200"
-              >
-                Please login
-              </Link>
-            </Typography> */}
           </MyForm>
         </Box>
       </Box>

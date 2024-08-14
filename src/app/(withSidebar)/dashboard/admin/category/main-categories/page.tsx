@@ -172,8 +172,8 @@ const MainCategorypage = () => {
               <MenuItem value="">
                 <em>Short by date</em>
               </MenuItem>
-              <MenuItem value="-createAt">Newest</MenuItem>
-              <MenuItem value="createAt">Lowest</MenuItem>
+              <MenuItem value="-createdAt">Newest</MenuItem>
+              <MenuItem value="createdAt">Lowest</MenuItem>
             </Select>
           </FormControl>
         </Stack>

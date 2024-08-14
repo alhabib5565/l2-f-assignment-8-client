@@ -23,7 +23,7 @@ const Sidebar = () => {
       </Toolbar>
       <Divider />
       <List>
-        {generageSidebarItems("admin" as TUserRole).map((item, index) => (
+        {generageSidebarItems("Admin" as TUserRole).map((item, index) => (
           <SidebarItem key={index} item={item} />
         ))}
       </List>
