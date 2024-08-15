@@ -2,12 +2,12 @@
 import OrderOverviewCard from "@/components/dashboard/admin/orders/OrderOverviewCard";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
 import {
+  useGetAllOrdersForUserQuery,
   useGetAllOrdersQuery,
   useUpdateOrderMutation,
 } from "@/redux/api/orders.api";
 import {
   Cancel,
-  Delete,
   LocalShipping,
   Pending,
   RemoveCircle,
@@ -19,32 +19,22 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
   Avatar,
   Box,
-  Button,
   Chip,
   Grid,
   IconButton,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Stack,
   Typography,
 } from "@mui/material";
 import { useCallback, useMemo } from "react";
 import { TOrder } from "@/type/order.type";
-import Image from "next/image";
 import { ORDER_STATUS } from "@/constent";
 import Link from "next/link";
-import {
-  calculateEstimatedDeliveryDate,
-  formatOrderDate,
-} from "@/utils/formatOrderData";
+import { formatOrderDate } from "@/utils/formatOrderData";
 import { toast } from "sonner";
-import dayjs from "dayjs";
 import { getOrderStatus } from "@/utils/orderStatusWithIcon";
 
 const YourOrdersPage = () => {
-  const [updateStatus, { isLoading: updateStatusLoading }] =
-    useUpdateOrderMutation();
+  const [updateStatus, { isLoading: updating }] = useUpdateOrderMutation();
 
   const handleUpdateOrderInfo = useCallback(
     async (data: any, id: string) => {
@@ -59,7 +49,7 @@ const YourOrdersPage = () => {
     [updateStatus]
   );
 
-  const { data, isLoading } = useGetAllOrdersQuery({});
+  const { data, isLoading } = useGetAllOrdersForUserQuery({});
   const columns = useMemo<GridColDef<TOrder>[]>(
     () => [
       {
@@ -171,7 +161,7 @@ const YourOrdersPage = () => {
               justifyContent="end"
               gap={1}
             >
-              <Link href={`your-orders/${row.row.orderId}`}>
+              <Link href={`my-orders/${row.row.orderId}`}>
                 <IconButton color="success">
                   <Visibility />
                 </IconButton>
@@ -194,7 +184,7 @@ const YourOrdersPage = () => {
         },
       },
     ],
-    []
+    [handleUpdateOrderInfo]
   );
 
   return (

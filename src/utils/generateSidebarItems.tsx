@@ -8,6 +8,8 @@ import {
   SubdirectoryArrowRightOutlined,
   ShoppingCartOutlined,
   PeopleOutline,
+  Person,
+  PersonOutline,
 } from "@mui/icons-material";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ViewListIcon from "@mui/icons-material/ViewList";
@@ -71,9 +73,14 @@ export const generageSidebarItems = (role: TUserRole) => {
         //   icon: ViewListIcon,
         // },
         {
-          name: "Your Orders",
-          href: `/dashboard/${lowerCaseRole}/your-orders`,
+          name: "My Orders",
+          href: `/dashboard/${lowerCaseRole}/my-orders`,
           icon: ShoppingCartOutlined,
+        },
+        {
+          name: "My Profile",
+          href: `/dashboard/${lowerCaseRole}/my-profile`,
+          icon: PersonOutline,
         }
       );
       break;
