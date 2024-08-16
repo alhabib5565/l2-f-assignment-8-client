@@ -51,7 +51,7 @@ const EditLocationModal = ({
       toast.success(response?.data?.message || "Successful");
       setOpen(false);
     } else {
-      toast.error(response?.data?.message || "Failed");
+      toast.error(response?.error?.message || "Failed");
     }
   };
 

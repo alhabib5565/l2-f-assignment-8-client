@@ -86,7 +86,7 @@ const UsersList = () => {
     if (response?.data?.success) {
       toast.success(response?.data?.message || "Successful");
     } else {
-      toast.error(response?.data?.message || "Failed");
+      toast.error(response?.error?.message || "Failed");
     }
   };
 

@@ -33,10 +33,7 @@ import { useCreateProductMutation } from "@/redux/api/product.api";
 const AddProduct = () => {
   const router = useRouter();
   const [features, setFeatures] = useState<string[]>([]);
-  const [productImagesUrl, setProductImagesUrl] = useState<string[]>([
-    "https://static-01.daraz.com.bd/p/fd99fa84242d8857351521aab22780de.jpg",
-    "https://static-01.daraz.com.bd/p/68d11d7406580c7c7105573da0dce830.jpg",
-  ]);
+  const [productImagesUrl, setProductImagesUrl] = useState<string[]>([]);
   const [mainCategory, setMainCategory] = useState("");
   const [category, setCategory] = useState("");
 

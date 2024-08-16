@@ -18,20 +18,12 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getAllUser: builder.query({
-      query: ({ query }) => ({
-        url: `/users?${query || ""}`,
-      }),
-      providesTags: ["users"],
-    }),
-
-    updateUser: builder.mutation({
-      query: ({ data, id }) => ({
-        url: `/users/${id || ""}`,
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/auth/change-password",
         body: data,
-        method: "PUT",
+        method: "POST",
       }),
-      invalidatesTags: ["users"],
     }),
   }),
 });
@@ -39,6 +31,5 @@ const authApi = baseApi.injectEndpoints({
 export const {
   useVerifyEmailMutation,
   useResendVerificationCodeMutation,
-  useGetAllUserQuery,
-  useUpdateUserMutation,
+  useChangePasswordMutation,
 } = authApi;
