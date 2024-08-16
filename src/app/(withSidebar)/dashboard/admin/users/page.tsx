@@ -6,13 +6,11 @@ import PaginationForTable from "@/components/shared/PaginationForTable";
 import { ACTIVE_STATUS, user_role } from "@/constent";
 import useDebounce from "@/hooks/common/useDebounce";
 import {
-  useGetAllUserQuery,
   useUpdateUserMutation,
-} from "@/redux/api/auth.api";
-import { TStatus } from "@/type";
+  useGetAllUserQuery,
+} from "@/redux/api/user.api";
 import { formatOrderDate } from "@/utils/formatOrderData";
 import {
-  Block,
   CheckCircle,
   Delete,
   PeopleAlt,
@@ -30,7 +28,6 @@ import {
   TextField,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Image from "next/image";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -60,11 +57,7 @@ const UsersList = () => {
     }${sortInfo.status && "&status=" + sortInfo.status}
     `,
   });
-  /**
- * &role=${
-      sortInfo.role
-    }&status=${sortInfo.status}
- */
+
   const users = data?.data;
   const meta = data?.meta;
 

@@ -1,9 +1,25 @@
-import { PlaceOutlined } from "@mui/icons-material";
-import { Box, Stack, Typography } from "@mui/material";
-import React from "react";
+"use client";
+import { Edit, PlaceOutlined } from "@mui/icons-material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import EditLocationModal from "./EditLocationModal";
+import { useGetMeQuery } from "@/redux/api/user.api";
 
-const CustomerLocationBox = () => {
-  const location = false;
+type TUserLocation = {
+  userLocation: {
+    area: string;
+    district: string;
+    division: string;
+    union: string;
+    upazila: string;
+  };
+  userId: string;
+};
+
+const CustomerLocationBox = ({ userLocation, userId }: TUserLocation) => {
+  const [open, setOpen] = useState(false);
+  const { data, isLoading } = useGetMeQuery({});
+
   return (
     <Box
       sx={{
@@ -14,31 +30,38 @@ const CustomerLocationBox = () => {
         mt: 3,
       }}
     >
-      <Typography variant="body1" fontWeight={600} fontSize={16} mb={2}>
-        Customer Location
-      </Typography>
-
-      {location ? (
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="body1" fontWeight={600} fontSize={16} mb={2}>
+          Customer Location
+        </Typography>
+        <IconButton onClick={() => setOpen(!open)} color="error">
+          <Edit />
+        </IconButton>
+      </Stack>
+      {open && userId && (
+        <EditLocationModal userId={userId} setOpen={setOpen} open={open} />
+      )}
+      {userLocation ? (
         <Stack gap={1}>
           <Typography variant="body1">
             <PlaceOutlined sx={{ mr: 2 }} />
-            Divisioin:
+            Divisioin: {userLocation?.division}
           </Typography>
           <Typography variant="body1">
             <PlaceOutlined sx={{ mr: 2 }} />
-            District
+            District: {userLocation.district}
           </Typography>
           <Typography variant="body1">
             <PlaceOutlined sx={{ mr: 2 }} />
-            Upazila
+            Upazila: {userLocation.upazila}
           </Typography>
           <Typography variant="body1">
             <PlaceOutlined sx={{ mr: 2 }} />
-            Union
+            Union: {userLocation.union}
           </Typography>
           <Typography variant="body1">
             <PlaceOutlined sx={{ mr: 2 }} />
-            Area
+            Area: {userLocation.area}
           </Typography>
         </Stack>
       ) : (

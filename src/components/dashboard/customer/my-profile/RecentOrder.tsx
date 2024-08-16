@@ -1,12 +1,18 @@
-import { useGetAllProductsQuery } from "@/redux/api/product.api";
+import { useGetAllOrdersForUserQuery } from "@/redux/api/orders.api";
+import { TOrder } from "@/type/order.type";
 import { Avatar, Box, Rating, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 
 const RecentOrder = () => {
   //query
-  const { data, isLoading } = useGetAllProductsQuery({ query: "limit=5" });
-  const products = data?.data;
+  const { data, isLoading } = useGetAllOrdersForUserQuery({ query: "limit=5" });
+  const orders = data?.data as TOrder[];
+
+  const products = orders
+    ?.map((orderProducts) => orderProducts.products)
+    .flat();
+
   const columns: GridColDef[] = [
     {
       field: "productId",

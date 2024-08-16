@@ -50,8 +50,4 @@ export const pages = [
     href: "/flash-sale",
     name: "Flash Sale",
   },
-  {
-    href: "/dashboard",
-    name: "Dashboard",
-  },
 ];
