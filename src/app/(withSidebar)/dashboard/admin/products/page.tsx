@@ -2,11 +2,15 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useGetAllProductsQuery } from "@/redux/api/product.api";
+import {
+  useAddToFlashSaleMutation,
+  useGetAllProductsQuery,
+} from "@/redux/api/product.api";
 import {
   Avatar,
   Button,
   FormControl,
+  IconButton,
   Input,
   MenuItem,
   Rating,
@@ -19,6 +23,7 @@ import {
 import {
   Add,
   AddOutlined,
+  Clear,
   Delete,
   Edit,
   Visibility,
@@ -29,6 +34,7 @@ import AddToFlashSaleModal from "@/components/dashboard/admin/flashSale/AddToFla
 import { TMeta } from "@/type";
 import PaginationForTable from "@/components/shared/PaginationForTable";
 import useDebounce from "@/hooks/common/useDebounce";
+import { toast } from "sonner";
 
 const ProductsPage = () => {
   //state
@@ -66,6 +72,21 @@ const ProductsPage = () => {
 
   const handleSortOrderChange = (event: SelectChangeEvent) => {
     setQueryInfo((prev) => ({ ...prev, sortOrder: event.target.value }));
+  };
+
+  const [addFlashSale] = useAddToFlashSaleMutation();
+
+  const handleRemoveFromFlash = async (productId: string, data: any) => {
+    const response = (await addFlashSale({
+      id: productId,
+      data,
+    })) as any;
+    if (response?.data?.success) {
+      toast.success(response?.data?.message);
+      setOpen(false);
+    } else {
+      toast.error(response.error.message || "Failed...");
+    }
   };
 
   const columns: GridColDef[] = [
@@ -133,24 +154,51 @@ const ProductsPage = () => {
             flexShrink={"inherit"}
             gap={1}
           >
-            <Button
-              onClick={() => handleAddToFlashSaleModalOpen(row.row?.productId)}
-              variant="contained"
+            {row.row?.currentlyFlashSale ? (
+              <Button
+                onClick={() =>
+                  handleRemoveFromFlash(row.row?.productId, { flashSale: {} })
+                }
+                size="small"
+                variant="contained"
+                color="error"
+                endIcon={<Clear />}
+              >
+                Remove
+              </Button>
+            ) : (
+              <Button
+                onClick={() =>
+                  handleAddToFlashSaleModalOpen(row.row?.productId)
+                }
+                size="small"
+                variant="contained"
+                color="info"
+                endIcon={<AddOutlined />}
+              >
+                Flash
+              </Button>
+            )}
+
+            <Link href={`/products/${row.row._id}`}>
+              <IconButton color="success">
+                <Visibility />
+              </IconButton>
+            </Link>
+            <IconButton
+              onClick={() =>
+                toast.message(`can not be delete a product. Please don't try`)
+              }
+              color="error"
+            >
+              <Delete />
+            </IconButton>
+            <IconButton
+              onClick={() => toast.message(`Comming soon...`)}
               color="info"
             >
-              Flash <AddOutlined />
-            </Button>
-            <Link href={`/products/${row.row._id}`}>
-              <Button variant="outlined" color="success">
-                <Visibility />
-              </Button>
-            </Link>
-            <Button variant="outlined" color="error">
-              <Delete />
-            </Button>
-            <Button variant="outlined" color="info">
               <Edit />
-            </Button>
+            </IconButton>
           </Stack>
         );
       },

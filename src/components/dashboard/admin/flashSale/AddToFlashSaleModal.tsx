@@ -9,7 +9,7 @@ const AddToFlashSaleModal = ({
 }: TModalOpenProps & { productId: string }) => {
   return (
     <MyModal title="Add to flash sale" open={open} setOpen={setOpen}>
-      <FlashSaleForm productId={productId} />
+      <FlashSaleForm productId={productId} setOpen={setOpen} />
     </MyModal>
   );
 };

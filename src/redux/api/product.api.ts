@@ -24,6 +24,7 @@ const productApi = baseApi.injectEndpoints({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ["product"],
     }),
   }),
 });

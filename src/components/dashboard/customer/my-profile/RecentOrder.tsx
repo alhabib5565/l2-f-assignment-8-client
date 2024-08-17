@@ -45,10 +45,11 @@ const RecentOrder = () => {
       ),
     },
     {
-      field: "rating",
-      headerName: "Rating",
+      field: "quantity",
+      headerName: "Quantity",
       width: 150,
-      renderCell: (row) => <Rating value={row.row.rating} readOnly />,
+      valueGetter: (value) => `${value} Item`,
+      // renderCell: (row) => <Rating value={row.row.rating} readOnly />,
     },
     {
       field: "price",

@@ -67,11 +67,11 @@ export const generageSidebarItems = (role: TUserRole) => {
       break;
     case user_role.CUSTOMER:
       sidebarItems.push(
-        // {
-        //   name: "Products",
-        //   href: `/dashboard/${lowerCaseRole}/products`,
-        //   icon: ViewListIcon,
-        // },
+        {
+          name: "Dashboard",
+          href: `/dashboard/${lowerCaseRole}`,
+          icon: DashboardOutlinedIcon,
+        },
         {
           name: "My Orders",
           href: `/dashboard/${lowerCaseRole}/my-orders`,

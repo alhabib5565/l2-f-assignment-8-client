@@ -110,7 +110,7 @@ const CartProductRow = () => {
                   </Typography>
                 </Box>
                 <HeaderText sx={{ display: { xs: "none", sm: "flex" } }}>
-                  ${product.price.toFixed(2)}
+                  TK{product.price.toFixed(2)}
                 </HeaderText>
                 <Stack
                   alignItems="center"
@@ -156,7 +156,7 @@ const CartProductRow = () => {
                   </IconButton>
                 </Stack>
                 <HeaderText sx={{ color: "primary.main" }}>
-                  ${product.price * product.quantity}
+                  TK{product.price * product.quantity}
                 </HeaderText>
                 <IconButton
                   onClick={() =>

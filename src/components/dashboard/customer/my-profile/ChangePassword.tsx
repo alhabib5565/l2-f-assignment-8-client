@@ -40,7 +40,7 @@ const validationSchema = z.object({
     }),
 });
 const ChangePassword = () => {
-  const [changePass, isLoading] = useChangePasswordMutation();
+  const [changePass, { isLoading }] = useChangePasswordMutation();
   const onSubmit = async (value: FieldValues) => {
     if (value.newPassword !== value.confirmPassword) {
       toast.error("Your new password and confirmation password do not match.");
@@ -90,10 +90,7 @@ const ChangePassword = () => {
             type="password"
           />
           <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <Button
-              //   disabled={updating || loading}
-              type="submit"
-            >
+            <Button disabled={isLoading} type="submit">
               Save
             </Button>
           </Box>

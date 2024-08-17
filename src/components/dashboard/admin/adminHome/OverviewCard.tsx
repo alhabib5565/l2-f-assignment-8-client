@@ -96,7 +96,7 @@ const OverviewCard = ({
                 // backgroundColor: "#187d44",
                 height: "26px",
               }}
-              label={`+ ${percentage}%`}
+              label={`+ ${percentage.toFixed(1)}%`}
             />
             <Typography fontSize={14} color="white">
               Last Month

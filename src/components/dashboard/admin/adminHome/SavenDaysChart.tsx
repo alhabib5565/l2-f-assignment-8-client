@@ -1,25 +1,27 @@
 import React from "react";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
+import { useGetLastSavenDaysSalesPerDayQuery } from "@/redux/api/analytics.api";
 
 const SavenDaysChart = () => {
-  const salesData = [
-    { date: "2023-06-24", sales: 150 },
-    { date: "2023-06-25", sales: 200 },
-    { date: "2023-06-26", sales: 170 },
-    { date: "2023-06-27", sales: 180 },
-    { date: "2023-06-28", sales: 220 },
-    { date: "2023-06-29", sales: 210 },
-    { date: "2023-06-30", sales: 190 },
-  ];
+  const { data, isLoading, isFetching } = useGetLastSavenDaysSalesPerDayQuery(
+    {}
+  );
 
-  const formatedSalesData = salesData.map((sale) => {
+  const lastSavenDaysSale = data?.data as [{ date: string; sales: number }];
+
+  const totalSale = lastSavenDaysSale?.reduce((previousValue, currentValue) => {
+    return previousValue + currentValue.sales;
+  }, 0);
+
+  const formatedSalesData = lastSavenDaysSale?.map((sale) => {
     const day = new Date(sale.date);
     return {
       day: day.toLocaleDateString("en-us", { weekday: "short" }),
-      sales: sale.sales,
+      sales: sale.sales || 0,
     };
   });
+
   return (
     <Card
       sx={{
@@ -38,14 +40,15 @@ const SavenDaysChart = () => {
       >
         <Box>
           <Typography fontSize={16} fontWeight={500} color="white" gutterBottom>
-            Total Sale
+            Weekly Sales
           </Typography>
           <Typography fontSize={32} fontWeight={700} color="white">
-            $3,787,681.00
+            TK {totalSale}
           </Typography>
         </Box>
 
         <LineChart
+          loading={isLoading || isFetching}
           xAxis={[{ dataKey: "day", scaleType: "point" }]}
           series={[
             {
@@ -54,7 +57,7 @@ const SavenDaysChart = () => {
               color: "#1D58C5",
             },
           ]}
-          dataset={formatedSalesData}
+          dataset={formatedSalesData || []}
           height={250}
           margin={{ left: 0, right: 0, bottom: 0, top: 20 }}
           grid={{ horizontal: true, vertical: true }}

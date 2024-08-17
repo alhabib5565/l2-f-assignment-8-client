@@ -8,11 +8,17 @@ import {
 } from "@/validationSchema/validation.addFlashSale";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Grid } from "@mui/material";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-const FlashSaleForm = ({ productId }: { productId: string }) => {
+const FlashSaleForm = ({
+  productId,
+  setOpen,
+}: {
+  productId: string;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [addFlashSale] = useAddToFlashSaleMutation();
 
   const onSubmit = async (value: FieldValues) => {
@@ -25,6 +31,7 @@ const FlashSaleForm = ({ productId }: { productId: string }) => {
     })) as any;
     if (response?.data?.success) {
       toast.success(response?.data?.message);
+      setOpen(false);
     } else {
       toast.error("Failed...");
     }

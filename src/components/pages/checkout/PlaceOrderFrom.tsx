@@ -27,11 +27,13 @@ import {
   deliveryTypeOptions,
   itemTypeOptions,
 } from "./procedOrderSelectOptions";
+import { useRouter } from "next/navigation";
 
 const PlaceOrderFrom = () => {
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
   const [upazila, setUpazila] = useState("");
+  const router = useRouter();
 
   const { user, token } = useAppSelector((state) => state.auth);
 
@@ -55,12 +57,13 @@ const PlaceOrderFrom = () => {
     value.products = products;
     value.totalPrice = totalPrice;
     value.paymentInfo = { method: "Cash On Delivery" };
-    console.log(value);
     const response = await proceedOrder(value, token);
-    console.log(response);
     if (response?.success) {
       toast.success(response?.message || "Order place sucesfully");
+      router.push("/dashboard/my-orders");
       dispatch(clearCart());
+    } else {
+      toast.error(response?.message || "Order place failed");
     }
   };
 

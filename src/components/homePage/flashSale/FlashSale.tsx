@@ -7,7 +7,7 @@ const FlashSale = async () => {
   const res = await fetch(
     `${process.env.SERVER_URL}/products/flash-sale/all-flash-sale`,
     {
-      cache: "reload",
+      cache: "no-store",
     }
   );
   const flashSaleProducts = await res.json();

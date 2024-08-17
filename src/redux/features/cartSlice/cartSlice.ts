@@ -85,13 +85,13 @@ export const cartSlice = createSlice({
   },
 });
 
-const persistConfig = {
-  key: "root",
+const cartPersistConfig = {
+  key: "cart",
   storage,
 };
 
 export const cartPersistedReducer = persistReducer(
-  persistConfig,
+  cartPersistConfig,
   cartSlice.reducer
 );
 

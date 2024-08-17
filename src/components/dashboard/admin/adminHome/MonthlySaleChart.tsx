@@ -1,3 +1,4 @@
+import { useGetMontlyTotalSalesForAYerarQuery } from "@/redux/api/analytics.api";
 import { Box, Typography } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
 import React from "react";
@@ -15,24 +16,31 @@ const data = [
   { date: "2024-11", totalSales: 16000.0 },
   { date: "2024-12", totalSales: 20000.0 },
 ];
-const formatdedMonthlySale = data.map((sale) => {
-  const date = new Date(sale.date);
 
-  return {
-    month: date.toLocaleDateString("en-us", { month: "short" }),
-    totalSales: sale.totalSales,
-  };
-});
-
-console.log(formatdedMonthlySale);
+// console.log(formatdedMonthlySale);
 const MonthlySaleChart = () => {
+  const { data, isLoading, isFetching } = useGetMontlyTotalSalesForAYerarQuery(
+    {}
+  );
+  console.log(data?.data, "data");
+  const formatdedMonthlySale = data?.data.map(
+    (sale: { date: string; totalSales: number }) => {
+      const date = new Date(sale.date);
+
+      return {
+        month: date.toLocaleDateString("en-us", { month: "short" }),
+        totalSales: sale.totalSales,
+      };
+    }
+  );
   return (
     <Box bgcolor="white" height={"100%"} padding={3} borderRadius={1}>
       <Typography fontWeight={700} variant="h5" component="h4" fontSize={20}>
         Revenue Report
       </Typography>
       <BarChart
-        dataset={formatdedMonthlySale}
+        loading={isFetching || isLoading}
+        dataset={formatdedMonthlySale || []}
         xAxis={[
           {
             scaleType: "band",

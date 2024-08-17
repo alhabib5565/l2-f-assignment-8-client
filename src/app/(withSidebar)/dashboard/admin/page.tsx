@@ -4,18 +4,20 @@ import OrderOverviewChart from "@/components/dashboard/admin/adminHome/OrderOver
 import OverviewCard from "@/components/dashboard/admin/adminHome/OverviewCard";
 import SavenDaysChart from "@/components/dashboard/admin/adminHome/SavenDaysChart";
 import PageHeader from "@/components/dashboard/shared/PageHeader";
+import { useGetTotalCountWithLastMonthPercentageQuery } from "@/redux/api/analytics.api";
 import {
   AccountCircle,
   ShoppingBag,
   ShoppingCart,
   Star,
 } from "@mui/icons-material";
-import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
-import { LineChart } from "@mui/x-charts/LineChart";
+import { Box, Grid } from "@mui/material";
 
 import React from "react";
 
 const AdminDashboardHome = () => {
+  const { data } = useGetTotalCountWithLastMonthPercentageQuery({});
+  const AdminAnalyticData = data?.data;
   return (
     <Box>
       <PageHeader pageName="Dashboard" />
@@ -24,9 +26,9 @@ const AdminDashboardHome = () => {
         <Grid item xs={12} md={6} lg={4}>
           <OverviewCard
             title="Total User"
-            count={234}
+            count={AdminAnalyticData?.totalUsers || 0}
             Icon={<AccountCircle sx={{ color: "#89ecb3" }} fontSize="large" />}
-            percentage={95}
+            percentage={AdminAnalyticData?.lastMonthUserPercentage || 0}
             gradientStartColor="#4eda89"
             gradientEndColor="#1a9f53"
             iconGradientStartColor="#27bf68"
@@ -35,9 +37,9 @@ const AdminDashboardHome = () => {
           <OverviewCard
             sx={{ mt: 3 }}
             title="Total Products"
-            count={1535}
+            count={AdminAnalyticData?.totalProducts || 0}
             Icon={<ShoppingBag sx={{ color: "#96cefa" }} fontSize="large" />}
-            percentage={53}
+            percentage={AdminAnalyticData?.lastMonthProductPercentage || 0}
             gradientStartColor="#64b3f6"
             gradientEndColor="#2b77e5"
             iconGradientStartColor="#4094f1"
@@ -48,9 +50,9 @@ const AdminDashboardHome = () => {
         <Grid item xs={12} md={6} lg={4}>
           <OverviewCard
             title="Total Orders"
-            count={546}
+            count={AdminAnalyticData?.totalOrders || 0}
             Icon={<ShoppingCart sx={{ color: "#f3a0ff" }} fontSize="large" />}
-            percentage={40}
+            percentage={AdminAnalyticData?.lastMonthOrderPercentage || 0}
             gradientStartColor="#ed68ff"
             gradientEndColor="#be0ee1"
             iconGradientStartColor="#de2fff"
@@ -59,9 +61,9 @@ const AdminDashboardHome = () => {
           <OverviewCard
             sx={{ mt: 3 }}
             title="Total Reviews"
-            count={342}
+            count={AdminAnalyticData?.totalFeedbacks || 0}
             Icon={<Star sx={{ color: "#f6e053" }} fontSize="large" />}
-            percentage={86}
+            percentage={AdminAnalyticData?.lastMonthFeedbackPercentage || 0}
             gradientStartColor="#f4d02b"
             gradientEndColor="#e1940e"
             iconGradientStartColor="#edb213"

@@ -39,13 +39,13 @@ const authSlice = createSlice({
   },
 });
 
-const persistConfig = {
-  key: "root",
+const authPersistConfig = {
+  key: "auth",
   storage,
 };
 
 export const userPersistedReducer = persistReducer(
-  persistConfig,
+  authPersistConfig,
   authSlice.reducer
 );
 
