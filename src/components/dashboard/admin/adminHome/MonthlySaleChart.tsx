@@ -1,3 +1,4 @@
+"use client";
 import { useGetMontlyTotalSalesForAYerarQuery } from "@/redux/api/analytics.api";
 import { Box, Typography } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
@@ -22,7 +23,7 @@ const MonthlySaleChart = () => {
   const { data, isLoading, isFetching } = useGetMontlyTotalSalesForAYerarQuery(
     {}
   );
-  console.log(data?.data, "data");
+
   const formatdedMonthlySale = data?.data.map(
     (sale: { date: string; totalSales: number }) => {
       const date = new Date(sale.date);

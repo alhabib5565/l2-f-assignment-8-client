@@ -9,6 +9,13 @@ const analyticsApi = baseApi.injectEndpoints({
       providesTags: ["users", "feedback", "order", "product"],
     }),
 
+    getTotalCountWithLastMonthPercentageForAUser: builder.query({
+      query: () => ({
+        url: "/analytics/total-count-with-last-month-percentage-for-user",
+      }),
+      providesTags: ["feedback", "order"],
+    }),
+
     getLastSavenDaysSalesPerDay: builder.query({
       query: () => ({
         url: "/analytics/last-saven-days-total-sales",
@@ -22,11 +29,28 @@ const analyticsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["order"],
     }),
+
+    getOrderStatusOverview: builder.query({
+      query: () => ({
+        url: "/analytics/order-status-overview",
+      }),
+      providesTags: ["order"],
+    }),
+
+    getUserStatusOverview: builder.query({
+      query: () => ({
+        url: "/analytics/user-status-overview",
+      }),
+      providesTags: ["users"],
+    }),
   }),
 });
 
 export const {
   useGetLastSavenDaysSalesPerDayQuery,
   useGetTotalCountWithLastMonthPercentageQuery,
+  useGetTotalCountWithLastMonthPercentageForAUserQuery,
   useGetMontlyTotalSalesForAYerarQuery,
+  useGetOrderStatusOverviewQuery,
+  useGetUserStatusOverviewQuery,
 } = analyticsApi;

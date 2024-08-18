@@ -5,6 +5,7 @@ import PageHeader from "@/components/dashboard/shared/PageHeader";
 import PaginationForTable from "@/components/shared/PaginationForTable";
 import { ACTIVE_STATUS, user_role } from "@/constent";
 import useDebounce from "@/hooks/common/useDebounce";
+import { useGetUserStatusOverviewQuery } from "@/redux/api/analytics.api";
 import {
   useUpdateUserMutation,
   useGetAllUserQuery,
@@ -48,6 +49,7 @@ const UsersList = () => {
   const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
 
   //api hit
+  const { data: userStatusOverviewData } = useGetUserStatusOverviewQuery({});
   const [updateUserInfo, { isLoading: updating }] = useUpdateUserMutation();
   const { data, isLoading } = useGetAllUserQuery({
     query: `page=${queryInfo.page + 1}&limit=${
@@ -58,11 +60,13 @@ const UsersList = () => {
     `,
   });
 
+  const activeUser = userStatusOverviewData?.data[0].total || 0;
+  const blockedUser = userStatusOverviewData?.data[1].total || 0;
+
   const users = data?.data;
   const meta = data?.meta;
 
   //handler
-
   const handleSortOrderChange = (event: SelectChangeEvent) => {
     setQueryInfo((prev) => ({ ...prev, sortOrder: event.target.value }));
   };
@@ -221,7 +225,7 @@ const UsersList = () => {
         <Box sx={{ flex: 1 }}>
           <OrderOverviewCard
             title="Total Users"
-            count={234}
+            count={blockedUser + activeUser}
             Icon={<PeopleAlt sx={{ color: "#f3a0ff", fontSize: "50px" }} />}
             gradientStartColor="#be0ee1"
             gradientEndColor="#ed68ff"
@@ -231,7 +235,7 @@ const UsersList = () => {
         <Box sx={{ flex: 1 }}>
           <OrderOverviewCard
             title="Active Users"
-            count={6}
+            count={activeUser}
             Icon={<CheckCircle sx={{ color: "#89ecb3", fontSize: "50px" }} />}
             gradientStartColor="#1a9f53"
             gradientEndColor="#4eda89"
@@ -241,7 +245,7 @@ const UsersList = () => {
         <Box sx={{ flex: 1 }}>
           <OrderOverviewCard
             title="Blocked Users"
-            count={2344}
+            count={blockedUser}
             Icon={<RemoveCircle sx={{ color: "#ff9baa", fontSize: "50px" }} />}
             gradientStartColor="#f11133"
             gradientEndColor="#ff6179"

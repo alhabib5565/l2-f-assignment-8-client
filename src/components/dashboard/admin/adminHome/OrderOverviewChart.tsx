@@ -1,5 +1,11 @@
+"use client";
+
+import { useGetOrderStatusOverviewQuery } from "@/redux/api/analytics.api";
+import { TOrderStatus } from "@/type/order.type";
 import {
+  Add,
   AddOutlined,
+  CheckCircleOutline,
   CheckOutlined,
   CloseOutlined,
   MoreHoriz,
@@ -9,12 +15,46 @@ import { pieArcLabelClasses, PieChart } from "@mui/x-charts";
 import React from "react";
 
 const OrderOverviewChart = () => {
-  const color = {
+  const { data, isLoading, isFetching } = useGetOrderStatusOverviewQuery({});
+
+  const orderStatusColor = {
     Pending: "#DE2FFF",
     Shipped: "#4094F1",
-    Recieved: "#27BF68",
+    Accepted: "#27BF68",
+    Delivered: "#4CAF50",
     Cancelled: "red",
   };
+
+  const orderOverview = data?.data?.map(
+    (item: { _id: TOrderStatus; total: number }, index: number) => {
+      let color = "";
+      let icon: any = "";
+      if (item._id === "Pending") {
+        color = orderStatusColor.Pending;
+        icon = MoreHoriz;
+      } else if (item._id === "Accepted") {
+        color = orderStatusColor.Accepted;
+        icon = CheckOutlined;
+      } else if (item._id === "Shipped") {
+        color = orderStatusColor.Shipped;
+        icon = AddOutlined;
+      } else if (item._id === "Cancelled") {
+        color = orderStatusColor.Cancelled;
+        icon = CloseOutlined;
+      } else if (item._id === "Delivered") {
+        color = orderStatusColor.Delivered;
+        icon = CheckCircleOutline;
+      }
+      return {
+        id: index,
+        value: item.total,
+        label: item._id,
+        color,
+        icon,
+      };
+    }
+  );
+  // const { Cancelled, Delivered, Pending, Shipped, Accepted } = data?.data;
   return (
     <Box bgcolor="white" height={"100%"} padding={3} borderRadius={1}>
       <Typography fontWeight={700} variant="h5" component="h4" fontSize={20}>
@@ -29,19 +69,13 @@ const OrderOverviewChart = () => {
         }}
       >
         <PieChart
+          loading={isFetching || isLoading}
           series={[
             {
-              data: [
-                { id: 0, value: 10, label: "Pending", color: "#DE2FFF" },
-                { id: 1, value: 15, label: "Shipped", color: "#4094F1" },
-                { id: 2, value: 20, label: "Recieved", color: "#27BF68" },
-                { id: 3, value: 20, label: "Cancelled", color: "red" },
-              ],
+              data: orderOverview || [],
               arcLabel: (item) => `${item.value}`,
               paddingAngle: 2,
               innerRadius: 40,
-              // cx: "100%",
-              // cy: "50%",
             },
           ]}
           sx={{
@@ -55,37 +89,24 @@ const OrderOverviewChart = () => {
         />
       </Box>
       <Divider sx={{ mt: 2 }} />
-      <Stack direction="row" gap={2} py={2}>
-        <Avatar sx={{ bgcolor: color.Pending, height: 24, width: 24 }}>
-          <MoreHoriz />
-        </Avatar>
-        <Typography flex={1}>Pending</Typography>
-        <Typography>503</Typography>
-      </Stack>
-      <Divider />
-      <Stack direction="row" gap={2} py={2}>
-        <Avatar sx={{ bgcolor: color.Shipped, height: 24, width: 24 }}>
-          <AddOutlined />
-        </Avatar>
-        <Typography flex={1}>Shipped</Typography>
-        <Typography>324</Typography>
-      </Stack>
-      <Divider />
-      <Stack direction="row" gap={2} py={2}>
-        <Avatar sx={{ bgcolor: color.Recieved, height: 24, width: 24 }}>
-          <CheckOutlined />
-        </Avatar>
-        <Typography flex={1}>Recieved</Typography>
-        <Typography>324</Typography>
-      </Stack>
-      <Divider />
-      <Stack direction="row" gap={2} pt={2}>
-        <Avatar sx={{ bgcolor: color.Cancelled, height: 24, width: 24 }}>
-          <CloseOutlined />
-        </Avatar>
-        <Typography flex={1}>Cancelled</Typography>
-        <Typography>634</Typography>
-      </Stack>
+      {orderOverview?.map((item: any, index: number) => (
+        <Box key={item._id}>
+          <Stack direction="row" gap={2} py={1.2}>
+            <Avatar
+              sx={{
+                bgcolor: item.color,
+                height: 24,
+                width: 24,
+              }}
+            >
+              <item.icon />
+            </Avatar>
+            <Typography flex={1}>{item.label}</Typography>
+            <Typography>{item.value}</Typography>
+          </Stack>
+          {index !== 4 && <Divider />}
+        </Box>
+      ))}
     </Box>
   );
 };

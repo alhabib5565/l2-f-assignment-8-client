@@ -1,9 +1,8 @@
 "use client";
 import MyForm from "@/components/form/MyForm";
 import MyInput from "@/components/form/MyInput";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import { icon_logo } from "@/assets";

@@ -26,7 +26,7 @@ export function Footer() {
   return (
     <Box
       component="footer"
-      sx={{ position: "relative", width: "100%", bgcolor: "black", py: 4 }}
+      sx={{ position: "relative", width: "100%", bgcolor: "black", py: 6 }}
     >
       <Container>
         <Grid container spacing={2}>

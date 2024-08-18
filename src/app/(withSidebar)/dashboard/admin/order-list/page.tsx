@@ -26,19 +26,37 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { TOrder } from "@/type/order.type";
-import Image from "next/image";
 import { ORDER_STATUS } from "@/constent";
 import Link from "next/link";
 import { formatOrderDate } from "@/utils/formatOrderData";
 import { toast } from "sonner";
+import { useGetOrderStatusOverviewQuery } from "@/redux/api/analytics.api";
+import useDebounce from "@/hooks/common/useDebounce";
+import PaginationForTable from "@/components/shared/PaginationForTable";
 
 const OrderList = () => {
+  const [sortInfo, setSortInfo] = useState({
+    orderStatus: "",
+  });
+  console.log(sortInfo);
+  const [queryInfo, setQueryInfo] = useState({
+    rowsPerPage: 10,
+    page: 0,
+    searchTerm: "",
+    sortOrder: "",
+  });
+
+  const debouncedValue = useDebounce(queryInfo.searchTerm, 500);
+
   const [updateStatus, { isLoading: updateStatusLoading }] =
     useUpdateOrderMutation();
+  const { data: orderStatusOverview } = useGetOrderStatusOverviewQuery({});
+
   const handleStatusUpdate = useCallback(
     async (event: SelectChangeEvent, id: string) => {
       const response = (await updateStatus({
@@ -55,7 +73,33 @@ const OrderList = () => {
     [updateStatus]
   );
 
-  const { data, isLoading } = useGetAllOrdersQuery({});
+  const { data, isLoading } = useGetAllOrdersQuery({
+    query: `page=${queryInfo.page + 1}&limit=${
+      queryInfo.rowsPerPage
+    }&searchTerm=${debouncedValue}&sort=${queryInfo.sortOrder}${
+      sortInfo.orderStatus && "&orderStatus=" + sortInfo.orderStatus
+    }
+    `,
+  });
+  const orders = data?.data;
+  const meta = data?.meta;
+
+  //handler
+
+  const handleSortOrderChange = (event: SelectChangeEvent) => {
+    setQueryInfo((prev) => ({ ...prev, sortOrder: event.target.value }));
+  };
+
+  const handleSortOrderStatusChange = (event: SelectChangeEvent) => {
+    setSortInfo((prev) => ({ ...prev, orderStatus: event.target.value }));
+  };
+
+  const handleSearchInputChage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryInfo((prev) => ({ ...prev, searchTerm: event.target.value }));
+  };
+
   const columns = useMemo<GridColDef<TOrder>[]>(
     () => [
       {
@@ -92,6 +136,12 @@ const OrderList = () => {
             <Typography fontSize={14}>{row.row?.user?.name}</Typography>
           </Box>
         ),
+      },
+      {
+        field: "paymentInfo",
+        headerName: "Payment Method",
+        width: 200,
+        valueGetter: (value: any) => `${value?.method}`,
       },
       {
         field: "products",
@@ -161,6 +211,7 @@ const OrderList = () => {
       {
         field: "action",
         headerName: "Action",
+        type: "number",
         flex: 1,
         renderCell: (row) => {
           return (
@@ -210,7 +261,7 @@ const OrderList = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Pending Orders"
-            count={234}
+            count={orderStatusOverview?.data[3]?.total || 0}
             Icon={<Pending sx={{ color: "#f3a0ff", fontSize: "50px" }} />}
             gradientStartColor="#be0ee1"
             gradientEndColor="#ed68ff"
@@ -220,7 +271,7 @@ const OrderList = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Shipped Orders"
-            count={534}
+            count={orderStatusOverview?.data[5]?.total || 0}
             Icon={<LocalShipping sx={{ color: "#96cefa", fontSize: "50px" }} />}
             gradientStartColor="#2b77e5"
             gradientEndColor="#64b3f6"
@@ -230,7 +281,7 @@ const OrderList = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Accepted Orders"
-            count={6}
+            count={orderStatusOverview?.data[0]?.total || 0}
             Icon={<ShoppingBag sx={{ color: "#89ecb3", fontSize: "50px" }} />}
             gradientStartColor="#1a9f53"
             gradientEndColor="#4eda89"
@@ -240,7 +291,7 @@ const OrderList = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Cancelled Orders"
-            count={2344}
+            count={orderStatusOverview?.data[1]?.total || 0}
             Icon={<RemoveCircle sx={{ color: "#ff9baa", fontSize: "50px" }} />}
             gradientStartColor="#f11133"
             gradientEndColor="#ff6179"
@@ -248,13 +299,83 @@ const OrderList = () => {
         </Grid>
       </Grid>
 
-      <Box sx={{ height: 300, width: "100%", mt: 3 }}>
-        <DataGrid
-          columns={columns}
-          rows={data?.data || []}
-          loading={isLoading}
-          autoHeight
-          getRowId={(row) => row._id}
+      <Box
+        sx={{
+          border: "1px solid lightgray",
+        }}
+        bgcolor="white"
+        borderRadius={2}
+        mt={3}
+      >
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          mx={1}
+          my={2}
+        >
+          <TextField
+            onChange={handleSearchInputChage}
+            placeholder="Search..."
+            size="small"
+            type="search"
+          />{" "}
+          <Box display="flex" gap={1}>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <Select
+                value={sortInfo.orderStatus}
+                onChange={handleSortOrderStatusChange}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>Short by status</em>
+                </MenuItem>
+                {Object.keys(ORDER_STATUS).map((status) => (
+                  <MenuItem key={status} value={status}>
+                    {status}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <Select
+                value={queryInfo.sortOrder}
+                onChange={handleSortOrderChange}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>Short by date</em>
+                </MenuItem>
+                <MenuItem value="-createdAt">Newest</MenuItem>
+                <MenuItem value="createdAt">Lowest</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
+        <Box sx={{ width: "100%" }}>
+          <DataGrid
+            sx={{
+              border: "none",
+              borderTop: "1px solid lightgray",
+              borderBottom: "1px solid lightgray",
+              borderRadius: 0,
+            }}
+            loading={isLoading}
+            // pagination={false}
+            hideFooter
+            getRowId={(row) => row._id}
+            rows={orders ?? []}
+            columns={columns}
+            autoHeight
+          />
+        </Box>
+
+        <PaginationForTable
+          meta={meta}
+          paginationInfo={queryInfo}
+          setPaginationInfo={setQueryInfo}
         />
       </Box>
     </Box>

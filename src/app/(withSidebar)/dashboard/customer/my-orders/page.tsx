@@ -4,6 +4,7 @@ import PageHeader from "@/components/dashboard/shared/PageHeader";
 import {
   useGetAllOrdersForUserQuery,
   useGetAllOrdersQuery,
+  useGetUserOrderStatusOverviewQuery,
   useUpdateOrderMutation,
 } from "@/redux/api/orders.api";
 import {
@@ -50,6 +51,10 @@ const YourOrdersPage = () => {
   );
 
   const { data, isLoading } = useGetAllOrdersForUserQuery({});
+  const { data: userOrderStatusOverview } = useGetUserOrderStatusOverviewQuery(
+    {}
+  );
+
   const columns = useMemo<GridColDef<TOrder>[]>(
     () => [
       {
@@ -133,14 +138,13 @@ const YourOrdersPage = () => {
         width: 200,
         valueGetter: (value) => formatOrderDate(value),
       },
-      // {
-      //   field: "createdAt",
-      //   headerName: "Estimated Delivery Time",
-      //   type: "number",
-      //   width: 200,
-      //   valueGetter: (value) =>
-      //     dayjs(value).add(7, "day").format("D MMMM YYYY"),
-      // },
+      {
+        field: "paymentInfo",
+        headerName: "Payment Method",
+        width: 200,
+        valueGetter: (value: any) => `${value?.method}`,
+        // renderCell: (row) => <Rating value={row.row.rating} readOnly />,
+      },
       {
         field: "totalPrice",
         headerName: "Total Price",
@@ -195,7 +199,7 @@ const YourOrdersPage = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Pending Orders"
-            count={234}
+            count={userOrderStatusOverview?.data[3]?.total || 0}
             Icon={<Pending sx={{ color: "#f3a0ff", fontSize: "50px" }} />}
             gradientStartColor="#be0ee1"
             gradientEndColor="#ed68ff"
@@ -205,7 +209,7 @@ const YourOrdersPage = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Shipped Orders"
-            count={534}
+            count={userOrderStatusOverview?.data[4]?.total || 0}
             Icon={<LocalShipping sx={{ color: "#96cefa", fontSize: "50px" }} />}
             gradientStartColor="#2b77e5"
             gradientEndColor="#64b3f6"
@@ -215,7 +219,7 @@ const YourOrdersPage = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Accepted Orders"
-            count={6}
+            count={userOrderStatusOverview?.data[0]?.total || 0}
             Icon={<ShoppingBag sx={{ color: "#89ecb3", fontSize: "50px" }} />}
             gradientStartColor="#1a9f53"
             gradientEndColor="#4eda89"
@@ -225,7 +229,7 @@ const YourOrdersPage = () => {
         <Grid item xs={12} md={6} lg={3}>
           <OrderOverviewCard
             title="Cancelled Orders"
-            count={2344}
+            count={userOrderStatusOverview?.data[1]?.total || 0}
             Icon={<RemoveCircle sx={{ color: "#ff9baa", fontSize: "50px" }} />}
             gradientStartColor="#f11133"
             gradientEndColor="#ff6179"
