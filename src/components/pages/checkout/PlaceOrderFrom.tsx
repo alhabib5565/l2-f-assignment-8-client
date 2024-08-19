@@ -60,7 +60,7 @@ const PlaceOrderFrom = () => {
     const response = await proceedOrder(value, token);
     if (response?.success) {
       toast.success(response?.message || "Order place sucesfully");
-      router.push("/dashboard/my-orders");
+      router.push("/dashboard/customer/my-orders");
       dispatch(clearCart());
     } else {
       toast.error(response?.message || "Order place failed");

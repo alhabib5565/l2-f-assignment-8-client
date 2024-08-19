@@ -8,8 +8,8 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Ceaning Supplies Store",
-  description: "Ceaning Supplies Store",
+  title: "QuickShop Store",
+  description: "QuickShop Store",
 };
 
 export default function RootLayout({

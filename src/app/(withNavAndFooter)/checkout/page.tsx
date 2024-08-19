@@ -5,7 +5,10 @@ import dynamic from "next/dynamic";
 import { useAppSelector } from "@/redux/hooks";
 import { Product } from "@/type/order.type";
 
-import PlaceOrderFrom from "@/components/pages/checkout/PlaceOrderFrom";
+const PlaceOrderFrom = dynamic(
+  () => import("@/components/pages/checkout/PlaceOrderFrom"),
+  { ssr: false }
+);
 const CartProductRow = dynamic(
   () => import("@/components/pages/checkout/CartProductRow"),
   {

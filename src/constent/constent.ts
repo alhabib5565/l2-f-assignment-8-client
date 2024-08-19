@@ -15,7 +15,7 @@ export const PRODUCT_STATUS = {
 
 export const ORDER_STATUS = {
   Pending: "Pending",
-  Rejected: "Rejected",
+  // Rejected: "Rejected",
   Accepted: "Accepted",
   Shipped: "Shipped",
   Delivered: "Delivered",

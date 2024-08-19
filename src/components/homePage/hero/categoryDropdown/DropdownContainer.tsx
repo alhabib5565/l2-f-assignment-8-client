@@ -14,14 +14,14 @@ const DropdownContainer = async () => {
         py: 1,
         position: "relative",
         zIndex: 900,
-        height: 350,
+        height: 400,
         border: "1px solid lightgray",
         borderRadius: 2,
         background: "white",
       }}
     >
       {mainCategories.data
-        .slice(0, 10)
+        .slice(0, 11)
         .map((mainCategory: TMainCategoryItemsData, index: number) => {
           return <MainCategoryMenuItems key={index} items={mainCategory} />;
         })}

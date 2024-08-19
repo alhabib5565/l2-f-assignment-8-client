@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   }, [user, router]);
 
   if (!user) {
-    return null; // or a loading spinner
+    return <>Loading...</>;
   }
   return (
     <div>

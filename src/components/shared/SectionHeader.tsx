@@ -17,7 +17,12 @@ const SectionHeader = ({ title, description, href }: TSectionHeaderProp) => {
           <Typography fontWeight={600} component="h3" variant="h4">
             {title}
           </Typography>
-          <Typography component="p" variant="body1" mt={1}>
+          <Typography
+            sx={{ display: { xs: "none", md: "block" } }}
+            component="p"
+            variant="body1"
+            mt={1}
+          >
             {description}
           </Typography>
         </Box>

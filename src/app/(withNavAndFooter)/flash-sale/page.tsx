@@ -6,10 +6,7 @@ import React from "react";
 
 const FlashSalePage = async () => {
   const res = await fetch(
-    `${process.env.SERVER_URL}/products/flash-sale/all-flash-sale`,
-    {
-      cache: "reload",
-    }
+    `${process.env.SERVER_URL}/products/flash-sale/all-flash-sale`
   );
   const flashSaleProducts = await res.json();
 

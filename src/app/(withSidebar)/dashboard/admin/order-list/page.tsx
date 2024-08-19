@@ -43,7 +43,7 @@ const OrderList = () => {
   const [sortInfo, setSortInfo] = useState({
     orderStatus: "",
   });
-  console.log(sortInfo);
+
   const [queryInfo, setQueryInfo] = useState({
     rowsPerPage: 10,
     page: 0,

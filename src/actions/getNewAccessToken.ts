@@ -1,12 +1,18 @@
 import { axiosInstance } from "@/helper/axiosInstance";
 
 export const getNewAccessToken = async () => {
-  return axiosInstance({
-    baseURL:
-      // "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/auth/refresh-toekn",
-      "http://localhost:5000/api/v1/auth/refresh-toekn",
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    withCredentials: true,
-  });
+  try {
+    const response = await axiosInstance({
+      url: "https://cleaning-supplies-store-server-indol.vercel.app/api/v1/auth/refresh-toekn",
+      // Adjusted endpoint URL
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    // Handle the error appropriately
+    console.error("Error getting new access token:", error);
+    throw error;
+  }
 };

@@ -17,6 +17,7 @@ import React from "react";
 
 const AdminDashboardHome = () => {
   const { data } = useGetTotalCountWithLastMonthPercentageQuery({});
+  console.log(data);
   const AdminAnalyticData = data?.data;
   return (
     <Box>

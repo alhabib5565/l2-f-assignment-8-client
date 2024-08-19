@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@mui/material";
+import { Button, SxProps } from "@mui/material";
 import React, { MouseEvent } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useAppDispatch } from "@/redux/hooks";
@@ -11,6 +11,8 @@ type TAddToCartButton = {
   price: number;
   thumbnail: string;
   productName: string;
+  sx?: SxProps;
+  fullWidth?: boolean;
 };
 
 const AddToCartButton = ({
@@ -18,6 +20,8 @@ const AddToCartButton = ({
   price,
   thumbnail,
   productName,
+  sx,
+  fullWidth = true,
 }: TAddToCartButton) => {
   const dispatch = useAppDispatch();
   const handleAddToCart = (e: MouseEvent<HTMLButtonElement>) => {
@@ -28,13 +32,13 @@ const AddToCartButton = ({
   };
   return (
     <Button
-      fullWidth
+      fullWidth={fullWidth}
       onClick={(e) => handleAddToCart(e)}
       size="small"
-      sx={{ gap: 2, flex: 1 }}
+      endIcon={<ShoppingCartIcon />}
+      sx={sx}
     >
-      <span className="truncate">Add To Cart </span>
-      <ShoppingCartIcon />
+      Add To Cart
     </Button>
   );
 };

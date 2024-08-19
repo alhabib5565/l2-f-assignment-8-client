@@ -90,11 +90,11 @@ const ProductDetailsCarousel = ({
           </Fab>
         </div>
       </div>
-      <div className="flex items-center gap-1 mt-2">
+      <div className="flex items-center justify-center gap-1 mt-2">
         {allImages.map((img, index) => (
           <button
             onClick={() => setActiveImage(index)}
-            className={`w-full border-2 rounded h-[50px] relative transition-all ${
+            className={`w-[80px] border-2 rounded h-[50px] relative transition-all ${
               index === activeImage
                 ? "opacity-100"
                 : "opacity-50 hover:opacity-100"

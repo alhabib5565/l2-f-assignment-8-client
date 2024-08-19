@@ -29,7 +29,7 @@ const NavSearchField = () => {
 
   return (
     <Autocomplete
-      sx={{ flex: 1, bgcolor: "white", borderRadius: 1, minWidth: 100 }}
+      sx={{ flex: 1, bgcolor: "white", borderRadius: 1, minWidth: 150 }}
       id="free-solo-demo"
       freeSolo
       size="small"

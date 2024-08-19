@@ -1,4 +1,4 @@
-import { Avatar, Box, Rating, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Grid, Rating, Stack, Typography } from "@mui/material";
 import React from "react";
 import ReviewModalOpenButton from "./ReviewModalOpenButton";
 
@@ -29,7 +29,7 @@ const ShowProductFeedback = async ({
         direction="row"
         justifyContent="space-between"
         alignItems="centers"
-        pb={2}
+        pb={1}
       >
         <Typography
           display={"flex"}
@@ -46,9 +46,12 @@ const ShowProductFeedback = async ({
         <ReviewModalOpenButton productId={productId} />
       </Stack>
       {hasFeedback && (
-        <Box mt={3} display="flex" flexDirection="column" gap={3}>
+        <Grid container spacing={2} mt={3}>
           {feedbacks.map((feedback, index: number) => (
-            <Box
+            <Grid
+              item
+              xs={12}
+              md={6}
               key={index}
               sx={{ bgcolor: "white", padding: 3, borderRadius: 2 }}
             >
@@ -79,9 +82,9 @@ const ShowProductFeedback = async ({
                 />
                 <Typography component="legend">{feedback.review}</Typography>
               </Box>
-            </Box>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       )}
     </Box>
   );

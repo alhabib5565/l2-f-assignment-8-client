@@ -38,6 +38,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       <Card
         sx={{
           maxWidth: 345,
+          mx: "auto",
           height: "100%",
           "&:hover img": {
             transform: "rotate(10deg) scale(1.2)",
@@ -61,6 +62,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
               width: "100%",
               height: "100%",
               transition: "transform 0.1s ease-in-out",
+              objectFit: "contain",
             }}
           />
           {currentDiscount ? (

@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Controller, useFormContext } from "react-hook-form";
@@ -48,7 +48,7 @@ export default function MyMultiSelect({
           renderOption={(props, option, { selected }) => (
             <Typography
               sx={{ display: "flex", gap: 1, alignItems: "center" }}
-              key={option._id}
+              // key={option._id}
               {...props}
             >
               <Typography

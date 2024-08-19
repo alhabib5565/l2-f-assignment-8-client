@@ -21,7 +21,10 @@ export default function CartIcon() {
   // const selectedProducts = cart.selectedProducts
   return (
     <Link href="/checkout">
-      <IconButton sx={{ mr: 2 }} aria-label="cart">
+      <IconButton
+        sx={{ mr: 2, display: { md: "block", xs: "none" } }}
+        aria-label="cart"
+      >
         <StyledBadge badgeContent={selectedProducts || 0} color="secondary">
           <ShoppingCartIcon />
         </StyledBadge>

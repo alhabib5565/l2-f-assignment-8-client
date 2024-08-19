@@ -2,8 +2,8 @@
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { theme } from "../theme/theme";
 import { Provider } from "react-redux";
-import { persistor, store } from "@/redux/store";
-import { PersistGate } from "redux-persist/integration/react";
+import { store } from "@/redux/store";
+// import { PersistGate } from "redux-persist/integration/react";
 
 const globalStyles = (
   <GlobalStyles

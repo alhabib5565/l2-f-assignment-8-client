@@ -1,9 +1,7 @@
 "use client";
-
 import { useGetOrderStatusOverviewQuery } from "@/redux/api/analytics.api";
 import { TOrderStatus } from "@/type/order.type";
 import {
-  Add,
   AddOutlined,
   CheckCircleOutline,
   CheckOutlined,
@@ -16,7 +14,7 @@ import React from "react";
 
 const OrderOverviewChart = () => {
   const { data, isLoading, isFetching } = useGetOrderStatusOverviewQuery({});
-
+  console.log({ data, isLoading, isFetching });
   const orderStatusColor = {
     Pending: "#DE2FFF",
     Shipped: "#4094F1",
@@ -44,6 +42,9 @@ const OrderOverviewChart = () => {
       } else if (item._id === "Delivered") {
         color = orderStatusColor.Delivered;
         icon = CheckCircleOutline;
+      } else if (item._id === "Rejected") {
+        color = orderStatusColor.Cancelled;
+        icon = CloseOutlined;
       }
       return {
         id: index,
@@ -54,7 +55,6 @@ const OrderOverviewChart = () => {
       };
     }
   );
-  // const { Cancelled, Delivered, Pending, Shipped, Accepted } = data?.data;
   return (
     <Box bgcolor="white" height={"100%"} padding={3} borderRadius={1}>
       <Typography fontWeight={700} variant="h5" component="h4" fontSize={20}>
@@ -89,24 +89,25 @@ const OrderOverviewChart = () => {
         />
       </Box>
       <Divider sx={{ mt: 2 }} />
-      {orderOverview?.map((item: any, index: number) => (
-        <Box key={item._id}>
-          <Stack direction="row" gap={2} py={1.2}>
-            <Avatar
-              sx={{
-                bgcolor: item.color,
-                height: 24,
-                width: 24,
-              }}
-            >
-              <item.icon />
-            </Avatar>
-            <Typography flex={1}>{item.label}</Typography>
-            <Typography>{item.value}</Typography>
-          </Stack>
-          {index !== 4 && <Divider />}
-        </Box>
-      ))}
+      {orderOverview &&
+        orderOverview?.map((item: any, index: number) => (
+          <Box key={index}>
+            <Stack direction="row" gap={2} py={1.2}>
+              <Avatar
+                sx={{
+                  bgcolor: item.color,
+                  height: 24,
+                  width: 24,
+                }}
+              >
+                <item.icon />
+              </Avatar>
+              <Typography flex={1}>{item.label}</Typography>
+              <Typography>{item.value}</Typography>
+            </Stack>
+            {index !== 4 && <Divider />}
+          </Box>
+        ))}
     </Box>
   );
 };

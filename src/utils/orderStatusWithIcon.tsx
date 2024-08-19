@@ -15,9 +15,9 @@ export const getOrderStatus = (status: TOrderStatus, fontSize: string) => {
     case ORDER_STATUS.Pending:
       iconStyle.color = "orange";
       return <Pending style={iconStyle} />;
-    case ORDER_STATUS.Rejected:
-      iconStyle.color = "red";
-      return <Cancel style={iconStyle} />;
+    // case ORDER_STATUS.Rejected:
+    //   iconStyle.color = "red";
+    //   return <Cancel style={iconStyle} />;
     case ORDER_STATUS.Accepted:
       iconStyle.color = "green";
       return <CheckCircle style={iconStyle} />;

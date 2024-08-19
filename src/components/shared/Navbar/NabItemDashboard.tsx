@@ -15,13 +15,7 @@ const NavItemDashboard = ({ handler, sx }: TNavItemDashboard) => {
   return (
     <>
       {user && user.role && (
-        <Link
-          href={
-            user.role === "Customer"
-              ? `dashboard/${user?.role.toLocaleLowerCase()}/my-profile`
-              : `dashboard/${user?.role.toLocaleLowerCase()}`
-          }
-        >
+        <Link href={`dashboard/${user?.role.toLocaleLowerCase()}`}>
           <MenuItem onClick={handler} sx={sx}>
             Dashboard
           </MenuItem>

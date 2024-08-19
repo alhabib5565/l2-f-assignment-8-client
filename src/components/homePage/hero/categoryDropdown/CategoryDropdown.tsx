@@ -25,7 +25,7 @@ const CategoryDropdown = ({
         borderRadius: 2,
         border: "1px solid lightgray",
         width: 300,
-        height: 350,
+        height: 400,
         display: `${isCategoryDropdownOpen ? "" : "none"}`,
       }}
     >

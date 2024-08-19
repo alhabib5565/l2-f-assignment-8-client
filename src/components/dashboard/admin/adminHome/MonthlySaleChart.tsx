@@ -1,4 +1,3 @@
-"use client";
 import { useGetMontlyTotalSalesForAYerarQuery } from "@/redux/api/analytics.api";
 import { Box, Typography } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
