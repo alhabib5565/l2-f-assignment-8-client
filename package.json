@@ -11,7 +11,7 @@
   "dependencies": {
     "@bangladeshi/bangladesh-address": "^1.0.5",
     "@emotion/cache": "^11.11.0",
-    "@emotion/react": "^11.11.4",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.14",
@@ -22,10 +22,10 @@
     "@mui/x-date-pickers": "^7.3.1",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.7.3",
-    "dayjs": "^1.11.11",
-    "framer-motion": "^11.0.24",
+    "dayjs": "^1.11.13",
+    "framer-motion": "^11.3.29",
     "jwt-decode": "^4.0.0",
-    "next": "14.0.3",
+    "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.4",
@@ -36,7 +36,7 @@
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "sonner": "^1.4.41",
-    "swiper": "^11.0.7",
+    "swiper": "^11.1.10",
     "zod": "^3.22.5"
   },
   "devDependencies": {
